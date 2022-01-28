@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GoodComponent } from './good.component';
 
+import { GoodRoutingModule } from './good-routing.module';
+import { GoodComponent } from './good.component';
 
 
 @NgModule({
@@ -9,7 +10,8 @@ import { GoodComponent } from './good.component';
     GoodComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    GoodRoutingModule
   ]
 })
 export class GoodModule { }

@@ -11,11 +11,18 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const userData=this._coreService.auth.getAuthAllDataFromLocalStorage();
-      if(userData){
+      const current_user_token = this._coreService.auth.getAuthAllDataFromLocalStorage();
+      if (current_user_token !== null) {
+        // if (!this.authHelper.checkRefreshokenValidation()) {
+        //   // اگر مدت زمان رفرش توکن تموم سده باشه یا وجود نداشته باشه
+        //   this.authService.logOut();
+        //   return false;
+        // }
         return true;
+      } else {
+         this._coreService.auth.logOut();
+        return false;
       }
-    return false;
   }
   
 }

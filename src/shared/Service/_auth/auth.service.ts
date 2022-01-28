@@ -9,6 +9,7 @@ import {
   shareReplay,
   switchMap,
 } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { LoginResponsDto } from 'src/shared/Domain/Dto/_User/login-respons-dto';
 import { UserDetail } from 'src/shared/Domain/Dto/_User/user-detail';
@@ -23,7 +24,7 @@ export class AuthService {
   //#region private
   private AUTH_KEY = 'userToken';
   private apiVersion = '1';
-  private baseUrl = `api/v${this.apiVersion}/Auth/`;
+  private baseUrl =environment.serverUrl+ `/api/v${this.apiVersion}/Auth/`;
   private _unsubscribe: Subscription[] = [];
 
   // private _deviceSearched$ = new BehaviorSubject<DeviceInsertedModel[]>([]);
@@ -58,10 +59,12 @@ export class AuthService {
   constructor(private http: HttpClient,private router: Router) {}
 
   login(loginModel: LoginInputVm) {
+    debugger
     this._isLoading$.next(true);
     return this.http
       .post<ResultDto<LoginResponsDto>>(this.baseUrl + 'Login', loginModel)
       .pipe(
+        
         map((resp: ResultDto<LoginResponsDto>) => {
           if (resp.isSuccess) {
             this.setAuthDataInLocalStorage(resp.data);

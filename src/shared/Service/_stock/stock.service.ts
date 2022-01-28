@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, shareReplay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { Stock } from 'src/shared/Domain/Models/_Stock/stock';
@@ -14,7 +15,7 @@ import { FacadService } from '../_Core/facad.service';
 export class StockService implements OnDestroy {
   //#region private
   private apiVersion = '1';
-  private baseUrl = `api/v${this.apiVersion}/Stock/`;
+  private baseUrl = environment.serverUrl+ `/api/v${this.apiVersion}/Stock/`;
   private _unsubscribe: Subscription[] = [];
 
   private _stock$ = new BehaviorSubject<Stock[]>([]);
@@ -55,6 +56,7 @@ export class StockService implements OnDestroy {
 
   // Get
   getStocks() {
+    debugger
     this._isLoading$.next(true);
     const sb = this.http.get<ResultDto<Stock[]>>(this.baseUrl + "GettAllStocks")
       .pipe(

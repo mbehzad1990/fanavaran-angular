@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, shareReplay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { Unit } from 'src/shared/Domain/Models/_Unit/unit';
@@ -14,7 +15,7 @@ import { FacadService } from '../_Core/facad.service';
 export class UnitService implements OnDestroy {
   //#region private
   private apiVersion = '1';
-  private baseUrl = `api/v${this.apiVersion}/Mesure/`;
+  private baseUrl =environment.serverUrl+ `/api/v${this.apiVersion}/Mesure/`;
   private _unsubscribe: Subscription[] = [];
 
   private _items$ = new BehaviorSubject<Unit[]>([]);
