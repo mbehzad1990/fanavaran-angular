@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+@import "assets/scss/variables.scss";
+//--- import from bootstrap
+@import "assets/scss/utilities.scss";
+
+//--- mat customization
+@import "assets/scss/mat-color-palette.scss";
+@import "assets/scss/mat-typography.scss";
+@import 'assets/scss/mat-custom-theme.scss';
+@import "assets/scss/mat-controls.scss";
+
+//--- common styles
+@import "assets/scss/colors-class.scss";
+@import 'assets/scss/fan-style.scss';
+@import 'assets/scss/modal.scss';
+
+
+@import "assets/icons/style";
+
+@import '~ngx-toastr/toastr';
+
+
+
+.icon-20px {
+  font-size: 20px;
+}
+
+i[class^="icon"] {
+  color: mat-color($gray-palette, 500);
+}
+
+
+.mycsssnackbartest {
+  background-color: #ffafaf;
+  color: #1c253d;
+
+  .mat-simple-snackbar-action {
+    color: #646464;
+  }
+}
+
+.mycsssnackbartestSuce {
+  background-color: #afffdf;
+  color: #1c253d;
+
+  .mat-simple-snackbar-action {
+    color: #646464;
+  }
+}

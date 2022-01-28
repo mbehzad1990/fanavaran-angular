@@ -1,0 +1,128 @@
+@import '~@angular/material/theming';
+
+// Be sure that you only ever include 'mat-core' mixin once!
+// it should not be included for each theme.
+@include mat-core();
+
+// define a real custom palette (using http://mcg.mbitson.com)
+$white:#fff;
+$cornflower-palette: (
+    
+  50: #edefff,
+  100: #d1d6ff,
+  200: #b2bbff,
+  300: #939fff,
+  400: #7c8bff,
+  500: #6576ff,
+  600: #5d6eff,
+  700: #5363ff,
+  800: #4959ff,
+  900: #3746ff,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #e1e3ff,
+  A700: #c8cbff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ));
+
+$hotpink-palette: (
+  50: #ffecf4,
+  100: #ffd0e4,
+  200: #ffb1d2,
+  300: #ff92c0,
+  400: #ff7ab3,
+  500: #ff63a5,
+  600: #ff5b9d,
+  700: #ff5193,
+  800: #ff478a,
+  900: #ff3579,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffdfe9,
+  A700: #ffc6d8,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  ));
+
+
+
+$gray-palette: (
+    50:#F5F6FA,
+  100: #EBEEF2,
+  200: #E5E9F2,
+  300: #DBDFEA,
+  400: #B7C2D0,
+  500: #8091A7,
+  600: #3C4D62,
+  700: #344357,
+  800: #2B3748,
+  900: #1F2B3A,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: white,
+  ));
+
+
+$semantic-palette: (
+  success: #36ad7d,
+  danger: #E85347,
+  warning: #F4BD0E,
+  info: #09C2DE,
+
+);
+$textcolor-palette: (
+    dusk: #525F84,
+    light-blue-gray: #B6C6E3,
+    lavender-mist: #E5E9F2,
+
+);
+
+
+// mandatory stuff for theming
+$bio-atlas-primary: mat-palette($cornflower-palette, 500);
+$bio-atlas-accent: mat-palette($hotpink-palette, 500);
+
+// include the custom theme components into a theme object
+$bio-atlas-theme: mat-light-theme($bio-atlas-primary, $bio-atlas-accent);
+
+// include the custom theme object into the angular material theme
+@include angular-material-theme($bio-atlas-theme);

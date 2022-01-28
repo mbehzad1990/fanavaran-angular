@@ -1,0 +1,212 @@
+/*#region rtl*/
+[dir="rtl"] {
+  body {
+    background-color: mat-color($gray-palette, 50);
+    color: mat-color($textcolor-palette, dusk);
+    box-sizing: border-box;
+    text-align: right;
+    margin: 0;
+    font-family: "IRANSans";
+    font-size: 13px;
+    line-height: 25px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  strong,
+  kbd,
+  samp {
+    color: mat-color($textcolor-palette, dusk);
+  }
+
+  /* Works on Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: mat-color($gray-palette, 400) mat-color($gray-palette, 50);
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: mat-color($gray-palette, 50);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: mat-color($gray-palette, 400);
+    border-radius: 20px;
+    border: 3px solid mat-color($gray-palette, 50);
+  }
+
+  .font-weight-semibold {
+    font-weight: 600 !important;
+  }
+
+  .tooltip-style {
+    background-color: mat-color($textcolor-palette, dusk) !important;
+    font-size: 14px !important;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+  .text-left {
+    text-align: left;
+  }
+
+  .text-center {
+    text-align: center !important;
+  }
+  
+
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  .cursor-default {
+    cursor: default !important;
+  }
+
+  .no-padding > div {
+    padding: 0 !important;
+  }
+
+  .curve-btn {
+    border-radius: 30px !important;
+  }
+
+  .position-relative {
+    position: relative;
+  }
+
+  .ip {
+    color: mat-color($gray-palette, 900);
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    font-size: 16px !important;
+  }
+
+  .mat-menu-panel {
+    min-width: 200px !important;
+  }
+}
+/*#endregion rtl*/
+
+/*#region ltr*/
+[dir="ltr"] {
+  body {
+    background-color: mat-color($gray-palette, 50);
+    color: mat-color($textcolor-palette, dusk);
+    box-sizing: border-box;
+    text-align: left;
+    margin: 0;
+    font-family: "IRANSans";
+    font-size: 12px;
+    line-height: 25px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  strong,
+  kbd,
+  samp {
+    color: mat-color($textcolor-palette, dusk);
+  }
+
+  /* Works on Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: mat-color($gray-palette, 400) mat-color($gray-palette, 50);
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: mat-color($gray-palette, 50);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: mat-color($gray-palette, 400);
+    border-radius: 20px;
+    border: 3px solid mat-color($gray-palette, 50);
+  }
+
+  .font-weight-semibold {
+    font-weight: 600 !important;
+  }
+
+  .tooltip-style {
+    background-color: mat-color($textcolor-palette, dusk) !important;
+    font-size: 10px !important;
+  }
+
+  .text-right {
+    text-align: left;
+  }
+  .text-left {
+    text-align: right;
+  }
+
+  .text-center {
+    text-align: center !important;
+  }
+
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  .cursor-default {
+    cursor: default !important;
+  }
+
+  .no-padding > div {
+    padding: 0 !important;
+  }
+
+  .curve-btn {
+    border-radius: 30px !important;
+  }
+
+  .position-relative {
+    position: relative;
+  }
+
+  .ip {
+    color: mat-color($gray-palette, 900);
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    font-size: 16px !important;
+  }
+
+  .mat-menu-panel {
+    min-width: 200px !important;
+  }
+}
+/*#endregion ltr*/
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-height{
+  height: calc(100vh - 9rem);
+}
+.delete-btn {
+  color: red;
+}

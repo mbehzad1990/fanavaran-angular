@@ -1,0 +1,128 @@
+//*************************** 1 - tet fields
+//*************************** 2- check box  radio btns
+//*************************** 3- range slider
+//*************************** 4- badge
+/*#region text feild*/
+.mat-form-field-appearance-outline:not(.mat-focused)
+  .mat-form-field-outline
+  [class*="mat-form-field-outline-"] {
+  border-color: mat-color($gray-palette, 500);
+}
+
+.mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.6em 0px;
+}
+
+.mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+
+/*#endregion text feild*/
+
+/*#region checkbox&radio*/
+[dir="rtl"] {
+  .radio-groups {
+    mat-radio-button {
+      margin-left: 2rem;
+      &:last-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+[dir="ltr"] {
+  .radio-groups {
+    mat-radio-button {
+      margin-right: 2rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+/*#endregion checkbox&radio*/
+
+/*#region range-slider*/
+.range-slider {
+  position: relative;
+
+  // width: 100%;
+  &_number {
+    position: absolute;
+    bottom: 0;
+
+    &:last-child {
+      left: 0;
+    }
+
+    &:first-child {
+      right: 0;
+    }
+  }
+}
+
+mat-slider {
+  width: 300px;
+}
+
+.mat-slider-min-value.mat-slider-thumb-label-showing .mat-slider-thumb {
+  background-color: mat-color($gray-palette, 600);
+}
+
+/*#endregion range-slider*/
+
+/*#region badge*/
+[dir="rtl"] {
+  .bl-sharp-badge {
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0px;
+      right: 13px;
+      background-color: mat-color($hotpink-palette, 500);
+      width: 10px;
+      height: 11px;
+      // z-index: -1;
+    }
+  }
+}
+[dir="ltr"] {
+  .bl-sharp-badge {
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0px;
+      left: 13px;
+      background-color: mat-color($hotpink-palette, 500);
+      width: 10px;
+      height: 11px;
+      // z-index: -1;
+    }
+  }
+}
+
+/*#endregion badge*/
+
+.mat-card-title {
+  color: mat-color($textcolor-palette, dusk);
+}
+.mat-card-subtitle {
+  color: mat-color($textcolor-palette, light-blue-gray);
+}
+
+// .mat-icon{
+//   color: mat-color($gray-palette, 700);
+
+// }
+ngx-mat-select-search {
+  font-family: "IRANSans" !important;
+}

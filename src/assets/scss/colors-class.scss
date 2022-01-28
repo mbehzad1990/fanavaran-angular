@@ -1,0 +1,31 @@
+@import "mat-color-palette.scss";
+._success-color{
+    color: mat-color($semantic-palette, success) !important;
+}
+._error-color{
+    color: mat-color($semantic-palette, danger) !important;
+}
+._warning-color{                                                    
+    color: mat-color($semantic-palette, warning) !important;
+}
+._info-color{
+    background-color: mat-color($semantic-palette, info) !important;
+}
+._success-bg-color{
+    background-color: mat-color($semantic-palette, success)!important;
+}
+._error-bg-color{
+    background-color: mat-color($semantic-palette, danger) !important;
+}
+._warning-bg-color{
+    background-color: mat-color($semantic-palette, warning) !important;
+}
+._info-bg-color{
+    background-color: mat-color($semantic-palette, info) !important;
+}
+._error-bg-table{
+    background-color: lighten(mat-color($semantic-palette, danger),35%)  !important;
+}
+._white-color{
+     color: #fff  !important;
+}
