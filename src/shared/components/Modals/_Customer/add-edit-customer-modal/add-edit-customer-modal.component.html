@@ -1,0 +1,54 @@
+<div class="add-customer-modal modal-container">
+    <form [formGroup]="crudForm" (ngSubmit)="
+      submit(name.value, address.value, phone.value,description.value,mobile.value)
+        ">
+      <div>
+        <p class="mat-h2 modal-title">افزودن مشتری</p>
+      </div>
+
+      <div fxLayout="column" class="data-container mt-2">
+          <div fxLayout="row"  class="w-100" fxLayoutGap="10px">
+            <mat-form-field fxFlex="33%" class="my-2 input-size" appearance="outline" color="primary">
+                <mat-label>نام</mat-label>
+                <input matInput placeholder="اقا/خانم ..." #name formControlName="name" />
+                <mat-error *ngIf="errorHandling('name', 'required')">
+                  وارد کردن نام اجباری است
+                </mat-error>
+                <!-- <mat-hint>Hint</mat-hint> -->
+              </mat-form-field>
+              <mat-form-field fxFlex="33%" class="my-2 input-size" appearance="outline" color="primary">
+                <mat-label>موبایل</mat-label>
+                <input matInput  placeholder="0911---" #mobile
+                  formControlName="mobile" />
+              </mat-form-field>
+              <mat-form-field fxFlex="33%" class="my-2 input-size" appearance="outline" color="primary">
+                <mat-label>شماره تماس</mat-label>
+                <input matInput  placeholder="021-000" #phone
+                  formControlName="phone" />
+              </mat-form-field>
+          </div>
+
+          <mat-form-field class="my-2 input-size" appearance="outline" color="primary">
+            <mat-label>ادرس</mat-label>
+            <input matInput placeholder="ایران-...." #address formControlName="address" />
+            <!-- <mat-hint>Hint</mat-hint> -->
+          </mat-form-field>
+
+          <mat-form-field  class="w-100 mt-3" appearance="outline" color="primary" >
+            <mat-label>توضیحات</mat-label>
+              <textarea matInput placeholder="توضیحات" #description class="description-field-height"
+              formControlName="description" ></textarea>
+          </mat-form-field>
+        </div>
+  
+      <app-result-message *ngIf="isFinishOperation" [ResultType]="messageResultType" [resultSmessageText]="resultMessage">
+      </app-result-message>
+      <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close class="ms-2 curve-btn">انصراف</button>
+        <button mat-raised-button color="primary" class="curve-btn" [disabled]="crudForm.invalid">
+          اعمال تغییرات
+        </button>
+      </div>
+    </form>
+  </div>
+  

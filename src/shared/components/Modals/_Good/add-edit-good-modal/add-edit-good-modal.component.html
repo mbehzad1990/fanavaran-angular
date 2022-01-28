@@ -1,0 +1,97 @@
+<div class="add-stock-modal modal-container">
+    <form [formGroup]="modalForm" (ngSubmit)="
+        submit(modalForm)
+          ">
+      <div>
+        <p class="mat-h2 modal-title">افزودن انبار</p>
+      </div>
+      <div fxLayout="column" class="data-container mt-2">
+        <div fxLayout="column" class="mt-2">
+          <div fxLayout="row" class="w-100" fxLayoutGap="10px">
+            <mat-form-field fxFlex="50%" class="mt-1 input-size" appearance="outline" color="primary">
+              <mat-label>نام</mat-label>
+              <input matInput placeholder="نام کالا ..." #name formControlName="name" />
+              <mat-error *ngIf="errorHandling('name', 'required')">
+                وارد کردن نام اجباری است
+              </mat-error>
+              <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+            <mat-form-field fxFlex="50%" class="mt-1 input-size" appearance="outline" color="primary">
+              <mat-label>نام لاتین کالا</mat-label>
+              <input matInput placeholder="ABC ..." #latinName formControlName="latinName" />
+            </mat-form-field>
+          </div>
+          <section class="mt-1 input-size">
+            <mat-checkbox [(ngModel)]="isSetManualId" [ngModelOptions]="{standalone: true}">کد دستی</mat-checkbox>
+          </section>
+          <div *ngIf="isSetManualId">
+            <mat-form-field class="mt-1 input-size" appearance="outline" color="primary">
+              <mat-label>کد دستی کالا</mat-label>
+              <input matInput type="number" placeholder="123 ..." #manualId formControlName="manualId" />
+            </mat-form-field>
+          </div>
+  
+          <div fxLayout="row" fx fxFill fxFlexAlign=" center">
+  
+            <mat-form-field fxFlex="90%" class="w-100" appearance="outline"
+              [floatLabel]="isLoading || (!isOpen && unit.value === null) ? 'never' : 'auto'">
+              <mat-label>واحد سنجش</mat-label>
+              <mat-select required #unit placeholder="واحد سنجش" (openedChange)="openChanged($event)"
+                formControlName="unit">
+                <ng-container
+                  *ngIf="units !== null   && ((isOpen && !isLoading) || (!unit.panelOpen && unit.value !== null)); else loading">
+                  <div fxLayout="row" fxFill *ngIf="units.length==0;else data">
+                    <mat-option>
+                      <span>واحد سنجشی ثبت نشده است</span>
+                    </mat-option>
+                  </div>
+                  <ng-template #data>
+                    <mat-option *ngFor="let item of units" [value]="item.id">
+                      {{item.name}} </mat-option>
+                  </ng-template>
+  
+                </ng-container>
+                <ng-template #loading>
+                  <!-- While waiting for the options to load show a single, disabled option with a loading spinner -->
+                  <mat-option disabled>
+                    <div class="deferred-select-placeholder-container">
+                      <span> در حال دریافت اطلاعات ...</span>
+                      <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                    </div>
+                  </mat-option>
+                </ng-template>
+              </mat-select>
+              <mat-error *ngIf="errorHandling('unit','required')">
+                <p class="mat-subheading-1 text-right">انتخاب واد سنجش اجباری است</p>
+  
+              </mat-error>
+              <!-- <mat-hint>تست</mat-hint> -->
+            </mat-form-field>
+            <div fxFlex="10%" fxFlexAlign="center center" class="mt-2 me-2">
+  
+              <button mat-icon-button color="primary" matTooltip="افزودن واحد سنجش" (click)="navigate($event)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+  
+  
+          <mat-form-field class="w-100 mt-2" appearance="outline" color="primary">
+            <mat-label>توضیحات</mat-label>
+            <textarea matInput placeholder="توضیحات" #description class="description-field-height"
+              formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+  
+      </div>
+      <app-result-message *ngIf="isFinishOperation" [ResultType]="messageResultType" [resultSmessageText]="resultMessage">
+      </app-result-message>
+      <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close class="ms-2 curve-btn">انصراف</button>
+        <button mat-raised-button color="primary" class="curve-btn" [disabled]="modalForm.invalid">
+          اعمال تغییرات
+        </button>
+      </div>
+    </form>
+  </div>
+  
