@@ -1,0 +1,147 @@
+@import "/src/assets/scss/mat-color-palette.scss";
+@import "/src/assets/scss/variables";
+
+/*#region rtl*/
+::ng-deep [dir="rtl"] {
+  table {
+    width: 100%;
+    text-align: right;
+
+    td {
+      padding: 8px 0px;
+    }
+  }
+
+  .mat-column-small-width {
+    width: 35px;
+  }
+
+  .id-col-width {
+    width: 80px;
+  }
+  .name-col-width {
+    width: 180px;
+  }
+  .address-col-width {
+    width: 300px;
+  }
+  .menu-width{
+    min-width: 80px;
+  }
+
+  .add-scroll {
+    max-height: 73vh;
+    overflow: auto;
+  }
+
+  .pagination {
+    position: absolute;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+
+    .mat-paginator-range-label {
+      direction: ltr !important;
+    }
+  }
+
+  .mat-paginator {
+    border-radius: 0 0 10px 10px;
+  }
+
+  .no-white-space {
+    white-space: nowrap;
+  }
+}
+
+/*#endregion rtl*/
+/*#region ltr*/
+// ::ng-deep [dir="ltr"] {
+//   table {
+//     width: 100%;
+//     text-align: left;
+
+//     td {
+//       padding: 8px 10px;
+//     }
+//   }
+
+//   .mat-column-small-width {
+//     width: 35px;
+//   }
+
+//   .id-col-width {
+//     width: 45px;
+//   }
+
+
+//   .add-scroll {
+//     max-height: 73vh;
+//     overflow: auto;
+//   }
+
+//   .pagination {
+//     position: absolute;
+//     width: 100%;
+//     left: 0;
+//     bottom: 0;
+
+//     .mat-paginator-range-label {
+//       direction: rtl !important;
+//     }
+//   }
+
+//   .mat-paginator {
+//     border-radius: 0 0 10px 10px;
+//   }
+
+//   .no-white-space {
+//     white-space: nowrap;
+//   }
+// }
+
+.page-loaded {
+  app-layout {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+}
+
+/*#endregion ltr*/
+.delete-btn {
+  color: red;
+}
+
+.element-row:not(.expanded):hover {
+  background: #f5f5f5;
+}
+
+
+
+
+
+.delete-btn {
+  color: red;
+}
+
+.element-row:not(.expanded):hover {
+  background: #f5f5f5;
+}
+
+.node .hover-display {
+  display: none;
+}
+
+.node:hover .hover-display {
+  display: block;
+}
+
+
+.mat-row.hovered {
+  cursor: pointer;
+  background-color: #bfd7ea;
+}
+
+.mat-row.highlighted {
+  background: #aecfd6;
+}
