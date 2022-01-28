@@ -1,0 +1,81 @@
+<div class="mb-1" fxLayout="column" fxFill>
+    <form [formGroup]="headerForm" (ngSubmit)="submit(headerForm)">
+      <div fxLayout="row" fxLayoutGap="10px">
+  
+        <mat-form-field fxFlex="20%" class="my-2 input-size" appearance="outline" color="primary">
+          <mat-label>شماره بچ (batch)</mat-label>
+          <input matInput type="number" placeholder="شماره بچ : 1234..." #batchNumber
+            formControlName="batchNumber" />
+          <mat-error *ngIf="errorHandling('batchNumber', 'required')">
+            وارد کردن شماره بچ اجباری است
+          </mat-error>
+          <!-- <mat-hint>Hint</mat-hint> -->
+        </mat-form-field>
+        <mat-form-field fxFlex="40%" class="my-2 w-100" appearance="outline">
+          <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect">
+            <mat-select-trigger>
+              {{ personSelect.value?.name }}
+            </mat-select-trigger>
+            <mat-option>
+              <ngx-mat-select-search [formControl]="personFilterCtrl" placeholderLabel="جستجو..."
+                noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let person of filterPerson | async ;let i=index;" [value]="person">
+              <!-- <span>{{i}}</span> -->
+              <span> {{person.name}}</span>
+              <!-- <span>{{person.mobile}}</span> -->
+              <!-- <div fxLayout="row" fxLayoutAlign="space-between">
+                              <span> {{person.name}}</span>
+                              <span>{{person.mobile}}</span>
+                          </div> -->
+              <!-- {{person.name}}---{{person.mobile}} -->
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="errorHandling('personSelect', 'required')">
+            انتخاب شخص اجباری است
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex="40%" class="my-2 w-100" appearance="outline">
+          <mat-select placeholder="انبار" #stockSelect formControlName="stockSelect">
+            <mat-select-trigger>
+              {{ stockSelect.value?.name }}
+            </mat-select-trigger>
+            <mat-option>
+              <ngx-mat-select-search [formControl]="stockFilterCtrl" placeholderLabel="جستجو..."
+                noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let stock of filterstock | async ;let i=index;" [value]="stock">
+              {{stock.name}}
+              <!-- <div fxLayout="row" fxLayoutAlign="space-between">
+                                <div>
+                                    <span class="ms-2">{{i+1}}</span>
+                                    <span> {{stock.name}}</span>
+                                </div>
+                                <span>{{stock.address}}</span>
+                            </div> -->
+            </mat-option>
+  
+          </mat-select>
+          <mat-error *ngIf="errorHandling('stockSelect', 'required')">
+            انتخاب انبار اجباری است
+          </mat-error>
+        </mat-form-field>
+  
+  
+      </div>
+      <mat-form-field class="w-100 mt-3" appearance="outline" color="primary" style="height: 200px">
+        <mat-label>توضیحات</mat-label>
+        <textarea matInput placeholder="توضیحات" #description formControlName="description"></textarea>
+      </mat-form-field>
+  
+      <div class="text-left mt-3" align="end">
+        <button class="mx-2" mat-flat-button mat-Stroked-button color="primary" [disabled]="headerForm.invalid"
+          (click)="nextStep()">
+          <span color="primary">ثبت ریز اقلام</span>
+  
+        </button>
+  
+      </div>
+    </form>
+  </div>
+  
