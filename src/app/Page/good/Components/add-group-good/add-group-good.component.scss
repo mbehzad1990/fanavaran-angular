@@ -1,0 +1,40 @@
+@import "/src/assets/scss/mat-color-palette";
+@import "/src/assets/scss/variables";
+/*#region rtl*/
+::ng-deep [dir="rtl"] {
+  .good-list {
+    border-radius: $radius-small;
+    background-color: $white;
+    &_header {
+      padding: 8px 8px 8px 0;
+      margin-bottom: 8px;
+
+      &_action-btn {
+        button {
+          margin-left: 1.2rem;
+
+          &:last-child {
+            margin-left: 0;
+            position: relative;
+          }
+
+        }
+      }
+
+    }
+    &_list {
+        margin-right: 16px;
+  
+        p.mat-h3 {
+          font-weight: 500 !important;
+          font-size: 16px !important;
+          color: mat-color($cornflower-palette, 400);
+        }
+      }
+  }
+}
+
+/*#endregion rtl*/
+.delete-btn {
+  color: red;
+}
