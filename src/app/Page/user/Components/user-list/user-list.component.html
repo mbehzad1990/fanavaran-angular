@@ -1,0 +1,22 @@
+<div fxLayout>
+    <mat-card class="user-list position-relative card-height" fxFlex="100%">
+      <div fxLayout="column">
+        <!-- menu -->
+        <div class="user-list_header" fxLayout="row" fxLayoutAlign="space-between">
+          <div class="user-list_header_main-btn" fxLayout="row">
+            <button mat-flat-button class="ms-3" color="primary" (click)="addUser()">
+              <i class="icon-plus-square icon-20px _white-color ms-1"></i>
+              <span>افزودن کاربر</span>
+            </button>
+          </div>
+        </div>
+        <!-- menu -->
+  
+        <!-- DataTable -->
+       <app-user-table></app-user-table>
+        <!-- DataTable -->
+  
+      </div>
+    </mat-card>
+  </div>
+  

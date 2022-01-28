@@ -22,6 +22,9 @@ import { AddEditUnitModalComponent } from './Modals/_Unit/add-edit-unit-modal/ad
   imports: [
     CommonModule,
     MaterialModule
+  ],
+  exports:[
+    ResultMessageComponent
   ]
 })
 export class ComponentsModule { }

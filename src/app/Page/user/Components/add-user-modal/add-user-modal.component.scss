@@ -1,0 +1,56 @@
+@import "/src/assets/scss/mat-color-palette.scss";
+@import "/src/assets/scss/variables";
+/*#region rtl*/
+::ng-deep[dir="rtl"] {
+  .add-user-modal {
+    min-width: 500px;
+    min-height: 400px;
+  }
+
+  .data-container {
+    min-height: 400px;
+
+    &_img {
+      height: 100px;
+      width: 100px;
+    }
+
+    &_info {
+      margin-right: 16px;
+
+      p.mat-h3 {
+        font-weight: 500 !important;
+        font-size: 16px !important;
+        color: mat-color($cornflower-palette, 400);
+      }
+    }
+  }
+}
+/*#endregion rtl*/
+/*#region ltr*/
+// ::ng-deep[dir="ltr"] {
+//   .add-user-modal {
+//     min-width: 700px;
+//     min-height: 400px;
+//   }
+
+//   .data-container {
+//     min-height: 300px;
+
+//     &_img {
+//       height: 100px;
+//       width: 100px;
+//     }
+
+//     &_info {
+//       margin-left: 16px;
+
+//       p.mat-h3 {
+//         font-weight: 500 !important;
+//         font-size: 16px !important;
+//         color: mat-color($cornflower-palette, 400);
+//       }
+//     }
+//   }
+// }
+/*#endregion ltr*/

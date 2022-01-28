@@ -1,0 +1,56 @@
+<div class="add-user-modal modal-container">
+    <form [formGroup]="adduserForm" (ngSubmit)="
+        addUser(fullname.value, username.value, password.value, email.value)">
+      <div>
+        <p class="mat-h2 modal-title">افزودن کاربر</p>
+      </div>
+      <div fxLayout="column" class="data-container mt-2">
+        <div fxLayout="column" class="mt-3">
+          <mat-form-field class="my-2 input-size" appearance="outline" color="primary">
+            <mat-label>نام و نام خانوادگی</mat-label>
+            <input matInput placeholder="آقا/خانم ..." #fullname formControlName="fullname" />
+            <mat-error *ngIf="errorHandling('fullname', 'required')">
+              وارد کردن نام اجباری است
+            </mat-error>
+            <!-- <mat-hint>Hint</mat-hint> -->
+          </mat-form-field>
+          <mat-form-field class="my-2 input-size" appearance="outline" color="primary">
+            <mat-label>نام کاربری</mat-label>
+            <input matInput placeholder="نام کاربری جهت ورود به سیستم" #username formControlName="username" />
+            <mat-error *ngIf="errorHandling('username', 'required')">
+              آدرس IP معتبر نیست
+            </mat-error>
+            <!-- <mat-hint>Hint</mat-hint> -->
+          </mat-form-field>
+          <mat-form-field class="my-2 input-size" appearance="outline" color="primary">
+            <mat-label>رمز ورود</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="رمز ورود به سیستم" #password
+              formControlName="password" />
+            <mat-icon class="cursor-pointer" matSuffix (click)="hidePassword = !hidePassword">
+              {{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+            <mat-hint>ترکیبی از حروف و عدد</mat-hint>
+            <mat-error *ngIf="errorHandling('password', 'required')">
+              آدرس IP معتبر نیست
+            </mat-error>
+            <!-- <mat-hint>Hint</mat-hint> -->
+          </mat-form-field>
+          <mat-form-field class="my-2 input-size" appearance="outline" color="primary">
+            <mat-label>ایمیل</mat-label>
+            <input matInput type="email" placeholder="MyEmail@email.com" #email formControlName="email" />
+            <!-- <mat-hint>Hint</mat-hint> -->
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <app-result-message *ngIf="isFinishOperation" [ResultType]="messageResultType" [resultSmessageText]="resultMessage">
+      </app-result-message>
+      <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close class="ms-2 curve-btn">انصراف</button>
+        <button mat-raised-button color="primary" class="curve-btn" [disabled]="adduserForm.invalid">
+          اعمال تغییرات
+        </button>
+      </div>
+    </form>
+  </div>
+  
