@@ -1,0 +1,55 @@
+
+  <form [formGroup]="pageForm" (ngSubmit)="add(pageForm)">
+    <div fxLayout fxLayoutGap="6px">
+  <mat-form-field class="mt-1 input-size" appearance="outline" color="primary">
+    <mat-label>نام کالا</mat-label>
+    <input matInput placeholder="نام کالا ..." #name  formControlName="name"/>
+    <mat-error *ngIf="errorHandling('name', 'required')">
+              وارد کردن نام اجباری است
+            </mat-error>
+  </mat-form-field>
+  <mat-form-field class="mt-1 input-size" appearance="outline" color="primary" >
+    <mat-label>نام لاتین کالا</mat-label>
+    <input matInput placeholder="ABC ..." #latinName formControlName="latinName"/>
+  </mat-form-field>
+  <mat-form-field class="mt-1 input-size" appearance="outline"
+    [floatLabel]="isLoading || (!isOpen && unit.value === null) ? 'never' : 'auto'">
+    <mat-label>واحد سنجش</mat-label>
+    <mat-select required #unit placeholder="واحد سنجش" (openedChange)="openChanged($event)" formControlName="unit"> 
+      <ng-container
+        *ngIf="units !== null   && ((isOpen && !isLoading) || (!unit.panelOpen && unit.value !== null)); else loading">
+        <div fxLayout="row" fxFill *ngIf="units.length==0;else data">
+          <mat-option>
+            <span>واحد سنجشی ثبت نشده است</span>
+          </mat-option>
+        </div>
+        <ng-template #data>
+          <mat-option *ngFor="let item of units" [value]="item.id">
+            {{item.name}} </mat-option>
+        </ng-template>
+
+      </ng-container>
+      <ng-template #loading>
+        <mat-option disabled>
+          <div class="deferred-select-placeholder-container">
+            <span> در حال دریافت اطلاعات ...</span>
+            <mat-spinner class="spinner" diameter="20"></mat-spinner>
+          </div>
+        </mat-option>
+      </ng-template>
+    </mat-select>
+    <mat-error *ngIf="errorHandling('unit', 'required')">
+      وارد کردن نام اجباری است
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="w-35 mt-1 input-size" appearance="outline" color="primary">
+    <mat-label>توضیحات</mat-label>
+    <input matInput placeholder="توضیحات ..." #dec formControlName="dec"/>
+  </mat-form-field>
+  <button mat-flat-button color="primary" class="button-size" [disabled]="pageForm.invalid">
+    <i class="icon-plus-square icon-19px _white-color"></i>
+    <span class="me-1">افزودن به لیست</span>
+  </button>
+  </div>
+</form>
+
