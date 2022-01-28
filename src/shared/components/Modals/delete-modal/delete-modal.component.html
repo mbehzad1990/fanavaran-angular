@@ -1,0 +1,19 @@
+<div class="delete-modal modal-container">
+    <div>
+      <p class="mat-h2 m-0 modal-title _error-color">{{title}}</p>
+      <!-- <p class="mat-h2 m-0 modal-title _error-color">حذف دستگاه </p> -->
+    </div>
+    <div fxLayout="column">
+      <!-- <div fxLayout="column" class="data-container"> -->
+      <!-- <p>از حذف دستگاه اطمینان دارید؟</p> -->
+      <p>از حذف <strong>{{objectName}}</strong> اطمینان دارید؟</p>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close class="ms-2 curve-btn">انصراف </button>
+      <button mat-raised-button color="warn" [mat-dialog-close]="true" class="curve-btn">
+        حذف
+      </button>
+  
+    </div>
+  </div>
+  

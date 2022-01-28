@@ -1,0 +1,32 @@
+@import "/src/assets/scss/mat-color-palette.scss";
+@import "/src/assets/scss/variables";
+/*#region rtl*/
+::ng-deep[dir="rtl"] {
+  .add-stock-modal {
+    min-width: 450px;
+    min-height: 280px;
+  }
+
+  .data-container {
+    min-height: 300px;
+
+    &_img {
+      height: 100px;
+      width: 100px;
+    }
+
+    &_info {
+      margin-right: 16px;
+
+      p.mat-h3 {
+        font-weight: 500 !important;
+        font-size: 16px !important;
+        color: mat-color($cornflower-palette, 400);
+      }
+    }
+  }
+}
+
+.description-field-height{
+  height: 100px;
+}
