@@ -1,0 +1,27 @@
+<mat-toolbar>
+    <div fxLayout fxLayoutAlign="space-between center" fxFill>
+      <div fxLayout fxLayoutAlign="center center">
+        <button mat-icon-button>
+  
+          <mat-icon> <i class="icon-bell icon-20px"></i>
+          </mat-icon>
+        </button>
+  
+        <!-- <div>
+          <button mat-icon-button color="primary" (click)="changeLangage('fa')" [disabled]="direction==='rtl'">Fa</button>
+          <button mat-icon-button color="primary" (click)="changeLangage('en')" [disabled]="direction==='ltr'">En</button>
+        </div> -->
+      </div>
+      <div class="abs-section">
+        <span class="mat-body">{{weekdaysss}}</span>
+        <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+          <i class="icon-settings icon-20px"></i>
+        </button> -->
+        <button mat-icon-button color="primary" class="mx-3" matTooltip="خروج از سیستم" (click)="logout()">
+          <span class="icon-log-out icon-20px"></span>
+        </button>
+      </div>
+    </div>
+  
+  </mat-toolbar>
+  

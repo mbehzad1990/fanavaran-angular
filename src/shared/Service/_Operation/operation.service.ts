@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, shareReplay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { RegisterOperationVm } from 'src/shared/Domain/ViewModels/_Operation/register-operation-vm';
@@ -13,7 +14,7 @@ import { FacadService } from '../_Core/facad.service';
 export class OperationService implements OnDestroy {
   //#region private
   private apiVersion = '1';
-  private baseUrl = `api/v${this.apiVersion}/Operation/`;
+  private baseUrl = environment.serverUrl+ `/api/v${this.apiVersion}/Operation/`;
   private _unsubscribe: Subscription[] = [];
 
   // private _user$ = new BehaviorSubject<User[]>([]);

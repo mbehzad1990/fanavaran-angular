@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, shareReplay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { Customer } from 'src/shared/Domain/Models/_Customer/customer';
@@ -14,7 +15,7 @@ import { FacadService } from '../_Core/facad.service';
 export class CustomerService implements OnDestroy {
   //#region private
   private apiVersion = '1';
-  private baseUrl = `api/v${this.apiVersion}/Customer/`;
+  private baseUrl = environment.serverUrl+ `/api/v${this.apiVersion}/Customer/`;
   private _unsubscribe: Subscription[] = [];
 
   private _items$ = new BehaviorSubject<Customer[]>([]);
@@ -56,6 +57,7 @@ export class CustomerService implements OnDestroy {
   //#region Get
   getAll() {
     this._isLoading$.next(true);
+    debugger
     const sb = this.http.get<ResultDto<Customer[]>>(this.baseUrl + "GettAll")
       .pipe(
         map((result: ResultDto<Customer[]>) => {

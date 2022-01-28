@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, shareReplay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { GoodDetailsVm } from 'src/shared/Domain/ViewModels/_Good/good-details-vm';
@@ -15,7 +16,7 @@ import { FacadService } from '../_Core/facad.service';
 export class GoodService implements OnDestroy {
   //#region private
   private apiVersion = '1';
-  private baseUrl = `api/v${this.apiVersion}/Good/`;
+  private baseUrl = environment.serverUrl+ `/api/v${this.apiVersion}/Good/`;
   private _unsubscribe: Subscription[] = [];
 
   private _items$ = new BehaviorSubject<GoodDetailsVm[]>([]);

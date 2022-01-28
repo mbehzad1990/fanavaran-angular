@@ -17,6 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private _coreService:FacadService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    debugger
     return next.handle(this.setTokenRequest(request)).pipe(
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {

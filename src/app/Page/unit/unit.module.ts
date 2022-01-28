@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UnitComponent } from './unit.component';
 
+import { UnitRoutingModule } from './unit-routing.module';
+import { UnitComponent } from './unit.component';
 
 
 @NgModule({
@@ -9,7 +10,8 @@ import { UnitComponent } from './unit.component';
     UnitComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    UnitRoutingModule
   ]
 })
 export class UnitModule { }

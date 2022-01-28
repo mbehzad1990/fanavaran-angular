@@ -1,0 +1,29 @@
+<mat-drawer-container  *ngIf="Reinitprop" autosize [dir]="direction" >
+    <mat-drawer #drawer mode="side" disableClose="false" opened="true">
+      <app-side-nav [isOpen]="isExpanded"></app-side-nav>
+    </mat-drawer>
+    <!-- Toolbar -->
+    <div class="sticky-toolbar"  [ngClass]="{'change-width' : !isExpanded}">
+      <app-toolbar (enlang)="changeLang($event)"></app-toolbar>
+      <!-- <app-toolbar (enlang)="changeLang($event)" (isExpand)="changeNavSize($event)" ></app-toolbar> -->
+  
+    </div>
+    <!-- Toolbar -->
+  
+    <!-- Main Content -->
+    <div class="main-container">
+      <div class="pb-2 px-2 mb-2" fxLayout="row" fxLayoutAlign="space-between">
+  
+          <span class="mat-headline"> {{titleComponenet}}</span>
+  
+          <!-- <xng-breadcrumb > </xng-breadcrumb> -->
+  
+      </div>
+      <div >
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <!-- Main Content -->
+  </mat-drawer-container>
+  
+  
