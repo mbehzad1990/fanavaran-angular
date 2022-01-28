@@ -1,0 +1,23 @@
+<mat-card class="section-container ">
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step #header [label]="setTitle(formType)" completed=false editable=true state="info">
+        <div fxLayout="column" fxFill>
+          <p>{{setContainerTitle(formType)}}</p>
+          <app-remittance-header [nextStepper]="header" [stockOperationType]="formType"
+            (headerInfo)="getHeaderInfo($event)"></app-remittance-header>
+        </div>
+      </mat-step>
+      <mat-step label="ثبت ریز اقلام" completed=false #detail state="list">
+        <span>dasdasdasdasdasdasdasdasdasd</span>
+      </mat-step>
+  
+      <ng-template matStepperIcon="info">
+        <mat-icon>insert_drive_file</mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="list">
+        <mat-icon>format_list_numbered_rtl</mat-icon>
+      </ng-template>
+    </mat-horizontal-stepper>
+  
+  </mat-card>
+  
