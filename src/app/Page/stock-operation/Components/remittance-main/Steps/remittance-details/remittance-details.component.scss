@@ -1,0 +1,14 @@
+@import "../../../../../../../assets/scss/mat-color-palette";
+@import "../../../../../../../assets/scss/variables";
+
+.header {
+    background-color: #f3feff;
+    border-radius: $radius-small ;
+    text-align: center;
+    // border: 1px solid mat-color($semantic-palette , success);
+    margin-bottom: 1rem;
+    width: fit-content;
+    padding: .5rem 1rem;
+    color:  mat-color($semantic-palette , success);
+    display: inline-flex;
+  }

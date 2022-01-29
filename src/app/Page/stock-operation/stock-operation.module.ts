@@ -7,6 +7,7 @@ import { RemittanceMainComponent } from './Components/remittance-main/remittance
 import { RemittanceDetailsComponent } from './Components/remittance-main/Steps/remittance-details/remittance-details.component';
 import { RemittanceHeaderComponent } from './Components/remittance-main/Steps/remittance-header/remittance-header.component';
 import { SharedModule } from 'src/shared/shared.module';
+import { AddDetailsComponent } from './Components/remittance-main/Steps/remittance-details/add-details/add-details.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SharedModule } from 'src/shared/shared.module';
     StockOperationComponent,
     RemittanceMainComponent,
     RemittanceDetailsComponent,
-    RemittanceHeaderComponent
+    RemittanceHeaderComponent,
+    AddDetailsComponent
   ],
   imports: [
     CommonModule,

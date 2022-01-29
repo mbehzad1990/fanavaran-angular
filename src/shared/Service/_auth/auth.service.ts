@@ -59,7 +59,7 @@ export class AuthService {
   constructor(private http: HttpClient,private router: Router) {}
 
   login(loginModel: LoginInputVm) {
-    debugger
+    
     this._isLoading$.next(true);
     return this.http
       .post<ResultDto<LoginResponsDto>>(this.baseUrl + 'Login', loginModel)

@@ -24,11 +24,11 @@ export class AddGroupGoodComponent implements OnInit,OnDestroy {
   pageForm!: FormGroup;
   isFinishOperation!: boolean;
   isLoading$!: Observable<boolean>;
-  isSetManualId: boolean = false;
-
+  
   isLoading = false;
   isOpen = false;
-
+  
+  isSetManualId: boolean = false;
   units: Unit[] = [];
   unit_selected!:Unit;
 
@@ -84,13 +84,7 @@ export class AddGroupGoodComponent implements OnInit,OnDestroy {
     if (index !== -1) {
       data.splice(index, 1);
       this.dataSource.data = data;
-    }
-
-    // let index=this.listOfGood.findIndex(p=>p==deleteItem);
-    // const data=this.listOfGood.splice(index,1);
-    // this.dataSource.data= [];
-    // this.dataSource.data=data;
-    
+    }   
   }
   getItem(_item:RegisterGoodVm){
     let isExist=false;
@@ -129,7 +123,7 @@ export class AddGroupGoodComponent implements OnInit,OnDestroy {
       model.description='';
       goodList.push(model);
     })
-    debugger
+    
     const sb=this._coreService.good.addlist(goodList).subscribe(result => {
       if (result?.isSuccess) {
         this._coreService.notification.showNotiffication(

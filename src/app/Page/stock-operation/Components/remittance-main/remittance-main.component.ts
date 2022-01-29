@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { HeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/header-info-dto';
 import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { RegisterStockOperationVm } from 'src/shared/Domain/ViewModels/_StockOperation/register-stock-operation-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
@@ -19,6 +20,7 @@ private subscriptions: Subscription[] = [];
 //#region Public field
 formType!:StockOperationType;
 headerInfo!:RegisterStockOperationVm;
+headerInfoDto!:HeaderInfoDto;
 //#endregion
 
 //#region Input & OutPut & Other
@@ -66,6 +68,9 @@ headerInfo!:RegisterStockOperationVm;
 
  getHeaderInfo(_headerInfo:RegisterStockOperationVm){
    this.headerInfo=_headerInfo;
+ }
+ getHeaderDto(_headerInfo:HeaderInfoDto){
+   this.headerInfoDto=_headerInfo;
  }
 
  ngOnDestroy(): void {

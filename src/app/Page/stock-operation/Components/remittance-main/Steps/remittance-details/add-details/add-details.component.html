@@ -1,0 +1,57 @@
+<form [formGroup]="pageForm" (ngSubmit)="add(pageForm)">
+  <div fxLayout fxLayoutGap="6px">
+    <mat-form-field class="mt-1 input-size" appearance="outline">
+      <mat-select placeholder="کالا" #goodCtrl formControlName="goodCtrl" disableOptionCentering>
+        <mat-select-trigger>
+          {{ goodCtrl.value?.name }}
+        </mat-select-trigger>
+        <mat-option>
+          <ngx-mat-select-search [formControl]="goodFilterCtrl" placeholderLabel="جستجو..."
+            noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let good of filterGoods | async ;let i=index;" [value]="good">
+          {{good.name}}
+          <!-- <div fxLayout="row" fxLayoutAlign="space-between">
+                                    <div>
+                                        <span class="ms-2">{{i+1}}</span>
+                                        <span> {{stock.name}}</span>
+                                    </div>
+                                    <span>{{stock.address}}</span>
+                                </div> -->
+        </mat-option>
+
+      </mat-select>
+      <mat-error *ngIf="errorHandling('goodCtrl', 'required')">
+        انتخاب انبار اجباری است
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mt-1 input-size" appearance="outline" color="primary">
+      <mat-label>تعداد</mat-label>
+      <input matInput placeholder="1 ..." #count formControlName="count"  [pattern]="numberPattern"/>
+      <mat-error *ngIf="errorHandling('count', 'required')">
+       وارد کردن تعداد اجباری است
+      </mat-error>
+      <mat-error *ngIf="errorHandling('count', 'pattern')">
+        عدد وارد کنید
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="mt-1 input-size" appearance="outline" color="primary">
+        <mat-label>قیمت</mat-label>
+        <input matInput placeholder="1,000" #price formControlName="price"  PersianCurency/>
+        <mat-error *ngIf="errorHandling('price', 'required')">
+            انتخاب انبار اجباری است
+          </mat-error>
+      </mat-form-field>
+
+    <mat-form-field class="w-35 mt-1 input-size" appearance="outline" color="primary">
+      <mat-label>توضیحات</mat-label>
+      <input matInput placeholder="توضیحات ..." #dec formControlName="dec" />
+    </mat-form-field>
+    <button mat-flat-button color="primary" class="button-size" [disabled]="pageForm.invalid" >
+      <i class="icon-plus-square icon-19px _white-color"></i>
+      <span class="me-1">افزودن به لیست</span>
+    </button>
+  </div>
+</form>

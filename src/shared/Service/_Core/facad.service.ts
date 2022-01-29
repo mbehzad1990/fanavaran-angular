@@ -10,6 +10,7 @@ import { PersianCalenderService } from '../_utility/persian-calender.service';
 import { StockService } from '../_stock/stock.service';
 import { UnitService } from '../_unit/unit.service';
 import { GoodService } from '../_good/good.service';
+import { OperationService } from '../_Operation/operation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -99,5 +100,12 @@ export class FacadService {
       this._good = this.injector.get(GoodService);
     }
     return this._good;
+  }
+  private _Operation!: OperationService;
+  public get Operation(): OperationService {
+    if (!this._Operation) {
+      this._Operation = this.injector.get(OperationService);
+    }
+    return this._Operation;
   }
 }
