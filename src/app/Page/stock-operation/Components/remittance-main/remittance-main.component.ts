@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/header-info-dto';
 import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { RegisterStockOperationVm } from 'src/shared/Domain/ViewModels/_StockOperation/register-stock-operation-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
+import { RemittanceHeaderComponent } from './Steps/remittance-header/remittance-header.component';
 
 @Component({
   selector: 'app-remittance-main',
@@ -21,9 +22,11 @@ private subscriptions: Subscription[] = [];
 formType!:StockOperationType;
 headerInfo!:RegisterStockOperationVm;
 headerInfoDto!:HeaderInfoDto;
+_operationResult:boolean=false;
 //#endregion
 
 //#region Input & OutPut & Other
+@ViewChild('stepHeader') stepHeader!:RemittanceHeaderComponent;
 //#endregion
  constructor(private rout:ActivatedRoute,private _coreService:FacadService) { }
 
@@ -72,7 +75,18 @@ headerInfoDto!:HeaderInfoDto;
  getHeaderDto(_headerInfo:HeaderInfoDto){
    this.headerInfoDto=_headerInfo;
  }
-
+ onStepChange(event: any): void {
+  console.log(event.selectedIndex);
+  if( this._operationResult){
+    this.stepHeader.resetStep();
+  }
+}
+rest(){
+  this.stepHeader.resetStep();
+}
+getOperationStatus(operationResult:boolean){
+  this._operationResult=operationResult;
+}
  ngOnDestroy(): void {
    this.subscriptions.forEach(sb=>sb.unsubscribe());
  }

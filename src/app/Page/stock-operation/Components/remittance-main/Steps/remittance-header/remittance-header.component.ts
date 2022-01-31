@@ -164,7 +164,9 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
     this.headerInfo.emit(_headerInfo);
     this.headerInfoDto.emit(_headerDto);
   }
-
+  resetStep(){
+    this.headerForm.reset();
+  }
 
 
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {

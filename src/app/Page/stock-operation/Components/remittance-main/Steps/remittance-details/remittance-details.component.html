@@ -24,7 +24,7 @@
   <div fxLayout="row" fxFill fxLayoutGap="10px">
     <app-add-details class="w-100" (itemForAdd)="getItem($event)"></app-add-details>
   </div>
-  <div fxLayout="column" fxFlex="100%"> 
+  <div fxLayout="column" fxFlex="100%">
     <div class="mb-1" fxFlex="100%">
       <!-- <p class="mat-subheading-1 text-right"></p> -->
       <table mat-table [dataSource]="dataSource" class="w-100 text-right">
@@ -34,36 +34,45 @@
           <td class=" mat-column-small-width text-right" mat-cell *matCellDef="let element;index as i;">
             {{i+1}}
           </td>
+          <td mat-footer-cell *matFooterCellDef> جمع کل : </td>
         </ng-container>
         <!-- name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class=" text-right">نام کالا</th>
           <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodName}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <!-- count Column -->
         <ng-container matColumnDef="count">
           <th mat-header-cell *matHeaderCellDef class="text-right">تعداد</th>
           <td mat-cell class="text-right" *matCellDef="let element"> {{element.count}}</td>
+          <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalCount() }} </strong> </td>
+
         </ng-container>
         <!-- price Column -->
         <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef class="text-right">فی</th>
-          <td mat-cell class="text-right" *matCellDef="let element" > {{element.price| persianCurencyPipe}}</td>
+          <th mat-header-cell *matHeaderCellDef class="text-right">فی(ریال)</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{element.price| persianCurencyPipe}}</td>
+          <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalFi() | persianCurencyPipe}} </strong> ریال </td>
         </ng-container>
         <!-- amount Column -->
         <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef class="text-right">کل</th>
-          <td mat-cell class="text-right" *matCellDef="let element" PersianCurency> {{element.amount | persianCurencyPipe}}</td>
+          <th mat-header-cell *matHeaderCellDef class="text-right">کل(ریال)</th>
+          <td mat-cell class="text-right" *matCellDef="let element" PersianCurency>
+            {{element.amount | persianCurencyPipe}}</td>
+          <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalCost() | persianCurencyPipe}} </strong> ریال </td>
         </ng-container>
         <!-- unitName Column -->
         <ng-container matColumnDef="unitName">
           <th mat-header-cell *matHeaderCellDef class="text-right">واحد</th>
           <td mat-cell class="text-right" *matCellDef="let element"> {{element.unitName}}</td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <!-- desc Column -->
         <ng-container matColumnDef="desc">
           <th mat-header-cell *matHeaderCellDef class="text-right">توضیحات</th>
           <td mat-cell class="text-right" *matCellDef="let element"> {{element.description}}</td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <!-- (click)="removeAll()" -->
         <ng-container matColumnDef="delete">
@@ -75,24 +84,34 @@
             <button mat-icon-button matTooltip="حذف این رکورد">
               <i class="icon-trash-2 icon-20px delete-btn" (click)="deletItemFromList(element)"></i>
             </button>
+
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
       </table>
+
+
 
     </div>
     <div class="text-left mt-3">
-        <button mat-raised-button color="primary"  (click)="addGoods()"
-          [disabled]="!(dataSource.data.length!=0)">
-          <span fxLayout fxLayoutAlign="center center">
-            <span>ذخیره و تایید</span>
-            <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
-            </mat-spinner>
-          </span>
-        </button>
+      <button mat-raised-button color="primary" (click)="addGoods()"
+        [disabled]="!(dataSource.data.length!=0) && _operationComplete">
+        <span fxLayout fxLayoutAlign="center center">
+          <span>ذخیره و تایید</span>
+          <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
+          </mat-spinner>
+        </span>
+      </button>
+      <div *ngIf="_operationComplete">
+        <button mat-raised-button color="primary" (click)=" newOperation();stepper.reset()">جدید </button>
       </div>
+
+
+    </div>
   </div>
 
 

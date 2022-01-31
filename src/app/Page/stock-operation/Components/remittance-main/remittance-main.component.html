@@ -1,14 +1,15 @@
 <mat-card class="section-container ">
-    <mat-horizontal-stepper linear #stepper>
+    <mat-horizontal-stepper linear #stepper (selectionChange)="onStepChange($event)">
       <mat-step #header [label]="setTitle(formType)" completed=false editable=true state="info">
         <div fxLayout="column" fxFill>
           <p>{{setContainerTitle(formType)}}</p>
-          <app-remittance-header [nextStepper]="header" [stockOperationType]="formType"
+          <app-remittance-header [nextStepper]="header" [stockOperationType]="formType" #stepHeader 
+        
             (headerInfo)="getHeaderInfo($event)" (headerInfoDto)="getHeaderDto($event)"></app-remittance-header>
         </div>
       </mat-step>
       <mat-step label="ثبت ریز اقلام" completed=false #detail state="list">
-        <app-remittance-details [headerInfoDto]="headerInfoDto" [headerInfo]="headerInfo"></app-remittance-details>
+        <app-remittance-details [headerInfoDto]="headerInfoDto" [headerInfo]="headerInfo" [stepper]="stepper" (OperationComplete)="getOperationStatus($event)"></app-remittance-details>
       </mat-step>
   
       <ng-template matStepperIcon="info">

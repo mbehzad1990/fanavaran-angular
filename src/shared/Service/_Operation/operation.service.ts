@@ -55,7 +55,7 @@ export class OperationService implements OnDestroy {
     // Post
     RegisterOperation(opModel: RegisterOperationVm) {
       this._isLoading$.next(true);
-      return this.http.post<ResultDto<boolean>>(this.baseUrl + "AddStock", opModel).pipe(
+      return this.http.post<ResultDto<boolean>>(this.baseUrl + "RegisterOperation", opModel).pipe(
         map((result: ResultDto<boolean>) => {
           if (result.isSuccess) {
           }
