@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
   templateUrl: './add-edit-customer-modal.component.html',
   styleUrls: ['./add-edit-customer-modal.component.scss']
 })
-export class AddEditCustomerModalComponent implements OnInit {
+export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
 
  //#region Private
  private subscriptions: Subscription[] = [];
@@ -40,6 +40,10 @@ export class AddEditCustomerModalComponent implements OnInit {
    public dialogRef: MatDialogRef<AddEditCustomerModalComponent>,
    @Inject(MAT_DIALOG_DATA) public data: RequestModalDto<Customer>
  ) { }
+  ngOnDestroy(): void {
+  
+    this.subscriptions.forEach(sb=>sb.unsubscribe());
+  }
 
  ngOnInit(): void {
    this.setTitle();

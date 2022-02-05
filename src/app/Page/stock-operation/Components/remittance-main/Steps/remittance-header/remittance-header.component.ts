@@ -19,6 +19,8 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
 export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   //#region Private field
   private subscriptions: Subscription[] = [];
+  private _headerDto!: HeaderInfoDto;
+  private _headerInfo!: RegisterStockOperationVm;
   //#endregion
 
   //#region Public field
@@ -140,32 +142,39 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   }
 
   nextStep(){
+    this.headerInfo.emit(this._headerInfo);
+    this.headerInfoDto.emit(this._headerDto);
     this.nextStepper.completed = true;
     this.nextStepper._stepper.next();
+
   }
 
   submit(form: FormGroup){
     
-    let _headerInfo=new RegisterStockOperationVm();
-    _headerInfo.bacthNumber=form.value.batchNumber;
-    _headerInfo.description=form.value.description;
-    _headerInfo.personId=form.value.personSelect.id;
-    _headerInfo.stockId=form.value.stockSelect.id;
-    _headerInfo.stockOperationType=this.stockOperationType;
-    _headerInfo.registerDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+     this._headerInfo=new RegisterStockOperationVm();
+     this._headerInfo.bacthNumber=form.value.batchNumber;
+     this._headerInfo.description=form.value.description;
+     this._headerInfo.personId=form.value.personSelect.id;
+     this._headerInfo.stockId=form.value.stockSelect.id;
+     this._headerInfo.stockOperationType=this.stockOperationType;
+     this._headerInfo.registerDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
     
-    let _headerDto=new HeaderInfoDto();
-    _headerDto.stockName=form.value.stockSelect.name;
-    _headerDto.personName=form.value.personSelect.name;
-    _headerDto.description=form.value.personSelect;
-    _headerDto.bachNumber=form.value.batchNumber;
-    _headerDto.registerDate=this.dateSelected;
+     this._headerDto=new HeaderInfoDto();
+     this._headerDto.stockName=form.value.stockSelect.name;
+     this._headerDto.personName=form.value.personSelect.name;
+     this._headerDto.description=form.value.personSelect;
+     this._headerDto.bachNumber=form.value.batchNumber;
+     this._headerDto.registerDate=this.dateSelected;
     // _headerInfo.registerDate=
-    this.headerInfo.emit(_headerInfo);
-    this.headerInfoDto.emit(_headerDto);
+    this.headerInfo.emit(this._headerInfo);
+    this.headerInfoDto.emit(this._headerDto);
+    this.nextStepper.completed = true;
+    this.nextStepper._stepper.next();
+
   }
   resetStep(){
     this.headerForm.reset();
+  
   }
 
 

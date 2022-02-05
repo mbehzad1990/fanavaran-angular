@@ -54,7 +54,6 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
   }
 
   getItem(_item: GoodDetailDto) {
-    debugger
     let isExist = false;
     this.listOfGood.forEach(item => {
       if (item.goodName == _item.goodName) {
@@ -122,9 +121,17 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
   newOperation(){
     this.listOfGood=[];
     this.dataSource.data=[];
+    this.headerInfoDto=new HeaderInfoDto();
+    
     this.OperationComplete.emit(this._operationComplete);
+    this._operationComplete=false;
   }
-
+  buttonStatus():boolean{
+    if(this.dataSource.data.length>0 && this._operationComplete==true){
+      return true;
+    }
+    return false;
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());

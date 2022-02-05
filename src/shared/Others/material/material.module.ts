@@ -47,6 +47,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MaterialPersianDateAdapter } from '../persian-utility/material-persian-date-adapter';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [],
@@ -96,7 +97,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angul
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    NgxSpinnerModule
   ],
   exports:[
     CommonModule,
@@ -144,7 +146,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angul
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    NgxSpinnerModule
   ],
   providers:[
     {

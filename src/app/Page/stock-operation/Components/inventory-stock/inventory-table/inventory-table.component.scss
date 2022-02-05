@@ -1,0 +1,140 @@
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 63vh;
+  overflow: auto;
+}
+
+
+
+@import "/src/assets/scss/mat-color-palette.scss";
+@import "/src/assets/scss/variables";
+
+/*#region rtl*/
+::ng-deep [dir="rtl"] {
+  table {
+    width: 100%;
+    text-align: right;
+
+    td {
+      padding: 8px 0px;
+    }
+  }
+
+  .mat-column-small-width {
+    width: 50px;
+  }
+
+  .id-col-width {
+    width: 180px;
+  }
+
+  .name-col-width {
+    width: 220px;
+  }
+
+  .unitName-col-width {
+    // width: 85px;
+  }
+
+  .count-width {
+    min-width: 220px;
+  }
+
+  .add-scroll {
+    max-height: 73vh;
+    overflow: auto;
+  }
+
+  .pagination {
+    position: absolute;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+
+    .mat-paginator-range-label {
+      direction: ltr !important;
+    }
+  }
+
+  .mat-paginator {
+    border-radius: 0 0 10px 10px;
+  }
+
+  .no-white-space {
+    white-space: nowrap;
+  }
+}
+
+/*#endregion rtl*/
+/*#region ltr*/
+::ng-deep [dir="ltr"] {
+  table {
+    width: 100%;
+    text-align: left;
+
+    td {
+      padding: 8px 0px;
+    }
+  }
+
+  .mat-column-small-width {
+    width: 35px;
+  }
+
+  .id-col-width {
+    width: 45px;
+  }
+
+
+  .add-scroll {
+    max-height: 73vh;
+    overflow: auto;
+  }
+
+  .pagination {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+
+    .mat-paginator-range-label {
+      direction: rtl !important;
+    }
+  }
+
+  .mat-paginator {
+    border-radius: 0 0 10px 10px;
+  }
+
+  .no-white-space {
+    white-space: nowrap;
+  }
+}
+
+.page-loaded {
+  app-layout {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+}
+
+/*#endregion ltr*/
+.warning-box {
+  background-color: #fffbec;
+  border-radius: $radius-small;
+  text-align: center;
+  // border: 1px solid mat-color($semantic-palette , warning);
+  margin-bottom: 1rem;
+  width: fit-content;
+  padding: .5rem 1rem;
+  color: mat-color($semantic-palette, warning);
+  display: inline-flex;
+
+  .icon-20px {
+    margin-left: 6px;
+  }
+}
+.table-fullHeight{
+  height: 63vh;
+}

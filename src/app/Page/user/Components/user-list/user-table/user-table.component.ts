@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
+import { blub, fadeOut } from 'src/shared/Adnimation/template.animations';
 import { DeleteModalComponent } from 'src/shared/components/Modals/delete-modal/delete-modal.component';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
 import { DeleteOperationType, NotificationType } from 'src/shared/Domain/Enums/global-enums';
@@ -11,7 +12,8 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
 @Component({
   selector: 'app-user-table',
   templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.scss']
+  styleUrls: ['./user-table.component.scss'],
+  animations: [fadeOut, blub]
 })
 export class UserTableComponent implements OnInit,OnDestroy {
   //#region Private field

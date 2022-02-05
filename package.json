@@ -24,6 +24,7 @@
     "@angular/router": "~13.2.0",
     "jalali-moment": "^3.3.10",
     "ngx-mat-select-search": "^4.0.1",
+    "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^14.2.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

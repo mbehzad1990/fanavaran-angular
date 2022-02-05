@@ -96,6 +96,24 @@
                 <h4 class="mat-body" mat-line *ngIf="isOpen">حواله ضایعات</h4>
               </a>
             </mat-list-item>
+            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-list']"
+                routerLinkActive="router-link-active">
+                <h4 class="mat-body" mat-line *ngIf="isOpen">فهرست حواله ها</h4>
+              </a>
+            </mat-list-item>
+            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/inventory']"
+                routerLinkActive="router-link-active">
+                <h4 class="mat-body" mat-line *ngIf="isOpen">موجودی انبار</h4>
+              </a>
+            </mat-list-item>
+            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/good-cardex']"
+                routerLinkActive="router-link-active">
+                <h4 class="mat-body" mat-line *ngIf="isOpen">کاردکس کالا</h4>
+              </a>
+            </mat-list-item>
           </mat-nav-list>
         </div>
       </cdk-accordion-item>

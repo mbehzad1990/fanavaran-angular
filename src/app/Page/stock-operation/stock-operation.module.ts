@@ -8,6 +8,11 @@ import { RemittanceDetailsComponent } from './Components/remittance-main/Steps/r
 import { RemittanceHeaderComponent } from './Components/remittance-main/Steps/remittance-header/remittance-header.component';
 import { SharedModule } from 'src/shared/shared.module';
 import { AddDetailsComponent } from './Components/remittance-main/Steps/remittance-details/add-details/add-details.component';
+import { ListOfRemittanceComponent } from './Components/list-of-remittance/list-of-remittance.component';
+import { RemittanceDetailsModalComponent } from './Components/list-of-remittance/remittance-details-modal/remittance-details-modal.component';
+import { InventoryStockComponent } from './Components/inventory-stock/inventory-stock.component';
+import { InventoryTableComponent } from './Components/inventory-stock/inventory-table/inventory-table.component';
+import { GoodCardexComponent } from './Components/good-cardex/good-cardex.component';
 
 
 @NgModule({
@@ -16,7 +21,12 @@ import { AddDetailsComponent } from './Components/remittance-main/Steps/remittan
     RemittanceMainComponent,
     RemittanceDetailsComponent,
     RemittanceHeaderComponent,
-    AddDetailsComponent
+    AddDetailsComponent,
+    ListOfRemittanceComponent,
+    RemittanceDetailsModalComponent,
+    InventoryStockComponent,
+    InventoryTableComponent,
+    GoodCardexComponent
   ],
   imports: [
     CommonModule,

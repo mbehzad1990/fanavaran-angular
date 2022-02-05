@@ -48,7 +48,8 @@ export enum ResultAction {
   export enum ActionType {
     Add,
     Update,
-    Delete
+    Delete,
+    ShowDetails
   }
   
   export enum StockOperationType{
@@ -57,4 +58,9 @@ export enum ResultAction {
     ReSell,
     ReBuy,
     Damage
+  }
+  export enum  serachRemittanceController{
+    isDropDownShow,
+    isTextBoxShow,
+    isDateBoxShow,
   }
