@@ -22,7 +22,10 @@
     margin-left: 10px;
   }
   .mat-table {
-    height: calc(97vh - 401px);
+    // height: calc(97vh - 401px);
     overflow: auto;
     width: 100%;
+  }
+  .table-fullHeight{
+    height: 43vh;
   }

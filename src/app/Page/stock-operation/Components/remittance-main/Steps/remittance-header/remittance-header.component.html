@@ -4,7 +4,7 @@
 
       <div fxLayout="row" fxLayoutGap="10px">
 
-        <mat-form-field fxFlex="20%" class="my-2 input-size" appearance="outline" color="primary">
+        <mat-form-field fxFlex="20%" class="input-size input-text-size" appearance="outline" color="primary">
           <mat-label>تاریخ</mat-label>
           <input matInput [matDatepicker]="picker" placeholder="تاریخ شروع قرارداد" #datePicker readonly
             (dateChange)="onChange($event)" formControlName="datePicker">
@@ -20,19 +20,8 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="20%" class="my-2 input-size" appearance="outline" color="primary">
-          <mat-label>شماره بچ (batch)</mat-label>
-          <input matInput placeholder="شماره بچ : 1234..." #batchNumber formControlName="batchNumber"
-            [pattern]="numberPattern" />
-          <mat-error *ngIf="errorHandling('batchNumber', 'required')">
-            وارد کردن شماره بچ اجباری است
-          </mat-error>
-          <mat-error *ngIf="errorHandling('batchNumber', 'pattern')">
-            عدد وارد کنید
-          </mat-error>
-          <!-- <mat-hint>Hint</mat-hint> -->
-        </mat-form-field>
-        <mat-form-field fxFlex="30%" class="my-2 w-100" appearance="outline">
+    
+        <mat-form-field fxFlex="30%" class=" w-100 input-text-size" appearance="outline">
           <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect">
             <mat-select-trigger>
               {{ personSelect.value?.name }}
@@ -57,7 +46,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="30%" class="my-2 w-100" appearance="outline">
+        <mat-form-field fxFlex="30%" class=" w-100 input-text-size" appearance="outline">
           <mat-select placeholder="انبار" #stockSelect formControlName="stockSelect" disableOptionCentering>
             <mat-select-trigger>
               {{ stockSelect.value?.name }}
@@ -67,7 +56,10 @@
                 noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
             </mat-option>
             <mat-option *ngFor="let stock of filterstock | async ;let i=index;" [value]="stock">
-              {{stock.name}}
+              <span class="mt-2">
+                {{stock.name}}
+              </span>
+              
               <!-- <div fxLayout="row" fxLayoutAlign="space-between">
                               <div>
                                   <span class="ms-2">{{i+1}}</span>
@@ -85,7 +77,7 @@
 
 
       </div>
-      <mat-form-field class="w-100 mt-3 description-height" appearance="outline" color="primary">
+      <mat-form-field class="w-100 mt-1 description-height" appearance="outline" color="primary">
         <mat-label>توضیحات</mat-label>
         <textarea matInput placeholder="توضیحات" rows="8" cols="50" #description
           formControlName="description"></textarea>
@@ -94,7 +86,7 @@
 
     <div class="text-left mt-3 button-Add" align="end">
       <!-- [disabled]="headerForm.invalid" -->
-      <button mat-flat-button mat-Stroked-button color="primary" [disabled]="headerForm.invalid"
+      <button mat-flat-button mat-Stroked-button color="primary" 
         (click)="submit(headerForm)">
         <span color="primary">ثبت ریز اقلام</span>
       </button>
