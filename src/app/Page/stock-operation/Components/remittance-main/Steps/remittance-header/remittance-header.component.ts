@@ -82,7 +82,6 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   formElementInit() {
     this.headerForm = this.fb.group({
       datePicker: [moment, Validators.required],
-      batchNumber: [null, Validators.required],
       personSelect: [null, Validators.required],
       stockSelect: [null, Validators.required],
       personFilterCtrl: [null],
@@ -152,7 +151,7 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   submit(form: FormGroup){
     
      this._headerInfo=new RegisterStockOperationVm();
-     this._headerInfo.bacthNumber=form.value.batchNumber;
+    //  this._headerInfo.bacthNumber=form.value.batchNumber;
      this._headerInfo.description=form.value.description;
      this._headerInfo.personId=form.value.personSelect.id;
      this._headerInfo.stockId=form.value.stockSelect.id;
@@ -163,7 +162,6 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
      this._headerDto.stockName=form.value.stockSelect.name;
      this._headerDto.personName=form.value.personSelect.name;
      this._headerDto.description=form.value.personSelect;
-     this._headerDto.bachNumber=form.value.batchNumber;
      this._headerDto.registerDate=this.dateSelected;
     // _headerInfo.registerDate=
     this.headerInfo.emit(this._headerInfo);

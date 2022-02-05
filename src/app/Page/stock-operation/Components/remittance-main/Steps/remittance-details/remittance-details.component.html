@@ -6,10 +6,6 @@
       <span><strong>{{headerInfoDto?.registerDate}}</strong></span>
     </div>
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
-      <span>شماره بچ :</span>
-      <span><strong>{{headerInfoDto?.bachNumber}}</strong></span>
-    </div>
-    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
       <span>مشتری / شرکت :</span>
       <span><strong>{{headerInfoDto?.personName}}</strong></span>
     </div>
@@ -28,7 +24,7 @@
   <div fxLayout="column" fxFlex="100%">
     <div class="mb-1" fxFlex="100%">
       <!-- <p class="mat-subheading-1 text-right"></p> -->
-      <table mat-table [dataSource]="dataSource" class="w-100 text-right">
+      <table mat-table [dataSource]="dataSource" class="w-100 text-right" [ngClass]="dataSource.data.length == 0 ? 'table-fullHeight' : ''">
         <!-- Index Column -->
         <ng-container matColumnDef="index">
           <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">#</th>
@@ -113,7 +109,7 @@
         </mat-spinner>
       </span>
     </button>
-    <div *ngIf="_operationComplete">
+    <div *ngIf="_operationComplete" class="ms-3">
       <button mat-raised-button color="primary" (click)=" newOperation();stepper.reset()">حواله جدید </button>
     </div>
 

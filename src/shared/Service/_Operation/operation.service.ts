@@ -5,6 +5,7 @@ import { catchError, finalize, map, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
+import { GoodCardexVM } from 'src/shared/Domain/ViewModels/_Operation/good-cardex-vm';
 import { RegisterOperationVm } from 'src/shared/Domain/ViewModels/_Operation/register-operation-vm';
 import { ReportGoodsInStockVm } from 'src/shared/Domain/ViewModels/_Operation/report-goods-in-stock-vm';
 import { ReportOperationDetailVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-detail-vm';
@@ -115,6 +116,33 @@ export class OperationService implements OnDestroy {
       debugger
       return this.http.get<ResultDto<ReportGoodsInStockVm[]>>(this.baseUrl + `GetGoodInStock?stockId=${stockId}`).pipe(
         map((result: ResultDto<ReportGoodsInStockVm[]>) => {
+          // if (result.isSuccess) {
+          //   this._operationDetailList$.next(result.data);
+          // }
+
+          return result;
+        }),
+        catchError((err) => {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Error,
+            err
+          );
+  
+          return of(null);
+        }),
+        finalize(() => {
+          this._isLoading$.next(false);
+          this._isCompleteStep$.next({ searc: true });
+        }),
+        shareReplay()
+      );
+    }
+    
+    GetGoodCardex(stockId:number,goodId:number):Observable<any>{
+      this._isLoading$.next(true);
+      debugger
+      return this.http.get<ResultDto<GoodCardexVM[]>>(this.baseUrl + `GetGoodCardex?stockId=${stockId}&&goodId=${goodId}`).pipe(
+        map((result: ResultDto<GoodCardexVM[]>) => {
           // if (result.isSuccess) {
           //   this._operationDetailList$.next(result.data);
           // }

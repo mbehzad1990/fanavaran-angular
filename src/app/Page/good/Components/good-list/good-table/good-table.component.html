@@ -76,6 +76,16 @@
   
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [colSpan]="displayedColumns.length+1">
+          <div fxLayout="row" fxFill fxLayoutAlign="center center">
+            <div class="warning-box">
+              <span>اطلاعاتی جهت نمایش وجود ندارد</span>
+            </div>
+
+          </div>
+        </td>
+      </tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered}"
         (mouseover)="row.hovered = true" (mouseover)="currentRow = row.id" (mouseout)="currentRow= -1"
         (mouseout)="row.hovered = false">

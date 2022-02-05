@@ -13,6 +13,7 @@ import { RemittanceDetailsModalComponent } from './Components/list-of-remittance
 import { InventoryStockComponent } from './Components/inventory-stock/inventory-stock.component';
 import { InventoryTableComponent } from './Components/inventory-stock/inventory-table/inventory-table.component';
 import { GoodCardexComponent } from './Components/good-cardex/good-cardex.component';
+import { CardexTableComponent } from './Components/good-cardex/cardex-table/cardex-table.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { GoodCardexComponent } from './Components/good-cardex/good-cardex.compon
     RemittanceDetailsModalComponent,
     InventoryStockComponent,
     InventoryTableComponent,
-    GoodCardexComponent
+    GoodCardexComponent,
+    CardexTableComponent
   ],
   imports: [
     CommonModule,

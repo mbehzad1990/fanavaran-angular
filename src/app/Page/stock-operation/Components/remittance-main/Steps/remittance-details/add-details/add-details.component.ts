@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import * as moment from 'jalali-moment';
 import { ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { GoodDetailDto } from 'src/shared/Domain/Dto/_Good/good-detail-dto';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
@@ -43,9 +45,10 @@ export class AddDetailsComponent implements OnInit{
   public goodFilterCtrl: FormControl = new FormControl();
   protected _onDestroy = new Subject<void>();
   public filterGoods: ReplaySubject<GoodDetailsVm[]> = new ReplaySubject<GoodDetailsVm[]>(1);
-  
+  dateSelected:string='';
   // unit_selected!:Unit;
   numberPattern='^[0-9]*$';
+  isOperationRun:boolean=false;
   //#endregion
 
   //#region Input & Output & Others
@@ -70,6 +73,8 @@ export class AddDetailsComponent implements OnInit{
       goodCtrl: [null, Validators.required,],
       count: [null, Validators.required],
       price: [null, Validators.required],
+      batchNumber: [null, Validators.required],
+      datePicker: [moment, Validators.required],
       dec: [null],
      
       // stockFilterCtrl: [''],
@@ -83,13 +88,17 @@ export class AddDetailsComponent implements OnInit{
       this.pageForm
     );
   }
-
+  onChange(event: MatDatepickerInputEvent<moment.Moment>) {
+    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+  }
   add(form: FormGroup){
     debugger
     const addModel = new GoodDetailDto();
 
     addModel.goodId=form.value.goodCtrl.id;
     addModel.goodName=form.value.goodCtrl.name;
+    addModel.bacthNumber=form.value.batchNumber;
+    addModel.expireDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
     addModel.count=form.value.count;
     const val = form.value.price;
     addModel.price=Number(val.replace(this.numberChars, ""));
@@ -105,12 +114,6 @@ export class AddDetailsComponent implements OnInit{
       console.log(`${typeof val} ${val}`);
     }
 
-
-    // addModel.manualId = 0;
-    // addModel.name = form.value.name;
-    // addModel.latinName = form.value.latinName;
-    // addModel.description = form.value.description;
-    // addModel.unitId = parseInt(form.value.unit);
     this.pageForm.reset();
     
     this.itemForAdd.emit(addModel);

@@ -1,6 +1,6 @@
 <form [formGroup]="pageForm" (ngSubmit)="add(pageForm)">
   <div fxLayout fxLayoutGap="6px">
-    <mat-form-field class="mt-1 input-size" appearance="outline">
+    <mat-form-field class="mt-1 input-size input-text-size" appearance="outline">
       <mat-select placeholder="کالا" #goodCtrl formControlName="goodCtrl" disableOptionCentering>
         <mat-select-trigger>
           {{ goodCtrl.value?.name }}
@@ -25,8 +25,35 @@
         انتخاب انبار اجباری است
       </mat-error>
     </mat-form-field>
+    <mat-form-field  class="mt-1 input-size input-text-size numberTextView-width-size" appearance="outline" color="primary">
+      <mat-label>شماره بچ (batch)</mat-label>
+      <input matInput placeholder="شماره بچ : 1234..." #batchNumber formControlName="batchNumber"
+        [pattern]="numberPattern" />
+      <mat-error *ngIf="errorHandling('batchNumber', 'required')">
+        وارد کردن شماره بچ اجباری است
+      </mat-error>
+      <mat-error *ngIf="errorHandling('batchNumber', 'pattern')">
+        عدد وارد کنید
+      </mat-error>
+      <!-- <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+    <mat-form-field  class="mt-1 input-size input-text-size" appearance="outline" color="primary">
+      <mat-label>تاریخ</mat-label>
+      <input matInput [matDatepicker]="picker" placeholder="تاریخ انقضا" #datePicker readonly
+        (dateChange)="onChange($event)" formControlName="datePicker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>انصراف</button>
+          <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+      <mat-error *ngIf="errorHandling('datePicker', 'required')">
+        وارد کردن تاریخ اجباری است
+      </mat-error>
+    </mat-form-field>
 
-    <mat-form-field class="mt-1 input-size" appearance="outline" color="primary">
+    <mat-form-field class="mt-1 input-size input-text-size numberTextView-width-size" appearance="outline" color="primary">
       <mat-label>تعداد</mat-label>
       <input matInput placeholder="1 ..." #count formControlName="count"  [pattern]="numberPattern"/>
       <mat-error *ngIf="errorHandling('count', 'required')">
@@ -37,7 +64,7 @@
       </mat-error>
     </mat-form-field>
     
-    <mat-form-field class="mt-1 input-size" appearance="outline" color="primary">
+    <mat-form-field class="mt-1 input-size input-text-size" appearance="outline" color="primary">
         <mat-label>قیمت</mat-label>
         <input matInput placeholder="1,000" #price formControlName="price"  PersianCurency/>
         <mat-error *ngIf="errorHandling('price', 'required')">
@@ -45,10 +72,10 @@
           </mat-error>
       </mat-form-field>
 
-    <mat-form-field class="w-35 mt-1 input-size" appearance="outline" color="primary">
+    <!-- <mat-form-field class="w-35 mt-1 input-size input-text-size" appearance="outline" color="primary">
       <mat-label>توضیحات</mat-label>
       <input matInput placeholder="توضیحات ..." #dec formControlName="dec" />
-    </mat-form-field>
+    </mat-form-field> -->
     <button mat-flat-button color="primary" class="button-size" [disabled]="pageForm.invalid" >
       <i class="icon-plus-square icon-19px _white-color"></i>
       <span class="me-1">افزودن به لیست</span>
