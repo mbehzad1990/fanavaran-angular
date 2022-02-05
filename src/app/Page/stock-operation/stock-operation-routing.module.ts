@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
+import { GoodCardexComponent } from './Components/good-cardex/good-cardex.component';
+import { InventoryStockComponent } from './Components/inventory-stock/inventory-stock.component';
+import { ListOfRemittanceComponent } from './Components/list-of-remittance/list-of-remittance.component';
 import { RemittanceMainComponent } from './Components/remittance-main/remittance-main.component';
 import { StockOperationComponent } from './stock-operation.component';
 
@@ -11,6 +14,9 @@ const routes: Routes = [
     { path: 'remittance-resell', component: RemittanceMainComponent,data:{type:StockOperationType.ReSell} },
     { path: 'remittance-rebuy', component: RemittanceMainComponent,data:{type:StockOperationType.ReBuy} },
     { path: 'remittance-damage', component: RemittanceMainComponent,data:{type:StockOperationType.Damage} },
+    { path: 'remittance-list', component: ListOfRemittanceComponent },
+    { path: 'inventory', component: InventoryStockComponent },
+    { path: 'good-cardex', component: GoodCardexComponent },
     ] },
 ];
 

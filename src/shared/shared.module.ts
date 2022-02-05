@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ComponentsModule } from './components/components.module';
 import { MaterialModule } from './Others/material/material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './Project_Config/auth.interceptor';
+import { PersianCurencyDirective } from './Directive/persian-curency.directive';
+import { PersianCurencyPipe } from './Pipe/persian-curency.pipe';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  
+    PersianCurencyDirective,
+        PersianCurencyPipe
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -24,8 +30,13 @@ import { AuthInterceptor } from './Project_Config/auth.interceptor';
     })
   ],
   exports: [
+    CommonModule,
     MaterialModule,
-    ComponentsModule
-  ], providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },]
+    ComponentsModule,
+    PersianCurencyDirective,
+    PersianCurencyPipe
+  ], providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },   DecimalPipe]
 })
-export class SharedModule { }
+export class SharedModule {
+
+ }

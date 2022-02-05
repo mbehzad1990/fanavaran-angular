@@ -57,7 +57,6 @@ export class CustomerService implements OnDestroy {
   //#region Get
   getAll() {
     this._isLoading$.next(true);
-    debugger
     const sb = this.http.get<ResultDto<Customer[]>>(this.baseUrl + "GettAll")
       .pipe(
         map((result: ResultDto<Customer[]>) => {

@@ -1,0 +1,76 @@
+<div class="details-modal modal-container">
+  <div>
+    <p class="mat-h2 modal-title">جزئیات حواله</p>
+  </div>
+  <div *ngIf="isLoading$ | async; else table" fxLayout="column" fxLayoutAlign="center center">
+    <div class="loading-shade" *ngIf="isLoading$ | async">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <mat-progress-spinner [mode]="'indeterminate'" *ngIf="isLoading$ | async"></mat-progress-spinner>
+        <h3 class="mt-3">در حال دریافت اطلاعت از سرور ...</h3>
+      </div>
+    </div>
+  </div>
+  <ng-template #table>
+    <div class="example-table-container">
+      <table mat-table [dataSource]="dataSource" class="w-100 text-right ">
+        <!-- Index Column -->
+        <ng-container matColumnDef="index">
+          <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">#</th>
+          <td class=" mat-column-small-width text-right" mat-cell *matCellDef="let element;index as i;">
+            {{i+1}}
+          </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
+
+        </ng-container>
+        <!-- name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class=" text-right">نام کالا</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodName}} </td>
+          <td mat-footer-cell *matFooterCellDef> جمع کل : </td>
+
+
+        </ng-container>
+        <!-- count Column -->
+        <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef class="text-right">تعداد</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{element.count}}</td>
+          <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalCount() }} </strong> </td>
+
+        </ng-container>
+        <!-- price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef class="text-right">فی(ریال)</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{element.price| persianCurencyPipe}}</td>
+          <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalFi() | persianCurencyPipe}} </strong> ریال </td>
+        </ng-container>
+        <!-- amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef class="text-right">کل(ریال)</th>
+          <td mat-cell class="text-right" *matCellDef="let element" PersianCurency>
+            {{element.amount | persianCurencyPipe}}</td>
+          <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalCost() | persianCurencyPipe}} </strong> ریال </td>
+        </ng-container>
+        <!-- unitName Column -->
+        <ng-container matColumnDef="unitName">
+          <th mat-header-cell *matHeaderCellDef class="text-right">واحد</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{element.unitName}}</td>
+          <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+        <!-- desc Column -->
+        <ng-container matColumnDef="desc">
+          <th mat-header-cell *matHeaderCellDef class="text-right">توضیحات</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{element.description}}</td>
+          <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+      </table>
+    </div>
+  </ng-template>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>بستن</button>
+  </mat-dialog-actions>
+</div>

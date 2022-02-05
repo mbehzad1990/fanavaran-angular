@@ -56,7 +56,7 @@ export class StockService implements OnDestroy {
 
   // Get
   getStocks() {
-    debugger
+    
     this._isLoading$.next(true);
     const sb = this.http.get<ResultDto<Stock[]>>(this.baseUrl + "GettAllStocks")
       .pipe(

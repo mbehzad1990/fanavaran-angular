@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { catchError, finalize, map, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { RegisterOperationVm } from 'src/shared/Domain/ViewModels/_Operation/register-operation-vm';
+import { ReportGoodsInStockVm } from 'src/shared/Domain/ViewModels/_Operation/report-goods-in-stock-vm';
+import { ReportOperationDetailVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-detail-vm';
+import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
 import { FacadService } from '../_Core/facad.service';
 
 @Injectable({
@@ -17,8 +20,10 @@ export class OperationService implements OnDestroy {
   private baseUrl = environment.serverUrl+ `/api/v${this.apiVersion}/Operation/`;
   private _unsubscribe: Subscription[] = [];
 
-  // private _user$ = new BehaviorSubject<User[]>([]);
+   private _operationlist$ = new BehaviorSubject<ReportOperationVm[]>([]);
+   private _operationDetailList$ = new BehaviorSubject<ReportOperationDetailVm[]>([]);
   private _isLoading$ = new BehaviorSubject<boolean>(false);
+  private _isoperationDetailListLoading$ = new BehaviorSubject<boolean>(false);
   private _isCompleteStep$ = new BehaviorSubject<{}>({});
   private _isFirstLoading$ = new BehaviorSubject<boolean>(true);
   private _errorMessage = new BehaviorSubject<string>('');
@@ -31,9 +36,15 @@ export class OperationService implements OnDestroy {
   get isLoading$() {
     return this._isLoading$.asObservable();
   }
-  // get user$() {
-  //   return this._user$.asObservable();
-  // }
+  get isoperationDetailListLoading$() {
+    return this._isoperationDetailListLoading$.asObservable();
+  }
+  get operationlist$ () {
+    return this._operationlist$.asObservable();
+  }
+  get operationDetailList$ () {
+    return this._operationDetailList$.asObservable();
+  }
   get isCompletePrcess$() {
     return this._isCompleteStep$.asObservable();
   }
@@ -51,11 +62,84 @@ export class OperationService implements OnDestroy {
 
 
     // Get
+    ListOfOperation(){
+      this._isLoading$.next(true);
+      return this.http.get<ResultDto<ReportOperationVm[]>>(this.baseUrl + "ListOfOperation").pipe(
+        map((result: ResultDto<ReportOperationVm[]>) => {
+          if (result.isSuccess) {
+            this._operationlist$.next(result.data);
+          }
+          return result;
+        }),
+        catchError((err) => {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Error,
+            err
+          );
+  
+          return of(null);
+        }),
+        finalize(() => {
+          this._isLoading$.next(false);
+          this._isCompleteStep$.next({ searc: true });
+        }),
+        shareReplay()
+      );
+    }
+    GetListOfOperationDetails(opId:number){
+      this._isoperationDetailListLoading$.next(true);
+      return this.http.get<ResultDto<ReportOperationDetailVm[]>>(this.baseUrl + `GetListOfOperationDetails?operationId=${opId}`).pipe(
+        map((result: ResultDto<ReportOperationDetailVm[]>) => {
+          if (result.isSuccess) {
+            this._operationDetailList$.next(result.data);
+          }
+          return result;
+        }),
+        catchError((err) => {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Error,
+            err
+          );
+  
+          return of(null);
+        }),
+        finalize(() => {
+          this._isoperationDetailListLoading$.next(false);
+          this._isCompleteStep$.next({ searc: true });
+        }),
+        shareReplay()
+      );
+    }
+    GetGoodsInStock(stockId:number):Observable<any>{
+      this._isLoading$.next(true);
+      debugger
+      return this.http.get<ResultDto<ReportGoodsInStockVm[]>>(this.baseUrl + `GetGoodInStock?stockId=${stockId}`).pipe(
+        map((result: ResultDto<ReportGoodsInStockVm[]>) => {
+          // if (result.isSuccess) {
+          //   this._operationDetailList$.next(result.data);
+          // }
 
+          return result;
+        }),
+        catchError((err) => {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Error,
+            err
+          );
+  
+          return of(null);
+        }),
+        finalize(() => {
+          this._isLoading$.next(false);
+          this._isCompleteStep$.next({ searc: true });
+        }),
+        shareReplay()
+      );
+    }
     // Post
     RegisterOperation(opModel: RegisterOperationVm) {
       this._isLoading$.next(true);
-      return this.http.post<ResultDto<boolean>>(this.baseUrl + "AddStock", opModel).pipe(
+      return this.http.post<ResultDto<boolean>>(this.baseUrl + "RegisterOperation", opModel).pipe(
         map((result: ResultDto<boolean>) => {
           if (result.isSuccess) {
           }
@@ -76,6 +160,7 @@ export class OperationService implements OnDestroy {
         shareReplay()
       );
     }
+    
     // Put
  
     // Delete

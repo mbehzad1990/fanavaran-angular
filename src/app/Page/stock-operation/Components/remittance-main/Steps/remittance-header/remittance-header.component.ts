@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatStep } from '@angular/material/stepper';
+import * as moment from 'jalali-moment';
 import { ReplaySubject, Subject, Subscription, takeUntil } from 'rxjs';
+import { HeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/header-info-dto';
 import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { Customer } from 'src/shared/Domain/Models/_Customer/customer';
 import { Stock } from 'src/shared/Domain/Models/_Stock/stock';
@@ -16,6 +19,8 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
 export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   //#region Private field
   private subscriptions: Subscription[] = [];
+  private _headerDto!: HeaderInfoDto;
+  private _headerInfo!: RegisterStockOperationVm;
   //#endregion
 
   //#region Public field
@@ -33,6 +38,9 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   public filterPerson: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
   public filterstock: ReplaySubject<Stock[]> = new ReplaySubject<Stock[]>(1);
   
+  dateSelected:string='';
+
+  numberPattern='^[0-9]*$';
 
   
   //#endregion
@@ -41,6 +49,7 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   @Input() nextStepper!: MatStep;
   @Input() stockOperationType!: StockOperationType;
   @Output() headerInfo=new EventEmitter<RegisterStockOperationVm>();
+  @Output() headerInfoDto=new EventEmitter<HeaderInfoDto>();
   //#endregion
   constructor(private _coreService: FacadService, private fb: FormBuilder) { }
 
@@ -72,11 +81,13 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   }
   formElementInit() {
     this.headerForm = this.fb.group({
-      batchNumber: ['', Validators.required],
-      personSelect: ['', Validators.required],
-      stockSelect: ['', Validators.required],
-      personFilterCtrl: [''],
-      description: [''],
+      datePicker: [moment, Validators.required],
+      batchNumber: [null, Validators.required],
+      personSelect: [null, Validators.required],
+      stockSelect: [null, Validators.required],
+      personFilterCtrl: [null],
+      description: [null],
+     
       // stockFilterCtrl: [''],
     });
   }
@@ -131,19 +142,44 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   }
 
   nextStep(){
+    this.headerInfo.emit(this._headerInfo);
+    this.headerInfoDto.emit(this._headerDto);
     this.nextStepper.completed = true;
     this.nextStepper._stepper.next();
+
   }
 
   submit(form: FormGroup){
-    // addModel.name = form.value.name;
-    let _headerInfo=new RegisterStockOperationVm();
-    _headerInfo.bacthNumber=form.value.batchNumber;
-    _headerInfo.description=form.value.description;
-    _headerInfo.personId=form.value.personSelect.id;
-    _headerInfo.stockId=form.value.stockSelect.id;
-    _headerInfo.stockOperationType=this.stockOperationType;
-    this.headerInfo.emit(_headerInfo);
+    
+     this._headerInfo=new RegisterStockOperationVm();
+     this._headerInfo.bacthNumber=form.value.batchNumber;
+     this._headerInfo.description=form.value.description;
+     this._headerInfo.personId=form.value.personSelect.id;
+     this._headerInfo.stockId=form.value.stockSelect.id;
+     this._headerInfo.stockOperationType=this.stockOperationType;
+     this._headerInfo.registerDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    
+     this._headerDto=new HeaderInfoDto();
+     this._headerDto.stockName=form.value.stockSelect.name;
+     this._headerDto.personName=form.value.personSelect.name;
+     this._headerDto.description=form.value.personSelect;
+     this._headerDto.bachNumber=form.value.batchNumber;
+     this._headerDto.registerDate=this.dateSelected;
+    // _headerInfo.registerDate=
+    this.headerInfo.emit(this._headerInfo);
+    this.headerInfoDto.emit(this._headerDto);
+    this.nextStepper.completed = true;
+    this.nextStepper._stepper.next();
+
+  }
+  resetStep(){
+    this.headerForm.reset();
+  
+  }
+
+
+  onChange(event: MatDatepickerInputEvent<moment.Moment>) {
+    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());

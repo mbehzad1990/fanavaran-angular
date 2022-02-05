@@ -7,6 +7,7 @@ import { DeleteModalComponent } from './Modals/delete-modal/delete-modal.compone
 import { AddEditGoodModalComponent } from './Modals/_Good/add-edit-good-modal/add-edit-good-modal.component';
 import { AddEditStockModalComponent } from './Modals/_Stock/add-edit-stock-modal/add-edit-stock-modal.component';
 import { AddEditUnitModalComponent } from './Modals/_Unit/add-edit-unit-modal/add-edit-unit-modal.component';
+import { LoadingComponent } from './global/loading/loading.component';
 
 
 
@@ -17,14 +18,16 @@ import { AddEditUnitModalComponent } from './Modals/_Unit/add-edit-unit-modal/ad
     DeleteModalComponent,
     AddEditGoodModalComponent,
     AddEditStockModalComponent,
-    AddEditUnitModalComponent
+    AddEditUnitModalComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
     MaterialModule
   ],
   exports:[
-    ResultMessageComponent
+    ResultMessageComponent,
+    LoadingComponent
   ]
 })
 export class ComponentsModule { }

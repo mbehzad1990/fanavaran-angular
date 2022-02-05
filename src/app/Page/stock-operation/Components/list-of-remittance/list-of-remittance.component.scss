@@ -1,0 +1,146 @@
+.section-container {
+  min-height: 80vh;
+}
+
+.mat-stepper-horizontal {
+  margin-top: 0px;
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
+
+.i-col-width {
+  width: 100px;
+}
+.remittancetype-col-width{
+  width: 100px;
+}
+.batch-col-width{
+  width: 70px;
+  text-align: center;
+}
+.name-col-width{
+  width: 150px;
+  text-align: center;
+}
+.stock-col-width{
+  width: 85px;
+  text-align: center;
+}
+.id-col-width{
+  width: 70px;
+  text-align: center;
+}
+.index-col-width{
+  width: 40px;
+  text-align: center;
+}
+.dec-col-width{
+  width: 85px;
+}
+.date-col-width{
+  width: 75;
+}
+.mat-column-small-width {
+  width: 35px;
+}
+
+
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 63vh;
+  overflow: auto;
+}
+
+@import "/src/assets/scss/mat-color-palette";
+@import "/src/assets/scss/variables";
+
+/*#region rtl*/
+::ng-deep [dir="rtl"] {
+  .remitt-list {
+    border-radius: $radius-small;
+    background-color: $white;
+
+    &_header {
+      padding: 8px 8px 8px 0;
+      margin-bottom: 8px;
+
+      &_action-btn {
+        button {
+          margin-left: 1.2rem;
+
+          &:last-child {
+            margin-left: 0;
+            position: relative;
+
+            &:after {
+              content: "";
+              position: absolute;
+              right: -8px;
+              top: 7px;
+              height: 80%;
+              width: 1px;
+              border-right: 1px solid mat-color($gray-palette, 300);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*#endregion rtl*/
+/*#region ltr*/
+::ng-deep [dir="ltr"] {
+  .remitt-list {
+    border-radius: $radius-small;
+    background-color: $white;
+
+    &_header {
+      padding: 8px 0 8px 8px;
+      margin-bottom: 8px;
+
+      &_action-btn {
+        button {
+          margin-right: 1.2rem;
+
+          &:last-child {
+            margin-right: 0;
+            position: relative;
+
+            &:after {
+              content: "";
+              position: absolute;
+              left: -8px;
+              top: 7px;
+              height: 80%;
+              width: 1px;
+              border-left: 1px solid mat-color($gray-palette, 300);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/*#endregion ltr*/
+
+.search-box {
+  background: #F3F6FF;
+  border-radius: 10px;
+  padding: 5px;
+  // height: 60px;
+}
+
+.radio-btns {
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  margin:16px 0;
+  .mat-radio-button{
+    margin: 0 8px;
+  }
+}

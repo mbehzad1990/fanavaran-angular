@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     model.isRememberMe = rememberMe;
 
     const sb = this._coreService.auth.login(model).subscribe(result=>{
-      debugger
       if(result){
         if(result?.isSuccess && result.resultAction==ResultAction.Success){
           const actionText=this._coreService.errorHandler.getErrorText(result.resultAction);
