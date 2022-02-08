@@ -7,7 +7,7 @@
     </div>
   </div>
   <ng-template #table>
-    <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width ">
+    <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width " [ngClass]="dataSource.data.length == 0 ? 'table-fullHeight' : ''">
       <!-- Index Column -->
       <ng-container matColumnDef="index">
         <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">#</th>

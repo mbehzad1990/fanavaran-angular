@@ -144,3 +144,19 @@
     margin: 0 8px;
   }
 }
+
+.warning-box {
+  background-color: #fffbec;
+  border-radius: $radius-small;
+  text-align: center;
+  // border: 1px solid mat-color($semantic-palette , warning);
+  margin-bottom: 1rem;
+  width: fit-content;
+  padding: .5rem 1rem;
+  color: mat-color($semantic-palette, warning);
+  display: inline-flex;
+
+  .icon-20px {
+    margin-left: 6px;
+  }
+}
