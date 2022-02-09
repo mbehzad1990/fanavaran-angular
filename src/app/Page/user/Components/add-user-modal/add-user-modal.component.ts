@@ -58,24 +58,22 @@ export class AddUserModalComponent implements OnInit , OnDestroy {
     model.email = email;
 
     const sb = this._coreService.user
-      .registerUser(model)
-      .pipe(
-        map((resp: ResultDto<boolean>) => {
-          if (resp.isSuccess) {
-            this._coreService.notification.showNotiffication(
-              NotificationType.Success,
-              this._coreService.errorHandler.getErrorText(resp?.resultAction)
-            );
-            this._coreService.user.getAllUsers();
-          }else{
-            this.isFinishOperation=true;
-            this.messageResultType=ResultType.error;
-            this.resultMessage=this._coreService.errorHandler.getErrorText(resp.resultAction);
-          }
-        })
-      )
-      .subscribe();
+      .registerUser(model).subscribe(resp=>{
+        if (resp?.isSuccess) {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Success,
+            this._coreService.errorHandler.getErrorText(resp?.resultAction)
+          );
+          // this._coreService.user.getAllUsers();
+          this.dialogRef.close();
+        }else{
+          this.isFinishOperation=true;
+          this.messageResultType=ResultType.error;
+          this.resultMessage=this._coreService.errorHandler.getErrorText(resp?.resultAction!);
+        }
+      });
     this.subscriptions.push(sb);
+
   }
   getOperationResult(result: ResultAction): string {
     return this._coreService.errorHandler.getErrorText(result);

@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  serverUrl:"https://localhost",
+  serverUrl:"https://localhost:7071"
+  //"https://185.81.96.33",
+  //"https://localhost:7071"
+
 };
 
 /*

@@ -49,3 +49,9 @@ i[class^="icon"] {
 .table-fullHeight{
   height: 63vh;
 }
+.table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 63vh;
+  overflow: auto;
+}

@@ -11,6 +11,7 @@ import { GoodDetail } from 'src/shared/Domain/ViewModels/_stockOperationDetail/g
 import { RegisterStockOperationDetail } from 'src/shared/Domain/ViewModels/_stockOperationDetail/register-stock-operation-detail';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 import { RemittanceHeaderComponent } from '../remittance-header/remittance-header.component';
+import * as moment from 'jalali-moment';
 
 @Component({
   selector: 'app-remittance-details',
@@ -28,14 +29,15 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
   // formType!:StockOperationType;
   listOfGood: GoodDetailDto[] = [];
   dataSource = new MatTableDataSource<GoodDetailDto>(this.listOfGood);
-  displayedColumns: string[] = ['index', 'name', 'count', 'price', 'amount', 'unitName', 'desc', 'delete'];
+  displayedColumns: string[] = ['index', 'name','unitName', 'count', 'price', 'amount','batch','expirdate',  'desc', 'menu'];
 
   isLoading$!: Observable<boolean>;
 
   isLoading = false;
   isOpen = false;
 
-  _operationComplete:boolean=false;
+  _operationComplete:boolean=true;
+  currentRow=-1;
   //#endregion
 
   //#region Input & OutPut & Other
@@ -52,7 +54,11 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   }
-
+  getShamsi(strDate: Date): string {
+    debugger
+    let MomentDate = moment(strDate, 'YYYY/MM/DD');;
+    return MomentDate.locale('fa').format('YYYY/M/D');
+   }
   getItem(_item: GoodDetailDto) {
     let isExist = false;
     this.listOfGood.forEach(item => {
@@ -61,8 +67,10 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
       }
     })
     if (!isExist) {
+      debugger
       this.listOfGood.push(_item);
       this.dataSource.data = this.listOfGood;
+      // this.dataSource.data.push(_item);
     } else {
       this._coreService.notification.showNotiffication(NotificationType.Warning, 'نام کالا تکراری است');
     }
@@ -77,38 +85,45 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
     }
   }
   addGoods() {
-    debugger
-    let model = new RegisterOperationVm();
-    let detail = new RegisterStockOperationDetail();
-    model.Header = this.headerInfo;
+    if(this.dataSource.data.length>0){
 
-    let goodDetails: GoodDetail[] = [];
-    this.dataSource.data.forEach(item => {
-      const _goodItem = new GoodDetail();
-      _goodItem.goodId = item.goodId;
-      _goodItem.price = Number(item.price.toString().replace(this.numberChars, ""));
-      _goodItem.count = item.count;
-      _goodItem.Description = item.description;
-      _goodItem.amount = Number(item.amount.toString().replace(this.numberChars, ""));
-      _goodItem.bacthNumber=item.bacthNumber;
-      _goodItem.expireDate=item.expireDate;
-
-      goodDetails.push(_goodItem);
-    })
-    detail.goodDetails = goodDetails;
-    model.Detail=detail;
-
-    const sb = this._coreService.Operation.RegisterOperation(model).subscribe(result => {
-      if (result?.isSuccess) {
-        this._coreService.notification.showNotiffication(
-          NotificationType.Success,
-          'حواله جدید ثبت شد'
-        );
-        this._operationComplete=true;
-      }
-    })
-
-    this.subscriptions.push(sb);
+      let model = new RegisterOperationVm();
+      let detail = new RegisterStockOperationDetail();
+      model.Header = this.headerInfo;
+  
+      let goodDetails: GoodDetail[] = [];
+      this.dataSource.data.forEach(item => {
+        const _goodItem = new GoodDetail();
+        _goodItem.goodId = item.goodId;
+        _goodItem.price = Number(item.price.toString().replace(this.numberChars, ""));
+        _goodItem.count = item.count;
+        _goodItem.Description = item.description;
+        _goodItem.amount = Number(item.amount.toString().replace(this.numberChars, ""));
+        _goodItem.bacthNumber=item.bacthNumber;
+        _goodItem.expireDate=item.expireDate;
+  
+        goodDetails.push(_goodItem);
+      })
+      detail.goodDetails = goodDetails;
+      model.Detail=detail;
+  
+      const sb = this._coreService.Operation.RegisterOperation(model).subscribe(result => {
+        if (result?.isSuccess) {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Success,
+            'حواله جدید ثبت شد'
+          );
+          this._operationComplete=false;
+        }
+      })
+  
+      this.subscriptions.push(sb);
+    }else{
+      this._coreService.notification.showNotiffication(
+        NotificationType.Warning,
+        'کالایی جهت ثبت وارد نشده است'
+      );
+    }
 
   }
   getTotalCost() {
@@ -129,10 +144,10 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
     this._operationComplete=false;
   }
   buttonStatus():boolean{
-    if(this.dataSource.data.length>0 && this._operationComplete==true){
-      return true;
+    if(this.dataSource.data.length>0 && this._operationComplete){
+      return false;
     }
-    return false;
+    return true;
   }
 
   ngOnDestroy(): void {

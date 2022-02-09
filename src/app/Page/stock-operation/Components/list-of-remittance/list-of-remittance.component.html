@@ -90,7 +90,7 @@
 
             <!-- Index Column -->
             <ng-container matColumnDef="index">
-              <th class="text-center" mat-header-cell *matHeaderCellDef class="index-col-width">#</th>
+              <th class="text-center" mat-header-cell *matHeaderCellDef class="index-col-width">ردیف</th>
               <td class=" mat-column-small-width" mat-cell *matCellDef="let element;index as i;">
                 {{i+1}}
               </td>
@@ -141,9 +141,9 @@
                   <!-- <mat-icon title="Reset Password" color='accent' (click)="clickTest()">
                                 lock_reset</mat-icon> -->
 
-                  <!-- <button mat-icon-button>
+                  <button mat-icon-button>
                     <i class="icon-edit-3 icon-20px "></i>
-                  </button> -->
+                  </button>
                   <button mat-icon-button matTooltip="نمایش جزییات" matTooltipPosition="right" (click)="getDetails(row)">
                     <i class="icon-eye icon-20px "></i>
                   </button>

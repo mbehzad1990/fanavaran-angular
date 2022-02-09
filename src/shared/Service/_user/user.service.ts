@@ -94,19 +94,24 @@ export class UserService implements OnDestroy {
       .subscribe();
     this.subscriptions.push(sb);
   }
-  registerUser(registerVm: RegisterVm): Observable<any> {
+  registerUser(registerVm: RegisterVm){
     this._isLoading$.next(true);
     return this.http
       .post<ResultDto<boolean>>(this.baseUrl + 'Register', registerVm)
       .pipe(
-
+        map((result:ResultDto<boolean>)=>{
+          if(result.isSuccess){
+            this.getAllUsers();
+          }
+          return result;
+        }),
         catchError((err) => {
           this._coreService.notification.showNotiffication(
             NotificationType.Error,
             err
           );
 
-          return of(registerVm);
+          return of(null);
         }),
         finalize(() => {
           this._isLoading$.next(false);

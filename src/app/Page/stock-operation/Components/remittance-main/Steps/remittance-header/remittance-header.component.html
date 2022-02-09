@@ -86,7 +86,7 @@
 
     <div class="text-left mt-3 button-Add" align="end">
       <!-- [disabled]="headerForm.invalid" -->
-      <button mat-flat-button mat-Stroked-button color="primary" 
+      <button mat-flat-button mat-Stroked-button color="primary" [disabled]="headerForm.invalid" 
         (click)="submit(headerForm)">
         <span color="primary">ثبت ریز اقلام</span>
       </button>

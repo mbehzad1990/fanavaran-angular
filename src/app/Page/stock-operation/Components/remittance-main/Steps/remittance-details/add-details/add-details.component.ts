@@ -156,4 +156,5 @@ export class AddDetailsComponent implements OnInit{
       this.goods.filter(g => g.name.toLowerCase().indexOf(search) > -1)
     );
   }
+
 }

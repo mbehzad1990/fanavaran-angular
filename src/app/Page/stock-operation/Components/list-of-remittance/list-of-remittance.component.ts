@@ -194,6 +194,7 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
     }
   }
   getShamsi(strDate: Date): string {
+
    const m = moment(strDate, 'jYYYY/jM/jD') ;
    return  moment(m.format('jYYYY/jM/jD')).format("jYYYY/jMM/jDD");
   }
