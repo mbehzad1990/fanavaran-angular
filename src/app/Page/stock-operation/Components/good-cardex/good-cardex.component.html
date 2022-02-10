@@ -28,7 +28,7 @@
                         {{ goodCtrl.value?.name }}
                       </mat-select-trigger>
                       <mat-option>
-                        <ngx-mat-select-search [formControl]="goodFilterCtrl" placeholderLabel="جستجو..."
+                        <ngx-mat-select-search [formControl]="goodFilterCtrl" placeholderLabel="جستجو..." 
                           noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
                       </mat-option>
                       <mat-option *ngFor="let good of filterGoods | async ;let i=index;" [value]="good">
@@ -47,8 +47,12 @@
                       انتخاب انبار اجباری است
                     </mat-error>
                   </mat-form-field>
-                  <button class="me-3 mb-3" mat-flat-button mat-Stroked-button color="primary" [disabled]="cardexForm.invalid">
-                    <span color="primary"  (click)="getCardex(stockSelect.value,goodCtrl.value)">نمایش کاردکس</span>
+                  <button class="me-3 mb-3" mat-flat-button mat-Stroked-button color="primary" [disabled]="cardexForm.invalid" (click)="getCardex(stockSelect.value,goodCtrl.value)">
+                    <span fxLayout fxLayoutAlign="center center">            
+                       <span color="primary"  >نمایش کاردکس</span>
+                      <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
+                      </mat-spinner>
+                    </span>
                   </button>
           </form>
         </div>

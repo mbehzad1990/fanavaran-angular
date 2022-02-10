@@ -7,8 +7,8 @@
     </div>
   </div>
   <ng-template #table>
-    <div class="table-container">
-      <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width " [ngClass]="dataSource.data.length == 0 ? 'table-fullHeight' : ''">
+    <div class="table-containers">
+      <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width " [ngClass]="dataSource.data.length == 0 ? 'table-fullHeights' : ''">
         <!-- Index Column -->
         <ng-container matColumnDef="index">
           <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">#</th>
@@ -54,7 +54,7 @@
         <!-- menu -->
         <ng-container matColumnDef="menu">
           <th mat-header-cell class="text-center" *matHeaderCellDef></th>
-          <td mat-cell class="text-left menu-width" *matCellDef="let row">
+          <td mat-cell class="text-left " *matCellDef="let row">
             <!-- <div [hidden]="row.id == currentRow">
                 <mat-checkbox disabled [checked]="row.grantAccess"> </mat-checkbox>
               </div> -->

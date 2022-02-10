@@ -43,6 +43,7 @@ export enum ResultAction {
     Stock,
     Unit,
     Good,
+    Operation
   }
   
   export enum ActionType {

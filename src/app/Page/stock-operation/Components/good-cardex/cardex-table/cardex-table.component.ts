@@ -13,7 +13,6 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
 export class CardexTableComponent implements OnInit {
 
   //#region Public field
-  isLoading$!: Observable<boolean>;
   dataSource = new MatTableDataSource<GoodCardexVM>();
   displayedColumns: string[] = ['index', 'goodId', 'goodName', 'unitName', 'stockOperationId',
 'stockOperationType','entireCount','outPutCount','previousRemainCount','currentRemainCount'];
@@ -25,7 +24,6 @@ export class CardexTableComponent implements OnInit {
   //#region Input & Output
   //#endregion
   constructor(private _coreService:FacadService) { 
-    this.isLoading$=this._coreService.Operation.isLoading$;
 
   }
 
@@ -33,7 +31,7 @@ export class CardexTableComponent implements OnInit {
   }
 
   getData(stockId:number,goodId:number){
-     this._coreService.Operation.GetGoodCardex(100,1000).subscribe(result=>{
+     this._coreService.Operation.GetGoodCardex(stockId,goodId).subscribe(result=>{
      this.dataSource.data=result.data;
     });
   }

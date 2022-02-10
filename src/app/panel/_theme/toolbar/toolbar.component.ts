@@ -2,6 +2,7 @@ import { Direction } from '@angular/cdk/bidi';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 
 @Component({
@@ -40,6 +41,9 @@ export class ToolbarComponent implements OnInit {
   changeNavSize(): void {
     this.isOpen = !this.isOpen;
     this.isExpand.emit(this.isOpen);
+  }
+  getVersion():string{
+    return environment.version;
   }
   logout() {
     this._coreService.auth.logOut();

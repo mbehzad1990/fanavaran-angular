@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ReplaySubject, Subject, Subscription, takeUntil } from 'rxjs';
+import { Observable, ReplaySubject, Subject, Subscription, takeUntil } from 'rxjs';
 import { Stock } from 'src/shared/Domain/Models/_Stock/stock';
 import { GoodDetailsVm } from 'src/shared/Domain/ViewModels/_Good/good-details-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
@@ -17,6 +17,8 @@ export class GoodCardexComponent implements OnInit {
   //#endregion
 
   //#region Public field
+  isLoading$!: Observable<boolean>;
+
   stocks!: Stock[];
   stockFilterCtrl: FormControl = new FormControl();
   filterstock: ReplaySubject<Stock[]> = new ReplaySubject<Stock[]>(1);
@@ -30,7 +32,10 @@ export class GoodCardexComponent implements OnInit {
   //#region Input & OutPut & Other
   @ViewChild('dataTable') dataTable!:CardexTableComponent;
   //#endregion
-  constructor(private _coreService:FacadService, private fb: FormBuilder) { }
+  constructor(private _coreService:FacadService, private fb: FormBuilder) { 
+    this.isLoading$=this._coreService.Operation.isLoading$;
+
+  }
 
   ngOnInit(): void {
     this.formElementInit();
@@ -115,6 +120,7 @@ export class GoodCardexComponent implements OnInit {
     );
   }
   getCardex(stock:Stock,good:GoodDetailsVm){
+    debugger
     this.dataTable.getData(stock.id,good.id);
   }
 }

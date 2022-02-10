@@ -192,6 +192,29 @@ export class OperationService implements OnDestroy {
     // Put
  
     // Delete
+    delete(spId: number) {
+      this._isLoading$.next(true);
+      return this.http.delete<ResultDto<boolean>>(this.baseUrl + `DeleteOperation?spId=${spId}`).pipe(
+        map((result: ResultDto<boolean>) => {
+          if (result.isSuccess) {
+          }
+          return result;
+        }),
+        catchError((err) => {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Error,
+            err
+          );
+  
+          return of(null);
+        }),
+        finalize(() => {
+          this._isLoading$.next(false);
+          this._isCompleteStep$.next({ searc: true });
+        }),
+        shareReplay()
+      );
+    }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sb) => sb.unsubscribe());

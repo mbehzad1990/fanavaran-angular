@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
           if (error.status === 401) {
             return this.handleHttpResponseError(request, next);
           }else{
-            return <any>this._coreService.auth.logOut();
+           // return <any>this._coreService.auth.logOut();
           }
         }
         return of(null);

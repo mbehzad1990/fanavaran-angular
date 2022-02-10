@@ -119,11 +119,22 @@ export class AddGroupGoodComponent implements OnInit,OnDestroy {
       model.unitId=item.unitId;
       model.name=item.name;
       model.manualId=item.manualId;
-      model.latinName=item.latinName;
-      model.description='';
+      debugger
+      if( item.latinName=="" || item.latinName==null){
+        model.latinName='';
+
+      }else{
+        model.latinName=item.latinName;
+      }
+      if( item.description=="" || item.description==null){
+        model.description='';
+
+      }else{
+        model.description=item.description;
+      }
       goodList.push(model);
     })
-    
+    debugger
     const sb=this._coreService.good.addlist(goodList).subscribe(result => {
       if (result?.isSuccess) {
         this._coreService.notification.showNotiffication(

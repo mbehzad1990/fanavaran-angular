@@ -35,6 +35,8 @@ export class DeleteModalComponent<T> implements OnInit , OnDestroy {
         return 'در صورت تمایل واحد اندازه گیری حذف می شود';
       case DeleteOperationType.Good:
         return 'در صورت تمایل کالا حذف می شود';
+      case DeleteOperationType.Operation:
+          return 'در صورت تمایل سند حذف می شود';
       // case (DeleteOperationType.Device):
       //   return "در صورت تایید دستگاه حذف می گردد.";
       // case DeleteOperationType.TargetSoftWare:

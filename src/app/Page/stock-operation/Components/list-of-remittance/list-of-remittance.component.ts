@@ -7,8 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'jalali-moment';
 import { Observable, Subscription } from 'rxjs';
 import { blub, fadeOut } from 'src/shared/Adnimation/template.animations';
+import { DeleteModalComponent } from 'src/shared/components/Modals/delete-modal/delete-modal.component';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
-import { ActionType, serachRemittanceController, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
+import { ActionType, DeleteOperationType, serachRemittanceController, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 import { RemittanceDetailsModalComponent } from './remittance-details-modal/remittance-details-modal.component';
@@ -213,6 +214,31 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
     dialogRef.afterClosed().subscribe(result => {
       // this.treeControl.expand(node);
     });
+  }
+  delete(item:ReportOperationVm){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+
+    const delete_data: RequestModalDto<number> = new RequestModalDto<number>();
+    delete_data.delete_field_name = 'حواله '+item.id;
+    delete_data.delete_resource = DeleteOperationType.Operation;
+
+    dialogConfig.data = delete_data
+    dialogConfig.direction = "rtl";
+    const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined && result) {
+        const sb=this._coreService.Operation.delete(item.id).subscribe(result=>{
+          debugger
+          if(result?.isSuccess){
+            this.getData();
+          }
+        })
+        this.subscriptions.push(sb);
+      }
+    });
+ 
   }
 
   ngOnDestroy(): void {
