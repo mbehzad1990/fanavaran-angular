@@ -8,7 +8,7 @@
           <mat-card-title class="mat-headline"> صفحه ورود</mat-card-title>
           <mat-card-subtitle class="mat-subheading-1">ورود به سیستم</mat-card-subtitle>
         </mat-card-header>
-        <form (ngSubmit)="login(username.value, password.value, rememberMe.checked)" [formGroup]="loginForm" novalidate>
+        <form (ngSubmit)="login(username.value, password.value)" [formGroup]="loginForm" novalidate>
           <div fxLayout="column" fxLayout fxLayoutAlign="center center">
             <mat-card-content class="" dir="rtl" fxLayout="column">
               <mat-form-field class="my-2 input-size" appearance="outline" color="primary">
@@ -34,9 +34,9 @@
                   رمز عبور را وارد کنید
                 </mat-error>
               </mat-form-field>
-              <mat-checkbox class="mb-4" formControlName="isRemember" color="primary" #rememberMe>مرا به یاد داشته باش
+              <!-- <mat-checkbox class="mb-4" formControlName="isRemember" color="primary" #rememberMe>مرا به یاد داشته باش
               </mat-checkbox>
-  
+   -->
               <div class="text-center">
                 <button mat-raised-button color="primary" class="w-50">
                   <span fxLayout fxLayoutAlign="center center">

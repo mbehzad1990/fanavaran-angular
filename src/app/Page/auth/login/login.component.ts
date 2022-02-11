@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.loginForm.controls[control].hasError(error);
   }
 
-  login(username: string, password: string, rememberMe: boolean) {
+  login(username: string, password: string, rememberMe: boolean=false) {
     const model = new LoginDto();
     model.userName = username;
     model.passWord = password;
