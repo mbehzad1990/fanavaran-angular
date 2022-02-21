@@ -1,4 +1,5 @@
-export class CustomerRegisterVm {
+export class CustomerEditVm {
+    public id!:number;
     public personCode!:number;
     public name!:string;
     public address!:string;

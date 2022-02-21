@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
 import { ReportOperationDetailVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-detail-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
-
+import * as moment from 'jalali-moment';
 @Component({
   selector: 'app-remittance-details-modal',
   templateUrl: './remittance-details-modal.component.html',
@@ -20,7 +20,7 @@ export class RemittanceDetailsModalComponent implements OnInit, OnDestroy {
   //#region Public
   listOfdetails: ReportOperationDetailVm[] = [];
   dataSource = new MatTableDataSource<ReportOperationDetailVm>();
-  displayedColumns: string[] = ['index', 'name', 'count', 'price', 'amount', 'unitName', 'desc',];
+  displayedColumns: string[] = ['index', 'name','batch','exp', 'count', 'price', 'amount', 'unitName', 'desc',];
 
   isLoading$!: Observable<boolean>;
   //#endregion
@@ -61,5 +61,11 @@ export class RemittanceDetailsModalComponent implements OnInit, OnDestroy {
       this.dataSource.data = data;
     });
   }
+
+  getShamsi(strDate: Date): string {
+
+    const m = moment(strDate, 'jYYYY/jM/jD') ;
+    return  moment(m.format('jYYYY/jM/jD')).format("jYYYY/jMM/jDD");
+   }
 
 }

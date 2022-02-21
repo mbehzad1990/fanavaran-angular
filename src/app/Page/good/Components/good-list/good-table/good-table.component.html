@@ -7,11 +7,11 @@
     </div>
   </div>
   <ng-template #table>
-    <div class="table-containers">
+    <div class="table-container">
       <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width " [ngClass]="dataSource.data.length == 0 ? 'table-fullHeights' : ''">
         <!-- Index Column -->
         <ng-container matColumnDef="index">
-          <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">#</th>
+          <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">ردیف</th>
           <td class=" mat-column-small-width text-right" mat-cell *matCellDef="let element;index as i;">
             {{i+1}}
           </td>
@@ -64,10 +64,10 @@
                   lock_reset</mat-icon> -->
     
               <button mat-icon-button>
-                <i class="icon-edit-3 icon-20px " (click)="edit(row)"></i>
+                <i class="icon-edit-3 icon-20px " (click)="edit(row)" matTooltip="ویرایش" matTooltipPosition="right"></i>
               </button>
               <button mat-icon-button>
-                <i class="icon-trash-2 icon-20px delete-btn" (click)="delete(row)"></i>
+                <i class="icon-trash-2 icon-20px delete-btn" (click)="delete(row)" matTooltip="خذف" matTooltipPosition="above"></i>
               </button>
               <!-- <mat-icon title="Delete Card" color='warn' (click)="clickTest()">delete</mat-icon> -->
     

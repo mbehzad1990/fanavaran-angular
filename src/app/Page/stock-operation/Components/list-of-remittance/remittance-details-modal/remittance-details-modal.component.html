@@ -27,8 +27,18 @@
           <th mat-header-cell *matHeaderCellDef class=" text-right">نام کالا</th>
           <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodName}} </td>
           <td mat-footer-cell *matFooterCellDef> جمع کل : </td>
-
-
+        </ng-container>
+        <!-- batch Column -->
+        <ng-container matColumnDef="batch">
+          <th mat-header-cell *matHeaderCellDef class=" text-right">بچ</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{element.bacthNumber}} </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <!-- exp Column -->
+        <ng-container matColumnDef="exp">
+          <th mat-header-cell *matHeaderCellDef class=" text-right">تاریخ انقضا</th>
+          <td mat-cell class="text-right" *matCellDef="let element"> {{getShamsi(element.expireDate)}} </td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
         <!-- count Column -->
         <ng-container matColumnDef="count">

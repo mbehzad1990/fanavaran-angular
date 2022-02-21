@@ -6,12 +6,15 @@ import { ResultAction } from 'src/shared/Domain/Enums/global-enums';
   providedIn: 'root',
 })
 export class ErrorHandlerService {
-  constructor() {}
+  constructor() { }
   getErrorText(resultAction: ResultAction): string {
     let resultText = '';
     switch (resultAction) {
       case ResultAction.Success:
         resultText = 'عملیات با موفقیت انجام شد';
+        break;
+      case ResultAction.ClientAlreadyExist:
+        resultText = 'مشتری با این مشخصات تکراری است';
         break;
       case ResultAction.ExceptionFaild:
         resultText = 'خطا در سرور رخ داده است';
@@ -31,8 +34,8 @@ export class ErrorHandlerService {
       case ResultAction.UserAlreadyExist:
         resultText = 'این کاربر قبلا اضافه شده است';
         break;
-        default:
-          resultText = 'UnHandled';
+      default:
+        resultText = 'UnHandled';
 
     }
     return resultText;

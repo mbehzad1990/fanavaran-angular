@@ -1,5 +1,6 @@
 export class Customer {
     public id!:number;
+    public personCode!:number;
     public name!:string;
     public address!:string;
     public phone!:string;

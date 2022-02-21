@@ -50,30 +50,39 @@ export class UserTableComponent implements OnInit,OnDestroy {
     this.subscriptions.push(sb);
   }
   deleteUser(user:User){
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = false;
+    debugger
+    if(!user.userName.includes('admin')){
 
-    const delete_data: RequestModalDto<number> = new RequestModalDto<number>();
-    delete_data.delete_field_name = user.fullName;
-    delete_data.delete_resource = DeleteOperationType.User;
-
-    dialogConfig.data = delete_data
-    dialogConfig.direction = "rtl";
-    const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined && result) {
-        const sb=this._coreService.user.deleteUser(user.id).subscribe(result=>{
-          if(result?.isSuccess){
-            const actionText=this._coreService.errorHandler.getErrorText(result.resultAction);
-            this._coreService.notification.showNotiffication(NotificationType.Success,actionText);
-          }else{
-    
-          }
-        });
-        this.subscriptions.push(sb);
-      }
-    });
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = false;
+  
+      const delete_data: RequestModalDto<number> = new RequestModalDto<number>();
+      delete_data.delete_field_name = user.fullName;
+      delete_data.delete_resource = DeleteOperationType.User;
+  
+      dialogConfig.data = delete_data
+      dialogConfig.direction = "rtl";
+      const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != undefined && result) {
+          const sb=this._coreService.user.deleteUser(user.id).subscribe(result=>{
+            if(result?.isSuccess){
+              const actionText=this._coreService.errorHandler.getErrorText(result.resultAction);
+              this._coreService.notification.showNotiffication(NotificationType.Success,actionText);
+            }else{
+      
+            }
+          });
+          this.subscriptions.push(sb);
+        }
+      });
+    }else{
+      this._coreService.notification.showNotiffication(
+        NotificationType.Error,
+        "این کاربر قابل حذف نیست"
+      );
+    }
 
   }
   clickTest(){

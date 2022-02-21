@@ -93,7 +93,7 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
   //dataSource = new MatTableDataSource<ReportOperationVm>();
   dataSource!: MatTableDataSource<ReportOperationVm>;
   tempdata: ReportOperationVm[] = [];
-  displayedColumns: string[] = ['index', 'id', 'bachNumber', 'personName', 'stockName', 'remittenceType', 'date', 'desc', 'menu'];
+  displayedColumns: string[] = ['index', 'id',  'personName', 'stockName', 'remittenceType', 'date', 'desc', 'menu'];
 
   isLoading$!: Observable<boolean>;
 
