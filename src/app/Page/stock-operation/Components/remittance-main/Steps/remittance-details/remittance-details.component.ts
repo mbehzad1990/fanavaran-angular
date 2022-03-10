@@ -55,7 +55,6 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
   getShamsi(strDate: Date): string {
-    debugger
     let MomentDate = moment(strDate, 'YYYY/MM/DD');;
     return MomentDate.locale('fa').format('YYYY/M/D');
    }

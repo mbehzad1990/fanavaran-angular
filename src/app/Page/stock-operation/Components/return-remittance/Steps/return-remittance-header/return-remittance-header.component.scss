@@ -1,0 +1,55 @@
+
+table {
+  width: 100%;
+  text-align: right;
+
+
+  td {
+    padding: 8px 0px !important;
+  }
+}
+
+.btn-height {
+  height: 40px;
+}
+
+.table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 63vh;
+  overflow: auto;
+}
+
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  background-color: #f8f9fcde; width: 100%;
+}
+
+table {
+  width: 100%;
+  text-align: right;
+  
+
+  td {
+    padding: 8px 0px;
+  }
+}
+
+.mat-column-small-width {
+  width: 50px;
+}
+.mat-column-small-width-collapse {
+  width: 10px;
+}
+tr.example-detail-row {
+  height: 0;
+}
+.example-element-row td {
+  border-bottom-width: 0;
+}
+.selet-remittance-btn{
+  color: green;
+}

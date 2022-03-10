@@ -14,7 +14,7 @@ import { PersianCurencyPipe } from './Pipe/persian-curency.pipe';
   declarations: [
   
     PersianCurencyDirective,
-        PersianCurencyPipe
+        PersianCurencyPipe,
   ],
   imports: [
     CommonModule,
