@@ -16,7 +16,7 @@ table {
 .table-container {
   position: relative;
   min-height: 200px;
-  max-height: 63vh;
+  max-height: 65vh;
   overflow: auto;
 }
 
@@ -52,4 +52,7 @@ tr.example-detail-row {
 }
 .selet-remittance-btn{
   color: green;
+}
+.table-fullHeight {
+  height: 43vh;
 }

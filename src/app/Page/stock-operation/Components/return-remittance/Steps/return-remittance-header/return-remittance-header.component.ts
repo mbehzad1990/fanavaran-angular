@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, ReplaySubject, Subject, Subscription, takeUntil } from 'rxjs';
 import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
@@ -13,6 +13,10 @@ import { MatStep } from '@angular/material/stepper';
 import { HeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/header-info-dto';
 import { RetrnHeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/retrn-header-info-dto';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ReturnHeaderDto } from 'src/shared/Domain/Dto/_Operation/ReturnRemittance/return-header-dto';
+import { SetDateModalComponent } from './set-date-modal/set-date-modal.component';
+import { ReturnShareDataService } from '../Service/return-share-data.service';
 
 
 @Component({
@@ -41,22 +45,26 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
   filterPerson: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
 
   dataSource = new MatTableDataSource<CustomerFactorDetailsVm>([]);
-  displayedColumns: string[] = ['collapse', 'index', 'stockOperationId', 'registerDate', 'stockName', 'description','select'];
+  displayedColumns: string[] = ['collapse', 'index', 'stockOperationId', 'registerDate', 'stockName', 'description', 'select'];
   expandedElement!: CustomerFactorDetailsVm | null;
-  dateSelected:string='';
+  form!: FormGroup;
+  toggleFilters = true;
+  dateSelected: string = '';
+  isStepComplete: boolean = false;
   //#endregion
 
   //#region Input & OutPut & Other
   @Input() stockOperationType!: StockOperationType;
   @Input() nextStepper!: MatStep;
-  @Output() _retrnHeaderInfoDto=new EventEmitter<RetrnHeaderInfoDto>();
-  @Output() _remittanceMabna=new EventEmitter<CustomerFactorGoodsVm[]>();
+  @Output() _retrnHeaderInfoDto = new EventEmitter<RetrnHeaderInfoDto>();
+  @Output() _remittanceMabna = new EventEmitter<CustomerFactorGoodsVm[]>();
   //#endregion
-  constructor(private _coreService: FacadService) {
+  constructor(private _coreService: FacadService, private dialog: MatDialog, private fb: FormBuilder, private _shareData: ReturnShareDataService) {
     this.isLoading$ = this._coreService.Operation.isLoading$;
   }
 
   ngOnInit(): void {
+    this.formElementInit();
     this.getPerson();
     this.personFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -64,7 +72,11 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
         this.filterPersons();
       });
   }
-
+  formElementInit() {
+    this.form = this.fb.group({
+      personSelect: ['', Validators.required],
+    });
+  }
   getPerson() {
     const sb = this._coreService.customer.items$.subscribe(_persons => {
       this.persons = _persons;
@@ -89,10 +101,6 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
       this.persons.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
     );
   }
-
-  isSelectCustomer() {
-
-  }
   getStockOperationType(type: StockOperationType): StockOperationType {
     let opType!: StockOperationType;
     if (type == StockOperationType.ReBuy) {
@@ -105,7 +113,7 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
   }
   getCustomerFactorDetail(customerId: number) {
     const sb = this._coreService.Operation.GetCustomerFactorDetails(customerId, this.getStockOperationType(this.stockOperationType)).subscribe(data => {
-      
+
       this.dataSource.data = data.data
     });
     this.subscriptions.push(sb);
@@ -116,7 +124,7 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
     return date;
   }
   getStockNameById(stockId: number): string {
-    
+
     let stockName: string = '';
     const sb = this._coreService.stock.stock$.subscribe(data => {
       data.forEach(item => {
@@ -127,30 +135,56 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
     });
     return stockName;
   }
-  getDetailFromRemittance(item:CustomerFactorDetailsVm,person:Customer){
-    debugger
-    const data=new RetrnHeaderInfoDto();
-    data.refId=item.stockOperationId;
-    data.personName=person.name;
-    data.personId=person.id;
-    data.registerDate=this.dateSelected;
-    data.stockName=this.getStockNameById(item.stockId);
-    this._retrnHeaderInfoDto.emit(data);
-    this._coreService.Operation.setRemittanceDetails(item.customerFactorGoods);
-    this._remittanceMabna.emit(item.customerFactorGoods);
-    this.nextStepper.completed = true;
-    this.nextStepper._stepper.next();
-  }
+  // getDetailFromRemittance(item:CustomerFactorDetailsVm,person:Customer){
+
+  //   this._coreService.Operation.setRemittanceDetails(item.customerFactorGoods);
+  //   this._remittanceMabna.emit(item.customerFactorGoods);
+  //   this.nextStepper.completed = true;
+  //   this.nextStepper._stepper.next();
+  // }
   applyFilter(event: Event) {
-
     const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.data=this.dataSource.data.filter(item=>this.getShamsi(item.registerDate)==filterValue)
-    
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
   }
-  onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+  selectRemittance(item: CustomerFactorDetailsVm, person: Customer) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const modal_data = new ReturnHeaderDto();
+    modal_data.personId = person.id;
+    modal_data.refId = item.stockOperationId;
+    modal_data.stockId = item.stockId;
+    modal_data.stockOperationType = this.stockOperationType;
+
+
+    dialogConfig.data = modal_data;
+    const dialogRef = this.dialog.open(SetDateModalComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        const data = new RetrnHeaderInfoDto();
+        data.refId = item.stockOperationId;
+        data.personName = person.name;
+        data.personId = person.id;
+        data.registerDate = this.getDate();
+        data.stockName = this.getStockNameById(item.stockId);
+        this._retrnHeaderInfoDto.emit(data);
+        this._shareData.setGoodOfRemittance(item.customerFactorGoods);
+        this._shareData.setCompletHeaderStep(true);
+        // this.nextStepper.completed = true;
+        // this.nextStepper._stepper.next();
+      }
+    })
+  }
+  getDate(): string {
+    const sb = this._shareData.returnHeader$.subscribe(data => {
+      if (data) {
+        this.dateSelected = moment(data.registerDate.toString()).format("jYYYY/jMM/jDD");
+      }
+    });
+    this.subscriptions.push(sb);
+    return this.dateSelected;
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sp => sp.unsubscribe());

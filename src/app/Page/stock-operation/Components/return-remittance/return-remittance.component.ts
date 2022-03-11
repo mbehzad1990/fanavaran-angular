@@ -1,10 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { RetrnHeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/retrn-header-info-dto';
 import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { CustomerFactorGoodsVm } from 'src/shared/Domain/ViewModels/_stockOperationDetail/customer-factor-goods-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
+import { RemittanceDetailsComponent } from '../remittance-main/Steps/remittance-details/remittance-details.component';
+import { ReturnRemittanceDetailsComponent } from './Steps/return-remittance-details/return-remittance-details.component';
+import { ReturnShareDataService } from './Steps/Service/return-share-data.service';
 
 @Component({
   selector: 'app-return-remittance',
@@ -23,12 +26,16 @@ export class ReturnRemittanceComponent implements OnInit, OnDestroy {
   headerInfoDto!: RetrnHeaderInfoDto;
   remittanceDetail!: CustomerFactorGoodsVm[];
   _operationResult: boolean = false;
+  isDetailShow$!:Observable<boolean>;
   //#endregion
 
   //#region Input & OutPut & Other
   // @ViewChild('stepHeader') stepHeader!: RemittanceHeaderComponent;
+  @ViewChild('details') details!: ReturnRemittanceDetailsComponent;
   //#endregion
-  constructor(private rout: ActivatedRoute, private _coreService: FacadService) { }
+  constructor(private rout: ActivatedRoute, private _coreService: FacadService,private _shareData:ReturnShareDataService) {
+    this.isDetailShow$=this._shareData.completeHeaderStep$;
+   }
 
   ngOnInit(): void {
     this.rout.data.subscribe(data => {
@@ -37,6 +44,7 @@ export class ReturnRemittanceComponent implements OnInit, OnDestroy {
   }
   onStepChange(event: any): void {
     console.log(event.selectedIndex);
+    this.details.ngOnInit();
     // if( this._operationResult){
     //   this.stepHeader.resetStep();
     // }

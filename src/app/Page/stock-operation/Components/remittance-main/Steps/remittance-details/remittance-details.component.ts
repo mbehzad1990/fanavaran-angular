@@ -66,7 +66,6 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
       }
     })
     if (!isExist) {
-      debugger
       this.listOfGood.push(_item);
       this.dataSource.data = this.listOfGood;
       // this.dataSource.data.push(_item);
@@ -126,10 +125,10 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
 
   }
   getTotalCost() {
-    return this.dataSource.data.map(t => t.amount).reduce((acc, value) => acc + value, 0).toString();
+    return this.dataSource.data.map(t => t.amount).reduce((acc, value) => acc + value, 0);
   }
   getTotalFi() {
-    return this.dataSource.data.map(t => t.price).reduce((acc, value) => acc + value, 0).toString();
+    return this.dataSource.data.map(t => t.price).reduce((acc, value) => acc + value, 0);
   }
   getTotalCount() {
     return this.dataSource.data.map(t => t.count).reduce((acc, value) => parseInt(acc.toString()) + parseInt(value.toString()), 0);

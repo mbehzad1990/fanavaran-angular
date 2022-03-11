@@ -43,10 +43,10 @@ export class RemittanceDetailsModalComponent implements OnInit, OnDestroy {
     this.getData();
   }
   getTotalCost() {
-    return this.dataSource.data.map(t => t.amount).reduce((acc, value) => acc + value, 0).toString();
+    return this.dataSource.data.map(t => t.amount).reduce((acc, value) => acc + value, 0);
   }
   getTotalFi() {
-    return this.dataSource.data.map(t => t.price).reduce((acc, value) => acc + value, 0).toString();
+    return this.dataSource.data.map(t => t.price).reduce((acc, value) => acc + value, 0);
   }
   getTotalCount() {
     return this.dataSource.data.map(t => t.count).reduce((acc, value) => parseInt(acc.toString()) + parseInt(value.toString()), 0);

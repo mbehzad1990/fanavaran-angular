@@ -10,8 +10,9 @@ export class PersianCurencyPipe implements PipeTransform {
   constructor(private decimalPipe: DecimalPipe){
 
   }
-  transform(value: string): unknown {
-    const numberFormat = parseInt(String(value).replace(this.currencyChars, ''));
+  transform(value: number): unknown {
+    const stringValue=value.toString();
+    const numberFormat = parseInt(String(stringValue).replace(this.currencyChars, ''));
     const usd = this.decimalPipe.transform(numberFormat, '1.0', 'en-US');
     return usd;
   }
