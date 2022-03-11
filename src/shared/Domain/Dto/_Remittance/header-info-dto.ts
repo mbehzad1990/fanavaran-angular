@@ -3,4 +3,5 @@ export class HeaderInfoDto {
     public stockName:string='';
     public personName:string='';
     public description:string='';
+    public refId:number=0;
 }

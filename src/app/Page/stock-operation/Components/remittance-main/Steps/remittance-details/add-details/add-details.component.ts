@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'jalali-moment';
@@ -53,6 +53,7 @@ export class AddDetailsComponent implements OnInit{
 
   //#region Input & Output & Others
   @Output() itemForAdd=new EventEmitter<GoodDetailDto>();
+
   //#endregion
 
   constructor(private _coreService:FacadService,private fb: FormBuilder) { }
@@ -92,7 +93,6 @@ export class AddDetailsComponent implements OnInit{
     this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
   }
   add(form: FormGroup){
-    debugger
     const addModel = new GoodDetailDto();
 
     addModel.goodId=form.value.goodCtrl.id;

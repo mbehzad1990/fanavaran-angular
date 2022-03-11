@@ -7,6 +7,7 @@ import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { Customer } from 'src/shared/Domain/Models/_Customer/customer';
 import { CustomerRegisterVm } from 'src/shared/Domain/ViewModels/Customer/customer-register-vm';
+import { CustomerEditVm } from 'src/shared/Domain/ViewModels/_Customer/Customer-Edit-Vm';
 import { FacadService } from '../_Core/facad.service';
 
 @Injectable({
@@ -61,6 +62,7 @@ export class CustomerService implements OnDestroy {
       .pipe(
         map((result: ResultDto<Customer[]>) => {
           if (result.data) {
+            debugger
             this._items$.next(result.data);
           }
           if (!result.isSuccess) {
@@ -123,7 +125,8 @@ export class CustomerService implements OnDestroy {
   //#endregion
 
   //#region Put
-  edit(model: Customer) {
+  edit(model: CustomerEditVm) {
+    debugger
     this._isLoading$.next(true);
     return this.http.put<ResultDto<boolean>>(this.baseUrl + "Edit", model).pipe(
       map((result: ResultDto<boolean>) => {
@@ -147,12 +150,12 @@ export class CustomerService implements OnDestroy {
       shareReplay()
     );
   }
-  //#endregio
+  //#endregion
 
   //#region Delete
   delete(Id: number) {
     this._isLoading$.next(true);
-    return this.http.delete<ResultDto<boolean>>(this.baseUrl + `Delete?Id=${Id}`).pipe(
+    return this.http.delete<ResultDto<boolean>>(this.baseUrl + `Delete/${Id}`).pipe(
       map((result: ResultDto<boolean>) => {
         if (result.isSuccess) {
           this.getAll();

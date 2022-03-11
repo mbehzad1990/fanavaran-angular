@@ -14,6 +14,12 @@ import { InventoryStockComponent } from './Components/inventory-stock/inventory-
 import { InventoryTableComponent } from './Components/inventory-stock/inventory-table/inventory-table.component';
 import { GoodCardexComponent } from './Components/good-cardex/good-cardex.component';
 import { CardexTableComponent } from './Components/good-cardex/cardex-table/cardex-table.component';
+import { ReturnRemittanceComponent } from './Components/return-remittance/return-remittance.component';
+import { ReturnRemittanceHeaderComponent } from './Components/return-remittance/Steps/return-remittance-header/return-remittance-header.component';
+import { RemittanceDetailTableComponent } from './Components/return-remittance/Steps/return-remittance-header/remittance-detail-table/remittance-detail-table.component';
+import { ReturnRemittanceDetailsComponent } from './Components/return-remittance/Steps/return-remittance-details/return-remittance-details.component';
+import { ReturnAddDetailsComponent } from './Components/return-remittance/Steps/return-remittance-details/return-add-details/return-add-details.component';
+import { SetDateModalComponent } from './Components/return-remittance/Steps/return-remittance-header/set-date-modal/set-date-modal.component';
 
 
 @NgModule({
@@ -28,7 +34,13 @@ import { CardexTableComponent } from './Components/good-cardex/cardex-table/card
     InventoryStockComponent,
     InventoryTableComponent,
     GoodCardexComponent,
-    CardexTableComponent
+    CardexTableComponent,
+    ReturnRemittanceComponent,
+    ReturnRemittanceHeaderComponent,
+    RemittanceDetailTableComponent,
+    ReturnRemittanceDetailsComponent,
+    ReturnAddDetailsComponent,
+    SetDateModalComponent
   ],
   imports: [
     CommonModule,

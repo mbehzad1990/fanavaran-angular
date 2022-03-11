@@ -22,7 +22,7 @@ export class CustomerTableComponent implements OnInit,OnDestroy {
   //#region Public field
   currentRow = -1;
   dataSource = new MatTableDataSource<Customer>();
-  displayedColumns: string[] = ['index', 'id', 'name', 'mobile', 'phone','address','desc', 'menu'];
+  displayedColumns: string[] = ['index', 'id','manualId', 'name', 'mobile', 'phone','address','desc', 'menu'];
   
   isHover: boolean = false;
   

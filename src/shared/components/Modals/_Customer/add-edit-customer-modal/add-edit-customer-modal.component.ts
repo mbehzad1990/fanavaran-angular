@@ -7,6 +7,7 @@ import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { ActionType, NotificationType, ResultType } from 'src/shared/Domain/Enums/global-enums';
 import { Customer } from 'src/shared/Domain/Models/_Customer/customer';
 import { CustomerRegisterVm } from 'src/shared/Domain/ViewModels/Customer/customer-register-vm';
+import { CustomerEditVm } from 'src/shared/Domain/ViewModels/_Customer/Customer-Edit-Vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 
 @Component({
@@ -30,6 +31,7 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
  messageResultType!: ResultType;
  title: string = '';
  btnText: string = '';
+ numberPattern='^[0-9]*$';
  //#endregion
 
  //#region Input & Output & Others
@@ -57,7 +59,9 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
        address: [''],
        phone: [''],
        mobile:[''],
-       description:['']
+       description:[''],
+       customerCode:[''],
+       
      });
    }else{
        this.crudForm = this.fb.group({
@@ -65,7 +69,8 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
          address: [this.data.data.address],
          phone: [this.data.data.phone],
          mobile:[this.data.data.mobile],
-         description:[this.data.data.description]
+         description:[this.data.data.description],
+         customerCode:[this.data.data.personCode]
        });
    }
  }
@@ -103,7 +108,16 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
    this.subscriptions.push(sb);
  }
  edit(updateModel:Customer){
-    const sb=this._coreService.customer.edit(updateModel).subscribe(result=>{
+   const model=new CustomerEditVm();
+   model.id=updateModel.id;
+   model.name=updateModel.name;
+   model.mobile=updateModel.mobile;
+   model.phone=updateModel.phone;
+   model.address=updateModel.address;
+   model.description=updateModel.description;
+   model.personCode=updateModel.personCode;
+
+    const sb=this._coreService.customer.edit(model).subscribe(result=>{
      if (result?.isSuccess) {
        this._coreService.notification.showNotiffication(
          NotificationType.Success,
@@ -118,7 +132,7 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
    });
    this.subscriptions.push(sb);
  }
- submit(name:string,address:string,phone:string,dec:string,mobile:string){
+ submit(name:string,address:string,phone:string,dec:string,mobile:string,customerCode:string){
    if (this.data.action == ActionType.Add) {
      const model=new CustomerRegisterVm();
      model.name=name;
@@ -126,6 +140,7 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
      model.phone=phone;
      model.description=dec;
      model.mobile=mobile;
+     model.personCode=parseInt(customerCode);
      
      this.add(model);
    }else{
@@ -136,6 +151,7 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
      model.description=dec;
      model.mobile=mobile;
      model.id=this.data.data.id;
+     model.personCode=parseInt(customerCode);
       
      this.edit(model);
    }

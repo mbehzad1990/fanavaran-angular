@@ -1,4 +1,5 @@
 export class CustomerRegisterVm {
+    public personCode!:number;
     public name!:string;
     public address!:string;
     public phone!:string;

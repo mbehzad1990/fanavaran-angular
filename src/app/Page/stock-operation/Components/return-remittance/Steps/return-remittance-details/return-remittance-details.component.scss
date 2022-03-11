@@ -1,0 +1,95 @@
+@import "../../../../../../../assets/scss/mat-color-palette";
+@import "../../../../../../../assets/scss/variables";
+
+.header {
+    background-color: #f3feff;
+    border-radius: $radius-small ;
+    text-align: center;
+    // border: 1px solid mat-color($semantic-palette , success);
+    margin-bottom: 1rem;
+    width: fit-content;
+    padding: .5rem 1rem;
+    color:  mat-color($semantic-palette , success);
+    display: inline-flex;
+  }
+  table {
+    width: 100%;
+    text-align: right;
+    border-radius: 2em;
+    td {
+      padding: 8px 0px;
+    }
+  }
+  
+  .example-table-container {
+    position: relative;
+    min-height: 200px;
+    max-height: 63vh;
+    overflow: auto;
+  }
+  .header {
+    background-color: #f3feff;
+    border-radius: $radius-small;
+    text-align: center;
+    // border: 1px solid mat-color($semantic-palette , success);
+    margin-bottom: 1rem;
+    width: fit-content;
+    padding: .5rem 1rem;
+    color: mat-color($semantic-palette, success);
+    display: inline-flex;
+  }
+  
+  .button-Add {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    direction: ltr;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+  
+  .mat-table {
+    // height: calc(97vh - 401px);
+    overflow: auto;
+    width: 100%;
+  }
+  
+  .table-fullHeight {
+    height: 43vh;
+  }
+  
+  .index-col-width {
+    width: 40px;
+    text-align: center;
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .mat-column-small-width {
+    width: 50px;
+  }
+  .element-row:not(.expanded):hover {
+    background: #f5f5f5;
+  }
+  
+  .node .hover-display {
+    display: none;
+  }
+  
+  .node:hover .hover-display {
+    display: block;
+  }
+  
+  
+  .mat-row.hovered {
+    cursor: pointer;
+    background-color: #bfd7ea;
+  }
+  
+  .mat-row.highlighted {
+    background: #aecfd6;
+  }

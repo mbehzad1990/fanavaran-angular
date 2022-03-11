@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  serverUrl:"https://185.81.96.33",
-  version:"1.0.0"
+  serverUrl:"http://localhost:5071",
+  //"http://185.81.96.33",
+  //http://localhost:5071/
+  version:"1.1.0"
 };

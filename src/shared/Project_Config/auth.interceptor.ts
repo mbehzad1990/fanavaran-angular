@@ -26,10 +26,11 @@ export class AuthInterceptor implements HttpInterceptor {
       }),
       catchError((error: any): Observable<any> => {
         if (error instanceof HttpErrorResponse) {
+          debugger
           if (error.status === 401) {
             return this.handleHttpResponseError(request, next);
           }else{
-            return <any>this._coreService.auth.logOut();
+            //return <any>this._coreService.auth.logOut();
           }
         }
         return of(null);
@@ -43,10 +44,13 @@ export class AuthInterceptor implements HttpInterceptor {
         return request.clone({
           setHeaders: {
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
             'Authorization': `Bearer ${jwt.jwtToken}`
           }
         })
       }
+      debugger
       return request;
     } catch (error) {
       console.log('setTokenRequest_Error: ' + error);

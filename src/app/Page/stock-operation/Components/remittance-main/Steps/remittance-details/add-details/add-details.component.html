@@ -65,7 +65,7 @@
     </mat-form-field>
     
     <mat-form-field class="mt-1 input-size input-text-size" appearance="outline" color="primary">
-        <mat-label>قیمت</mat-label>
+        <mat-label>(ریال)قیمت</mat-label>
         <input matInput placeholder="1,000" #price formControlName="price"  PersianCurency/>
         <mat-error *ngIf="errorHandling('price', 'required')">
             انتخاب انبار اجباری است

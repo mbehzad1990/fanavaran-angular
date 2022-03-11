@@ -73,7 +73,6 @@ _operationResult:boolean=false;
    this.headerInfo=_headerInfo;
  }
  getHeaderDto(_headerInfo:HeaderInfoDto){
-   debugger
    this.headerInfoDto=new HeaderInfoDto();
    this.headerInfoDto=_headerInfo;
  }
