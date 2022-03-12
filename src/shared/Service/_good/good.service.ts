@@ -173,7 +173,7 @@ export class GoodService implements OnDestroy {
       shareReplay()
     );
   }
-  //#endregio
+  //#endregion
 
   //#region Delete
   delete(Id: number) {

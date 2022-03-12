@@ -155,7 +155,7 @@ export class CustomerService implements OnDestroy {
   //#region Delete
   delete(Id: number) {
     this._isLoading$.next(true);
-    return this.http.delete<ResultDto<boolean>>(this.baseUrl + `Delete/${Id}`).pipe(
+    return this.http.delete<ResultDto<boolean>>(this.baseUrl + `Delete?Id=${Id}`).pipe(
       map((result: ResultDto<boolean>) => {
         if (result.isSuccess) {
           this.getAll();
