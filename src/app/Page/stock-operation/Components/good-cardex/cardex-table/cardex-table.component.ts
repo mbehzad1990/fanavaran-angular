@@ -14,7 +14,7 @@ export class CardexTableComponent implements OnInit {
 
   //#region Public field
   dataSource = new MatTableDataSource<GoodCardexVM>();
-  displayedColumns: string[] = ['index', 'goodId', 'goodName', 'unitName', 'stockOperationId',
+  displayedColumns: string[] = ['index', 'goodId','manualId', 'goodName', 'unitName', 'stockOperationId',
 'stockOperationType','entireCount','outPutCount','previousRemainCount','currentRemainCount'];
   //#endregion
 
