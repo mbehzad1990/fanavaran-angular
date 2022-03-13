@@ -149,7 +149,7 @@
             </ng-container>
   
   
-            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true" style="background-color: #f1f3f84f;"></tr>
             <!-- <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
               </tr> -->
@@ -163,7 +163,7 @@
                 </div>
               </td>
             </tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered}"
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;;sticky: true" [ngClass]="{hovered: row.hovered}"
               (mouseover)="row.hovered = true" (mouseover)="currentRow = row.id" (mouseout)="currentRow= -1"
               (mouseout)="row.hovered = false">
             </tr>

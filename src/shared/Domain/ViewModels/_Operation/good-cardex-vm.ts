@@ -3,6 +3,7 @@ import { StockOperationType } from "../../Enums/global-enums";
 export class GoodCardexVM {
 
     public goodId!:number;
+    public manualId!:number;
     public goodName!:string;
     public unitName!:string;
     public stockOperationId!:number;
