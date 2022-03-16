@@ -9,7 +9,7 @@ import { Observable, Subscription } from 'rxjs';
 import { blub, fadeOut } from 'src/shared/Adnimation/template.animations';
 import { DeleteModalComponent } from 'src/shared/components/Modals/delete-modal/delete-modal.component';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
-import { ActionType, DeleteOperationType, serachRemittanceController, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
+import { ActionType, DeleteOperationType, NotificationType, serachRemittanceController, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 import { RemittanceDetailsModalComponent } from './remittance-details-modal/remittance-details-modal.component';
@@ -233,6 +233,8 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
           debugger
           if(result?.isSuccess){
             this.getData();
+          }else{
+            this._coreService.notification.showNotiffication(NotificationType.Error,this._coreService.errorHandler.getErrorText(result?.resultAction!));
           }
         })
         this.subscriptions.push(sb);

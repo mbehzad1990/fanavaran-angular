@@ -58,14 +58,17 @@ export class RemittanceDetailsModalComponent implements OnInit, OnDestroy {
   }
   getData() {
     const sb = this._coreService.Operation.operationDetailList$.subscribe(data => {
+      debugger
       this.dataSource.data = data;
     });
   }
 
-  getShamsi(strDate: Date): string {
-
-    const m = moment(strDate, 'jYYYY/jM/jD') ;
-    return  moment(m.format('jYYYY/jM/jD')).format("jYYYY/jMM/jDD");
-   }
+  getShamsi(strDate: Date|null): string {
+    if(strDate!=null){
+      let MomentDate = moment(strDate, 'YYYY/MM/DD');
+      return MomentDate.locale('fa').format('YYYY/M/D');
+    }
+    return '';
+  }
 
 }

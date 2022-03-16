@@ -1,6 +1,6 @@
 export class GoodDetailDto {
     public bacthNumber!:number;
-    public expireDate!:Date;
+    public expireDate:Date|null=null;
     public goodId!:number;
     public goodName!:string;
     public count!:number;

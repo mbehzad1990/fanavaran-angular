@@ -74,8 +74,7 @@ export class AddDetailsComponent implements OnInit{
       goodCtrl: [null, Validators.required,],
       count: [null, Validators.required],
       price: [null, Validators.required],
-      batchNumber: [null, Validators.required],
-      datePicker: [moment, Validators.required],
+      batchNumber: [null],
       dec: [null],
      
       // stockFilterCtrl: [''],
@@ -98,7 +97,11 @@ export class AddDetailsComponent implements OnInit{
     addModel.goodId=form.value.goodCtrl.id;
     addModel.goodName=form.value.goodCtrl.name;
     addModel.bacthNumber=form.value.batchNumber;
-    addModel.expireDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    
+    if(this.dateSelected!=''){
+      addModel.expireDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    }
+ 
     addModel.count=form.value.count;
     const val = form.value.price;
     addModel.price=Number(val.replace(this.numberChars, ""));

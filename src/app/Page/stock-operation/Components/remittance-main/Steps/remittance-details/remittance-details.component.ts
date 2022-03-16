@@ -29,22 +29,22 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
   // formType!:StockOperationType;
   listOfGood: GoodDetailDto[] = [];
   dataSource = new MatTableDataSource<GoodDetailDto>(this.listOfGood);
-  displayedColumns: string[] = ['index', 'name','unitName', 'count', 'price', 'amount','batch','expirdate',  'desc', 'menu'];
+  displayedColumns: string[] = ['index', 'name', 'unitName', 'count', 'price', 'amount', 'batch', 'expirdate', 'desc', 'menu'];
 
   isLoading$!: Observable<boolean>;
 
   isLoading = false;
   isOpen = false;
 
-  _operationComplete:boolean=true;
-  currentRow=-1;
+  _operationComplete: boolean = true;
+  currentRow = -1;
   //#endregion
 
   //#region Input & OutPut & Other
   @Input() headerInfo!: RegisterStockOperationVm;
   @Input() headerInfoDto!: HeaderInfoDto;
   @Input() stepper!: MatStepper;
-  @Output() OperationComplete=new EventEmitter<boolean>();
+  @Output() OperationComplete = new EventEmitter<boolean>();
 
   //#endregion
   constructor(private _coreService: FacadService) {
@@ -54,23 +54,38 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   }
-  getShamsi(strDate: Date): string {
-    let MomentDate = moment(strDate, 'YYYY/MM/DD');;
-    return MomentDate.locale('fa').format('YYYY/M/D');
-   }
+  getShamsi(strDate: Date|null): string {
+    if(strDate!=null){
+      let MomentDate = moment(strDate, 'YYYY/MM/DD');
+      return MomentDate.locale('fa').format('YYYY/M/D');
+    }
+    return '';
+  }
   getItem(_item: GoodDetailDto) {
     let isExist = false;
+    // this.listOfGood.forEach(item => {
+    //   if (item.goodName == _item.goodName) {
+    //     isExist = true;
+    //   }
+    // })
+
     this.listOfGood.forEach(item => {
-      if (item.goodName == _item.goodName) {
+      if (item.goodId == _item.goodId) {
         isExist = true;
+        if(item.price!=_item.price){
+          this._coreService.notification.showNotiffication(NotificationType.Warning, 'قیمت واحد را بررسی کنید');
+        }else{
+          item.count =parseInt(item.count.toString()) +parseInt( _item.count.toString());
+          item.amount=item.count* item.price;
+        }
       }
     })
     if (!isExist) {
       this.listOfGood.push(_item);
       this.dataSource.data = this.listOfGood;
-      // this.dataSource.data.push(_item);
-    } else {
-      this._coreService.notification.showNotiffication(NotificationType.Warning, 'نام کالا تکراری است');
+    } 
+    else {
+      this.dataSource.data = this.listOfGood;
     }
   }
   deletItemFromList(deleteItem: GoodDetailDto) {
@@ -83,12 +98,12 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
     }
   }
   addGoods() {
-    if(this.dataSource.data.length>0){
+    if (this.dataSource.data.length > 0) {
 
       let model = new RegisterOperationVm();
       let detail = new RegisterStockOperationDetail();
       model.Header = this.headerInfo;
-  
+
       let goodDetails: GoodDetail[] = [];
       this.dataSource.data.forEach(item => {
         const _goodItem = new GoodDetail();
@@ -97,26 +112,26 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
         _goodItem.count = item.count;
         _goodItem.Description = item.description;
         _goodItem.amount = Number(item.amount.toString().replace(this.numberChars, ""));
-        _goodItem.bacthNumber=item.bacthNumber;
-        _goodItem.expireDate=item.expireDate;
-  
+        _goodItem.bacthNumber = item.bacthNumber;
+        _goodItem.expireDate = item.expireDate!;
+
         goodDetails.push(_goodItem);
       })
       detail.goodDetails = goodDetails;
-      model.Detail=detail;
-  
+      model.Detail = detail;
+
       const sb = this._coreService.Operation.RegisterOperation(model).subscribe(result => {
         if (result?.isSuccess) {
           this._coreService.notification.showNotiffication(
             NotificationType.Success,
             'حواله جدید ثبت شد'
           );
-          this._operationComplete=false;
+          this._operationComplete = false;
         }
       })
-  
+
       this.subscriptions.push(sb);
-    }else{
+    } else {
       this._coreService.notification.showNotiffication(
         NotificationType.Warning,
         'کالایی جهت ثبت وارد نشده است'
@@ -133,16 +148,16 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
   getTotalCount() {
     return this.dataSource.data.map(t => t.count).reduce((acc, value) => parseInt(acc.toString()) + parseInt(value.toString()), 0);
   }
-  newOperation(){
-    this.listOfGood=[];
-    this.dataSource.data=[];
-    this.headerInfoDto=new HeaderInfoDto();
-    
+  newOperation() {
+    this.listOfGood = [];
+    this.dataSource.data = [];
+    this.headerInfoDto = new HeaderInfoDto();
+
     this.OperationComplete.emit(this._operationComplete);
-    this._operationComplete=false;
+    this._operationComplete = false;
   }
-  buttonStatus():boolean{
-    if(this.dataSource.data.length>0 && this._operationComplete){
+  buttonStatus(): boolean {
+    if (this.dataSource.data.length > 0 && this._operationComplete) {
       return false;
     }
     return true;

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 import { HeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/header-info-dto';
@@ -16,6 +16,7 @@ import { RegisterStockOperationVm } from 'src/shared/Domain/ViewModels/_StockOpe
 import { GoodDetail } from 'src/shared/Domain/ViewModels/_stockOperationDetail/good-detail';
 import { RegisterStockOperationDetail } from 'src/shared/Domain/ViewModels/_stockOperationDetail/register-stock-operation-detail';
 import { MatButton } from '@angular/material/button';
+import { ReturnAddDetailsComponent } from './return-add-details/return-add-details.component';
 
 @Component({
   selector: 'app-return-remittance-details',
@@ -28,7 +29,7 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
   private subscriptions: Subscription[] = [];
   private _header!:RegisterStockOperationVm;
   private numberChars = new RegExp("[^0-9]", "g")
-
+  private isEditItem:boolean=false;
   //#endregion
 
   //#region Public field
@@ -47,6 +48,7 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
   //#region Input & OutPut & Other
   @Input() headerInfoDto!: RetrnHeaderInfoDto;
   @Input() remittanceDetail!: CustomerFactorGoodsVm[];
+  @ViewChild('crudItem') crudItem!:ReturnAddDetailsComponent;
   //#endregion
   constructor(private _coreService: FacadService,private _shareData: ReturnShareDataService) { }
 
@@ -65,9 +67,12 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
   getTotalCount() {
     return this.dataSource.data.map(t => t.count).reduce((acc, value) => parseInt(acc.toString()) + parseInt(value.toString()), 0);
   }
-  getShamsi(strDate: Date): string {
-    let MomentDate = moment(strDate, 'YYYY/MM/DD');
-    return MomentDate.locale('fa').format('YYYY/M/D');;
+  getShamsi(strDate: Date|null): string {
+    if(strDate!=null){
+      let MomentDate = moment(strDate, 'YYYY/MM/DD');
+      return MomentDate.locale('fa').format('YYYY/M/D');
+    }
+    return '';
   }
   getItem(_item: GoodDetailDto) {
     let isExist = false;
@@ -91,7 +96,8 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
       let model = new RegisterOperationVm();
       let detail = new RegisterStockOperationDetail();
       model.Header = this._header;
-  
+
+      debugger
       let goodDetails: GoodDetail[] = [];
       this.dataSource.data.forEach(item => {
         const _goodItem = new GoodDetail();
@@ -101,7 +107,7 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
         _goodItem.Description = item.description;
         _goodItem.amount = Number(item.amount.toString().replace(this.numberChars, ""));
         _goodItem.bacthNumber=item.bacthNumber;
-        _goodItem.expireDate=item.expireDate;
+        _goodItem.expireDate=item.expireDate!;
   
         goodDetails.push(_goodItem);
       })
@@ -135,6 +141,19 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
     const sb=this._shareData.returnHeader$.subscribe(data=>{
       this._header=data;
     })
+  }
+  // editItem(item:GoodDetailDto){
+  //   this.isEditItem=true;
+  //   this.crudItem.editItem(item);
+  // }
+  deletItemFromList(deleteItem: GoodDetailDto) {
+    const data = this.dataSource.data;
+    const index: number = data.indexOf(deleteItem);
+    if (index !== -1) {
+      data.splice(index, 1);
+      this.dataSource.data = data;
+
+    }
   }
   ngOnDestroy(): void {
     this._shareData.setCompletHeaderStep(false);
