@@ -9,7 +9,7 @@
             <ngx-mat-select-search [formControl]="goodFilterCtrl" placeholderLabel="جستجو..."
               noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let good of filterGoods | async ;let i=index;" [value]="good" >
+          <mat-option class="mt-2" *ngFor="let good of filterGoods | async ;let i=index;" [value]="good" >
             {{good.name}}
           </mat-option>
   
@@ -22,9 +22,9 @@
         <mat-label>شماره بچ (batch)</mat-label>
         <input matInput placeholder="شماره بچ : 1234..." #batchNumber formControlName="batchNumber" 
           [pattern]="numberPattern" />
-        <mat-error *ngIf="errorHandling('batchNumber', 'required')">
+        <!-- <mat-error *ngIf="errorHandling('batchNumber', 'required')">
           وارد کردن شماره بچ اجباری است
-        </mat-error>
+        </mat-error> -->
         <!-- <mat-hint>Hint</mat-hint> -->
       </mat-form-field>
       <mat-form-field  class="mt-1 input-size input-text-size" appearance="outline" color="primary">
@@ -38,9 +38,9 @@
             <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
           </mat-datepicker-actions>
         </mat-datepicker>
-        <mat-error *ngIf="errorHandling('datePicker', 'required')">
+        <!-- <mat-error *ngIf="errorHandling('datePicker', 'required')">
           وارد کردن تاریخ اجباری است
-        </mat-error>
+        </mat-error> -->
       </mat-form-field>
   
       <mat-form-field class="mt-1 input-size input-text-size numberTextView-width-size" appearance="outline" color="primary">
@@ -66,10 +66,12 @@
         <mat-label>توضیحات</mat-label>
         <input matInput placeholder="توضیحات ..." #dec formControlName="dec" />
       </mat-form-field> -->
-      <button mat-flat-button color="primary" class="button-size" [disabled]="pageForm.invalid" >
-        <i class="icon-plus-square icon-19px _white-color"></i>
-        <span class="me-1">افزودن</span>
-      </button>
+      <div fxLayout="row" fxLayoutAlign="center center" class="ms-3">
+        <button mat-raised-button color="primary" [disabled]="pageForm.invalid" class="mb-2">
+          <i class="icon-plus-square icon-19px _white-color"></i>
+          <span class="me-1">افزودن</span>
+        </button>
+      </div>
     </div>
   </form>
   

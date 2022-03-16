@@ -57,6 +57,7 @@
   overflow: auto;
 }
 
+
 @import "/src/assets/scss/mat-color-palette";
 @import "/src/assets/scss/variables";
 
@@ -92,6 +93,9 @@
       }
     }
   }
+  .mat-column-small-width {
+    width: 35px;
+  }
 }
 
 /*#endregion rtl*/
@@ -126,6 +130,9 @@
         }
       }
     }
+  }
+  .mat-column-small-width {
+    width: 35px;
   }
 }
 

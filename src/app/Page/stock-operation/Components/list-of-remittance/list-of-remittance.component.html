@@ -134,7 +134,12 @@
             <!-- Delete -->
             <ng-container matColumnDef="menu">
               <th mat-header-cell class="text-center" *matHeaderCellDef></th>
-              <td mat-cell class="mat-column-small-width text-left menu-width" *matCellDef="let row">
+              <td mat-cell *matCellDef="let element" class="mat-column-small-width text-left">
+                <button mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{element: element}">
+                  <i class="icon-more-vertical icon-20px"></i>
+                </button>
+              </td>
+              <!-- <td mat-cell class="mat-column-small-width text-left menu-width" *matCellDef="let row">
      
                 <div  [hidden]="row.id != currentRow">
                   <button mat-icon-button matTooltip="نمایش جزییات" matTooltipPosition="right" (click)="getDetails(row)">
@@ -145,7 +150,7 @@
                   </button>
   
                 </div>
-              </td>
+              </td> -->
             </ng-container>
   
   
@@ -170,6 +175,28 @@
           </table>
   
         </div>
+        <mat-menu #menu="matMenu">
+          <ng-template matMenuContent let-aliasMenuItems="element">
+            <button mat-menu-item  (click)="getDetails(aliasMenuItems)">
+              <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                <i class="icon-file-text icon-20px ms-2"></i>
+                <span>جزئیات حواله</span>
+              </div>
+            </button>
+            <button mat-menu-item >
+              <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                <i class="icon-edit-3 icon-20px ms-2"></i>
+                <span>ویرایش</span>
+              </div>
+            </button>
+            <button mat-menu-item (click)="delete(aliasMenuItems)" >
+              <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                <i class="icon-trash icon-20px "></i>
+                <span>حذف </span>
+              </div>
+            </button>
+          </ng-template>
+        </mat-menu>
         <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons #paginator
             aria-label="Select page of periodic elements">
           </mat-paginator> -->

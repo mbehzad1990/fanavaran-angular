@@ -59,6 +59,7 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy, AfterViewIn
   listOfGoodIsOK: boolean = false;
   _currentGoodCount: number = 0;
   _currentGood!:GoodOfRemittanceDto;
+
   //#endregion
 
   //#region Input & Output & Others
@@ -120,14 +121,16 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy, AfterViewIn
       this._coreService.notification.showNotiffication(NotificationType.Error, 'تعداد بیش از حد مجاز است');
     }
     else {
-      debugger
+      
       const addModel = new GoodDetailDto();
       addModel.goodId = this._currentGood.goodId;
       addModel.goodName = form.controls['goodCtrl'].value.name;
       addModel.bacthNumber = form.controls['batchNumber'].value;
-      const date = moment(form.controls['datePicker'].value.toString()).format("jYYYY/jMM/jDD");
-      addModel.expireDate = new Date(moment.from(date, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
-      debugger
+      if(form.controls['datePicker'].value!=undefined ){
+        const date = moment(form.controls['datePicker'].value.toString()).format("jYYYY/jMM/jDD");
+        addModel.expireDate = new Date(moment.from(date, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+      }
+      addModel.expireDate=null;
       addModel.count = form.value.count;
       const val = form.controls['price'].value;
       addModel.price = Number(val.replace(this.numberChars, ""));
@@ -174,7 +177,9 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy, AfterViewIn
           good.name = this.getGoodName(good.goodId);
           good.bacthNumber = item.bacthNumber;
           good.count = item.count;
-          good.expireDate = item.expireDate;
+          if(good.expireDate!=null){
+            good.expireDate = item.expireDate!;
+          }
           good.price = item.price;
           good.amount = item.amount;
 
@@ -242,6 +247,13 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy, AfterViewIn
     return usd!;
     // 3. replace the input value with formatted numbers
     // this.renderer.setProperty(this.el.nativeElement, 'value', usd);
+  }
+  editItem(_item:GoodDetailDto){
+    this.pageForm.controls['goodCtrl'].setValue(_item.goodId);
+    this.pageForm.controls['count'].setValue(_item.count);
+    this.pageForm.controls['price'].patchValue(this.format(_item.price.toString()));
+    this.pageForm.controls['batchNumber'].setValue(_item.bacthNumber);
+    this.pageForm.controls['datePicker'].setValue(_item.expireDate);
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sp => sp.unsubscribe());

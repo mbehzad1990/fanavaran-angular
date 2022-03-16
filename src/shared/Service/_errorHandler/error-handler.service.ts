@@ -34,6 +34,9 @@ export class ErrorHandlerService {
       case ResultAction.UserAlreadyExist:
         resultText = 'این کاربر قبلا اضافه شده است';
         break;
+      case ResultAction.StockOperationHasRefId:
+        resultText = 'برای این حواله فاکتور برگشت وجود دارد';
+        break;
       default:
         resultText = 'UnHandled';
 

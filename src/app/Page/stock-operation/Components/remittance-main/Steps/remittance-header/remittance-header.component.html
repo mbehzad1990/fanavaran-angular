@@ -30,7 +30,7 @@
               <ngx-mat-select-search [formControl]="personFilterCtrl" placeholderLabel="جستجو..."
                 noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
             </mat-option>
-            <mat-option *ngFor="let person of filterPerson | async ;let i=index;" [value]="person">
+            <mat-option class="mt-3" *ngFor="let person of filterPerson | async ;let i=index;" [value]="person">
               <!-- <span>{{i}}</span> -->
               <span> {{person.name}}</span>
               <!-- <span>{{person.mobile}}</span> -->
@@ -55,7 +55,7 @@
               <ngx-mat-select-search [formControl]="stockFilterCtrl" placeholderLabel="جستجو..."
                 noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
             </mat-option>
-            <mat-option *ngFor="let stock of filterstock | async ;let i=index;" [value]="stock">
+            <mat-option class="mt-3" *ngFor="let stock of filterstock | async ;let i=index;" [value]="stock">
               <span class="mt-2">
                 {{stock.name}}
               </span>
