@@ -1,6 +1,7 @@
 <form [formGroup]="pageForm" (ngSubmit)="add(pageForm)">
-  <div fxLayout fxLayoutGap="6px">
+  <div fxLayout="row" fxLayoutGap="6px" fxLayoutAlign="center center" fxFill>
     <mat-form-field class="mt-1 input-size input-text-size" appearance="outline">
+      <mat-label>کالا</mat-label>
       <mat-select placeholder="کالا" #goodCtrl formControlName="goodCtrl" disableOptionCentering
         (selectionChange)="getDetails(pageForm,goodCtrl.value)">
         <mat-select-trigger>
@@ -10,7 +11,7 @@
           <ngx-mat-select-search [formControl]="goodFilterCtrl" placeholderLabel="جستجو..."
             noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
         </mat-option>
-        <mat-option class="mt-2" *ngFor="let good of filterGoods | async ;let i=index;" [value]="good">
+        <mat-option class="mt-2" *ngFor="let good of  filterGoods | async ;let i=index;" [value]="good">
           {{good.name}}
         </mat-option>
 
@@ -58,21 +59,23 @@
     </mat-form-field>
 
     <mat-form-field class="mt-1 input-size input-text-size" appearance="outline" color="primary">
-      <mat-label>(ریال)قیمت</mat-label>
+      <mat-label> قیمت (ریال)</mat-label>
       <input matInput placeholder="1,000" #price formControlName="price" PersianCurency />
       <mat-error *ngIf="errorHandling('price', 'required')">
         انتخاب انبار اجباری است
       </mat-error>
     </mat-form-field>
-
-    <!-- <mat-form-field class="w-35 mt-1 input-size input-text-size" appearance="outline" color="primary">
-        <mat-label>توضیحات</mat-label>
-        <input matInput placeholder="توضیحات ..." #dec formControlName="dec" />
-      </mat-form-field> -->
     <div fxLayout="row" fxLayoutAlign="center center" class="ms-3">
       <button mat-raised-button color="primary" [disabled]="pageForm.invalid" class="mb-2">
-        <i class="icon-plus-square icon-19px _white-color"></i>
-        <span class="me-1">افزودن</span>
+        <div *ngIf="!isEditMode;else edit">
+          <i class="icon-plus-square icon-19px _white-color"></i>
+          <span class="me-1">افزودن</span>
+        </div>
+        <ng-template #edit>
+          <i class="icon-edit icon-19px _white-color"></i>
+          <span class="me-1">ویرایش</span>
+        </ng-template>
+  
       </button>
     </div>
   </div>

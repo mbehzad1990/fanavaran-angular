@@ -20,6 +20,9 @@ import { RemittanceDetailTableComponent } from './Components/return-remittance/S
 import { ReturnRemittanceDetailsComponent } from './Components/return-remittance/Steps/return-remittance-details/return-remittance-details.component';
 import { ReturnAddDetailsComponent } from './Components/return-remittance/Steps/return-remittance-details/return-add-details/return-add-details.component';
 import { SetDateModalComponent } from './Components/return-remittance/Steps/return-remittance-header/set-date-modal/set-date-modal.component';
+import { EditRemittanceComponent } from './Components/edit-remittance/edit-remittance.component';
+import { RemittanceCrudElementComponent } from './Components/edit-remittance/components/remittance-crud-element/remittance-crud-element.component';
+import { RemittanceTableElementComponent } from './Components/edit-remittance/components/remittance-table-element/remittance-table-element.component';
 
 
 @NgModule({
@@ -40,7 +43,10 @@ import { SetDateModalComponent } from './Components/return-remittance/Steps/retu
     RemittanceDetailTableComponent,
     ReturnRemittanceDetailsComponent,
     ReturnAddDetailsComponent,
-    SetDateModalComponent
+    SetDateModalComponent,
+    EditRemittanceComponent,
+    RemittanceCrudElementComponent,
+    RemittanceTableElementComponent
   ],
   imports: [
     CommonModule,

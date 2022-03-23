@@ -20,22 +20,24 @@
 
   <div *ngIf="!(isDetailShow$|async);else detail">
     <div fxLayout="column" fxLayoutGap="15px">
-      <div fxLayout="row"  fxFill fxLayoutAlign="center center">
+      <div fxLayout="row" fxFill fxLayoutAlign="center center">
         <p>{{setTitle(formType)}}</p>
       </div>
-      <div fxLayout="row"  fxFill>
+      <div fxLayout="row" fxFill>
         <app-return-remittance-header class="w-100" [stockOperationType]="formType"
-        (_retrnHeaderInfoDto)="getHeaderInfo($event)" (_remittanceMabna)="getRemittanceDetail($event)"></app-return-remittance-header>
+          (_retrnHeaderInfoDto)="getHeaderInfo($event)" (_remittanceMabna)="getRemittanceDetail($event)">
+        </app-return-remittance-header>
       </div>
     </div>
   </div>
   <ng-template #detail>
     <div fxLayout="column" fxLayoutGap="15px">
-      <div fxLayout="row"  fxFill fxLayoutAlign="center center">
+      <div fxLayout="row" fxFill fxLayoutAlign="center center">
         <p>ثبت ریز اقلام سند</p>
       </div>
-      <div fxLayout="row"  fxFill>
-        <app-return-remittance-details class="w-100" #details [headerInfoDto]="headerInfoDto" [remittanceDetail]="remittanceDetail"></app-return-remittance-details>
+      <div fxLayout="row" fxFill>
+        <app-return-remittance-details class="w-100" #details [headerInfoDto]="headerInfoDto"
+          [remittanceDetail]="remittanceDetail"></app-return-remittance-details>
       </div>
     </div>
   </ng-template>

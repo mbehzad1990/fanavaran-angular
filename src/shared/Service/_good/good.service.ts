@@ -122,7 +122,6 @@ export class GoodService implements OnDestroy {
     );
   }
   addlist(model: RegisterGoodVm[]) {
-    debugger
     this._isLoading$.next(true);
     return this.http.post<ResultDto<boolean>>(this.baseUrl + "AddList", model).pipe(
       map((result: ResultDto<boolean>) => {

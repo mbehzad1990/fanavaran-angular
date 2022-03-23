@@ -1,0 +1,33 @@
+@import "../../../../../assets/scss/mat-color-palette";
+@import "../../../../../assets/scss/variables";
+
+.section-container {
+  min-height: 80vh;
+}
+
+.header {
+  background-color: #f9f9f9;
+  border-radius: $radius-small;
+  text-align: center;
+  // border: 1px solid mat-color($semantic-palette , success);
+  // margin-bottom: 1rem;
+  width: fit-content;
+  min-height: 110px;
+  // padding: .5rem 1rem;
+  // color:  mat-color($semantic-palette , success);
+  // display: inline-flex;
+}
+.content {
+  background-color: #f9f9f9;
+  border-radius: $radius-small;
+
+}
+
+.input-text-size {
+  font-size: 10px;
+}
+
+.mat-icon {
+  width: 16px;
+  height: 16px;
+}
