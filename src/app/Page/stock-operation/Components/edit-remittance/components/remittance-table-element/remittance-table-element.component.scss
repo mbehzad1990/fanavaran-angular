@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 2em #000;
+  }
+
+  table tr:last-child td /*To remove the last border*/
+  {
+    border-bottom:-.0002rem solid
+  } 
+  .tableHeaderCellDiv {
+    resize: horizontal;
+    overflow: hidden;
+  }
+  .tabledata-fullHeight{
+    height: 27vh;
+  }

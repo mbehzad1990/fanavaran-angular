@@ -62,7 +62,6 @@ export class CustomerService implements OnDestroy {
       .pipe(
         map((result: ResultDto<Customer[]>) => {
           if (result.data) {
-            debugger
             this._items$.next(result.data);
           }
           if (!result.isSuccess) {
@@ -126,7 +125,6 @@ export class CustomerService implements OnDestroy {
 
   //#region Put
   edit(model: CustomerEditVm) {
-    debugger
     this._isLoading$.next(true);
     return this.http.put<ResultDto<boolean>>(this.baseUrl + "Edit", model).pipe(
       map((result: ResultDto<boolean>) => {

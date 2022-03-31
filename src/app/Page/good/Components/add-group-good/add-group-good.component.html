@@ -1,5 +1,8 @@
 <div fxLayout>
     <mat-card fxLayout="column" class="good-list position-relative card-height" fxFlex="100%">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <p class="mat-h2 modal-title">افزودن دسته ای کالا</p>
+      </div>
       <div fxLayout="column" fxFill fxFlex="25%">
         <div class="good-list_header">
           <p>مشخصات کالا</p>
@@ -59,6 +62,9 @@
   
       </div>
       <div class="text-left mt-3">
+        <button mat-button color="warn" class="ms-3" [routerLink]="['/good']">
+          <span>انصراف</span>
+        </button>
         <button mat-raised-button color="primary" class="w-25" (click)="addGoods()" [disabled]="!(dataSource.data.length!=0)">
           <span fxLayout fxLayoutAlign="center center"> 
               <span>ذخیره و تایید</span>

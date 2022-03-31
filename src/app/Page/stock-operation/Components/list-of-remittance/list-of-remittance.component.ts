@@ -4,11 +4,13 @@ import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import * as moment from 'jalali-moment';
 import { Observable, Subscription } from 'rxjs';
 import { blub, fadeOut } from 'src/shared/Adnimation/template.animations';
 import { DeleteModalComponent } from 'src/shared/components/Modals/delete-modal/delete-modal.component';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
+import { EditRemittanceDto } from 'src/shared/Domain/Dto/_Operation/edit-remittance-dto';
 import { ActionType, DeleteOperationType, NotificationType, serachRemittanceController, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
@@ -93,7 +95,7 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
   //dataSource = new MatTableDataSource<ReportOperationVm>();
   dataSource!: MatTableDataSource<ReportOperationVm>;
   tempdata: ReportOperationVm[] = [];
-  displayedColumns: string[] = ['index', 'id',  'personName', 'stockName', 'remittenceType', 'date', 'desc', 'menu'];
+  displayedColumns: string[] = ['index', 'id', 'personName', 'stockName', 'remittenceType', 'date','refId', 'desc', 'menu'];
 
   isLoading$!: Observable<boolean>;
 
@@ -106,13 +108,12 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
   searchFiled: string = '';
   isSearchButonShow: boolean = false;
   searchType: string = 'all';
-
   //#endregion
 
   //#region Input & OutPut & Other
 
   //#endregion
-  constructor(private _coreService: FacadService,private dialog: MatDialog) {
+  constructor(private _coreService: FacadService, private dialog: MatDialog, private rout: Router) {
     this.isLoading$ = this._coreService.Operation.isLoading$;
   }
 
@@ -144,7 +145,7 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   }
-  resetDataSource(flag:boolean){
+  resetDataSource(flag: boolean) {
 
   }
   searchColumns() {
@@ -196,32 +197,32 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
   }
   getShamsi(strDate: Date): string {
 
-   const m = moment(strDate, 'jYYYY/jM/jD') ;
-   return  moment(m.format('jYYYY/jM/jD')).format("jYYYY/jMM/jDD");
+    const m = moment(strDate, 'jYYYY/jM/jD');
+    return moment(m.format('jYYYY/jM/jD')).format("jYYYY/jMM/jDD");
   }
-  getDetails(item:ReportOperationVm){
+  getDetails(item: ReportOperationVm) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    const modal_data=new RequestModalDto<number>();
-    modal_data.action=ActionType.ShowDetails;
-    modal_data.data=item.id;
+    const modal_data = new RequestModalDto<number>();
+    modal_data.action = ActionType.ShowDetails;
+    modal_data.data = item.id;
 
-    dialogConfig.data=modal_data;
+    dialogConfig.data = modal_data;
 
     const dialogRef = this.dialog.open(RemittanceDetailsModalComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       // this.treeControl.expand(node);
     });
   }
-  delete(item:ReportOperationVm){
+  delete(item: ReportOperationVm) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
 
     const delete_data: RequestModalDto<number> = new RequestModalDto<number>();
-    delete_data.delete_field_name = 'حواله '+item.id;
+    delete_data.delete_field_name = 'حواله ' + item.id;
     delete_data.delete_resource = DeleteOperationType.Operation;
 
     dialogConfig.data = delete_data
@@ -229,18 +230,21 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
     const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result) {
-        const sb=this._coreService.Operation.delete(item.id).subscribe(result=>{
+        const sb = this._coreService.Operation.delete(item.id).subscribe(result => {
           debugger
-          if(result?.isSuccess){
+          if (result?.isSuccess) {
             this.getData();
-          }else{
-            this._coreService.notification.showNotiffication(NotificationType.Error,this._coreService.errorHandler.getErrorText(result?.resultAction!));
+          } else {
+            this._coreService.notification.showNotiffication(NotificationType.Error, this._coreService.errorHandler.getErrorText(result?.resultAction!));
           }
         })
         this.subscriptions.push(sb);
       }
     });
- 
+
+  }
+  edit(item: ReportOperationVm) {
+    this.rout.navigate(['/remittance/remittance-edit'], { state: {data:item} });
   }
 
   ngOnDestroy(): void {

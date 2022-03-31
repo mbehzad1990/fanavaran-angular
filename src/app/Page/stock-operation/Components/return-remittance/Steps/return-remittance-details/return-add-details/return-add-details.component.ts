@@ -20,7 +20,7 @@ import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
   templateUrl: './return-add-details.component.html',
   styleUrls: ['./return-add-details.component.scss']
 })
-export class ReturnAddDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
 
   //#region Private
   private subscriptions: Subscription[] = [];
@@ -68,10 +68,6 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy, AfterViewIn
   //#endregion
 
   constructor(private _coreService: FacadService, private fb: FormBuilder, private _shareData: ReturnShareDataService, private decimalPipe: DecimalPipe) { }
-  ngAfterViewInit(): void {
-
-  }
-
 
   ngOnInit(): void {
     this.formElementInit();
@@ -107,7 +103,7 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy, AfterViewIn
     );
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
   }
 
   getUnits() {

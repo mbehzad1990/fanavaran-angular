@@ -6,7 +6,7 @@
 
         <mat-form-field fxFlex="20%" class="input-size input-text-size" appearance="outline" color="primary">
           <mat-label>تاریخ</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="تاریخ شروع قرارداد" #datePicker readonly
+          <input matInput [matDatepicker]="picker" placeholder="تاریخ تنظیم سند" #datePicker readonly
             (dateChange)="onChange($event)" formControlName="datePicker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker>
@@ -22,7 +22,7 @@
 
     
         <mat-form-field fxFlex="30%" class=" w-100 input-text-size" appearance="outline">
-          <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect">
+          <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect" >
             <mat-select-trigger>
               {{ personSelect.value?.name }}
             </mat-select-trigger>

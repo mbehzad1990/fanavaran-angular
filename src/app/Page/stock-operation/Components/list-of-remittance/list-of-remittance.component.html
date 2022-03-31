@@ -1,6 +1,6 @@
 <mat-card class="section-container ">
   <div fxLayout="column">
-    <div fxLayout="row"  fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutAlign="center center">
       <p class="mat-h2 modal-title">فهرست حواله ها</p>
     </div>
     <div fxLayout="row" fxFill>
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-  
+
     </div>
     <ng-template #table>
       <div fxLayout="column" fxFlex="100%">
@@ -61,7 +61,7 @@
                         <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
                       </mat-datepicker-actions>
                     </mat-datepicker>
-  
+
                   </mat-form-field>
                 </div>
                 <div *ngIf="isSearchButonShow" fxFlexAlign="center center">
@@ -69,7 +69,7 @@
                     <span color="primary">جستجو</span>
                   </button>
                 </div>
-  
+
               </div>
               <div fxLayout="row" fxLayoutGap="12px">
                 <mat-radio-group class="radio-btns" [(ngModel)]="searchType" (change)="radioChange($event)">
@@ -84,14 +84,14 @@
               </div>
             </div>
           </div>
-  
+
         </div>
         <!-- @blub -->
         <div class="table-containers">
           <!-- [@listAnimation]="dataSource.data.length" -->
           <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width "
             [ngClass]="dataSource.data.length == 0 ? 'table-fullHeights' : ''">
-  
+
             <!-- Index Column -->
             <ng-container matColumnDef="index">
               <th class="text-center" mat-header-cell *matHeaderCellDef class="index-col-width">ردیف</th>
@@ -126,6 +126,15 @@
               <th mat-header-cell *matHeaderCellDef class="date-col-width">تاریخ تنظیم</th>
               <td mat-cell *matCellDef="let element"> {{getShamsi(element.registerDate)}} </td>
             </ng-container>
+            <!-- refId Column -->
+            <ng-container matColumnDef="refId">
+              <th mat-header-cell *matHeaderCellDef class="date-col-width">سند مبنا</th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="element.refId!=0">
+                  {{element.refId}}
+                </div>
+              </td>
+            </ng-container>
             <!-- desc Column -->
             <ng-container matColumnDef="desc">
               <th mat-header-cell *matHeaderCellDef class="dec-col-width">توضیحات</th>
@@ -152,19 +161,17 @@
                 </div>
               </td> -->
             </ng-container>
-  
-  
-            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true" style="background-color: #f1f3f84f;"></tr>
-            <!-- <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-              </tr> -->
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true" style="background-color: #f1f3f84f;">
+            </tr>
             <tr class="mat-row" *matNoDataRow>
               <td class="mat-cell" [colSpan]="displayedColumns.length+1">
                 <div fxLayout="row" fxFill fxLayoutAlign="center center">
                   <div class="warning-box">
                     <span>اطلاعاتی جهت نمایش وجود ندارد</span>
                   </div>
-  
+
                 </div>
               </td>
             </tr>
@@ -173,23 +180,23 @@
               (mouseout)="row.hovered = false">
             </tr>
           </table>
-  
+
         </div>
         <mat-menu #menu="matMenu">
           <ng-template matMenuContent let-aliasMenuItems="element">
-            <button mat-menu-item  (click)="getDetails(aliasMenuItems)">
+            <button mat-menu-item (click)="getDetails(aliasMenuItems)">
               <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                 <i class="icon-file-text icon-20px ms-2"></i>
                 <span>جزئیات حواله</span>
               </div>
             </button>
-            <button mat-menu-item >
+            <button mat-menu-item (click)="edit(aliasMenuItems)">
               <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                 <i class="icon-edit-3 icon-20px ms-2"></i>
                 <span>ویرایش</span>
               </div>
             </button>
-            <button mat-menu-item (click)="delete(aliasMenuItems)" >
+            <button mat-menu-item (click)="delete(aliasMenuItems)">
               <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                 <i class="icon-trash icon-20px "></i>
                 <span>حذف </span>

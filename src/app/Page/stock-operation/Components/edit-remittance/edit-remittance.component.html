@@ -1,0 +1,162 @@
+<mat-card class="section-container ">
+
+  <div fxLayout="column" >
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <p class="mat-h2 modal-title">ویرایش حواله- {{getTitleOperationType(_initData.stockOperationType)}}</p>
+    </div>
+
+    <form [formGroup]="form">
+      <div fxLayout="column">
+        <!-- Header -->
+        <div fxLayout="column" fxLayoutGap="10px">
+          <p>مشخصات اولیه حواله :</p>
+          <div fxLayout="row" fxFlex="100%" fxFill fxLayoutGap="10px" class="header mt-2 p-3"
+            fxLayoutAlign="space-between">
+            <div fxLayout="row" fxFlex="15%" fxLayoutGap="10px" fxLayoutAlign="center center">
+              <div *ngIf="_operationType;else otherType">
+                <span>شماره سند :</span>
+                <span>{{_initData.id}}</span>
+              </div>
+              <ng-template #otherType>
+                <span>سند مبنا :</span>
+                <span>{{_initData.refId}}</span>
+              </ng-template>
+
+            </div>
+            <div fxLayout="row" fxFlex="25%" fxLayoutGap="10px" fxLayoutAlign="center center">
+              <span>تاریخ تنظیم :</span>
+              <div *ngIf="!_Edit_Date;else editDate">
+                <span>{{getShamsi(_initData.registerDate)}}</span>
+              </div>
+              <ng-template #editDate>
+                <mat-form-field class="input-size input-text-size mt-2 w-50" appearance="outline" color="primary">
+                  <mat-label>تاریخ</mat-label>
+                  <input matInput [matDatepicker]="picker" placeholder="تاریخ تنظیم سند" #datePicker readonly
+                    [value]="getShamsi(_initData.registerDate)" (dateChange)="onChange($event)"
+                    [(ngModel)]="_initData.registerDate" formControlName="datePicker">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker>
+                    <mat-datepicker-actions>
+                      <button mat-button matDatepickerCancel>انصراف</button>
+                      <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
+                    </mat-datepicker-actions>
+                  </mat-datepicker>
+                </mat-form-field>
+              </ng-template>
+              <button mat-icon-button class="mt-2" (click)="_Edit_Date=!_Edit_Date" matTooltip="ویرایش">
+                <div *ngIf="!_Edit_Date;else offDate">
+                  <mat-icon>edit</mat-icon>
+                </div>
+                <ng-template #offDate>
+                  <mat-icon style="width: 16px; height: 16px;">edit_off</mat-icon>
+                </ng-template>
+              </button>
+
+            </div>
+            <div fxLayout="row" fxFlex="30%" fxLayoutGap="10px" fxLayoutAlign="center center">
+              <span>شخص / مشتری :</span>
+              <div *ngIf="!_Edit_Customer;else editCustomer">
+                <span>{{_initData.personName}}</span>
+              </div>
+              <ng-template #editCustomer>
+                <mat-form-field class=" w-50 input-text-size mt-2" appearance="outline">
+                  <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect" (selectionChange)="changePerson(personSelect.value)">
+                    <mat-select-trigger>
+                      {{ personSelect.value?.name }}
+                    </mat-select-trigger>
+                    <mat-option>
+                      <ngx-mat-select-search [formControl]="personFilterCtrl" placeholderLabel="جستجو..."
+                        noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option class="mt-3" *ngFor="let person of filterPerson | async ;let i=index;" [value]="person">
+                      <!-- <span>{{i}}</span> -->
+                      <span> {{person.name}}</span>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ng-template>
+              <button mat-icon-button class="mt-2" (click)="_Edit_Customer=!_Edit_Customer" matTooltip="ویرایش">
+                <div *ngIf="!_Edit_Customer;else offCustomer">
+                  <mat-icon>edit</mat-icon>
+                </div>
+                <ng-template #offCustomer>
+                  <mat-icon>edit_off</mat-icon>
+                </ng-template>
+              </button>
+            </div>
+            <div fxLayout="row" fxFlex="30%" fxLayoutAlign="center center">
+              <span>انبار :</span>
+              <div *ngIf="!_Edit_Stock;else editStock">
+                <span class="me-1">{{_initData.stockName}}</span>
+              </div>
+              <ng-template #editStock>
+                <mat-form-field class="me-1 mt-2 w-50 input-text-size" appearance="outline">
+                  <mat-select placeholder="انبار" #stockSelect formControlName="stockSelect" disableOptionCentering (selectionChange)="changeStock(stockSelect.value)">
+                    <mat-select-trigger>
+                      {{ stockSelect.value?.name }}
+                    </mat-select-trigger>
+                    <mat-option>
+                      <ngx-mat-select-search [formControl]="stockFilterCtrl" placeholderLabel="جستجو..."
+                        noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option class="mt-3" *ngFor="let stock of filterstock | async ;let i=index;" [value]="stock">
+                      <span class="mt-2">
+                        {{stock.name}}
+                      </span>
+
+                      <!-- <div fxLayout="row" fxLayoutAlign="space-between">
+                                                  <div>
+                                                      <span class="ms-2">{{i+1}}</span>
+                                                      <span> {{stock.name}}</span>
+                                                  </div>
+                                                  <span>{{stock.address}}</span>
+                                              </div> -->
+                    </mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+              </ng-template>
+              <button mat-icon-button class="mt-2" (click)="_Edit_Stock=!_Edit_Stock" matTooltip="ویرایش">
+                <div *ngIf="!_Edit_Stock;else offDate">
+                  <mat-icon>edit</mat-icon>
+                </div>
+                <ng-template #offDate>
+                  <mat-icon>edit_off</mat-icon>
+                </ng-template>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Table edit -->
+        <div fxLayout="column" fxLayoutGap="10px" class="  mt-3">
+          <p>ریز قلم حواله :</p>
+          <div fxLayout="column" class="content p-3">
+            <div *ngIf="!(isLoadComponents$|async)">
+              <app-remittance-crud-element [remittanceReturnType]="_operationType" #crudElement
+                (itemExport)="getItemExported($event)" (actionMode)="getActionMode($event)"></app-remittance-crud-element>
+              <app-remittance-table-element (editItem)="getItemForEdit($event)" #dataTable>
+              </app-remittance-table-element>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="text-left mt-3 button-Add">
+    <button mat-button color="warn" class="ms-3" (click)="back()">
+      <span>برگشت</span>
+    </button>
+    <button #btn mat-raised-button color="primary" (click)="save(btn)">
+      <span fxLayout fxLayoutAlign="center center">
+        <span>ذخیره و ویرایش</span>
+        <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
+        </mat-spinner>
+      </span>
+    </button>
+  </div>
+ 
+</mat-card>

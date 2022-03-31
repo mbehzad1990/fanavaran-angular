@@ -1,4 +1,7 @@
 <mat-card class="section-container ">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <p class="mat-h2 modal-title">حواله</p>
+  </div>
   <mat-horizontal-stepper linear #stepper (selectionChange)="onStepChange($event)">
     <mat-step #header [label]="setTitle(formType)" completed=false editable=true state="info">
       <div fxLayout="column" fxFill>

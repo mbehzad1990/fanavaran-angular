@@ -1,5 +1,5 @@
 export class GoodDetailDto {
-    public bacthNumber!:number;
+    public bacthNumber:string|null=null;
     public expireDate:Date|null=null;
     public goodId!:number;
     public goodName!:string;

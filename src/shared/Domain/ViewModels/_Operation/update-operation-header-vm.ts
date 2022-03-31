@@ -1,12 +1,10 @@
 import { StockOperationType } from "../../Enums/global-enums";
 
-export class ReportOperationVm {
-    public id!:number;
-    public refId!:number;
+export class UpdateOperationHeaderVm {
+    public operationId!:number;
     public stockId!:number;
-    public stockName!:string;
+    public refId:number=0;
     public personId!:number;
-    public personName!:string;
     public stockOperationType!:StockOperationType;
     public registerDate!:Date;
     public description!:string;

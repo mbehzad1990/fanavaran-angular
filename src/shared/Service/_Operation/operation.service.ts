@@ -11,6 +11,7 @@ import { RegisterOperationVm } from 'src/shared/Domain/ViewModels/_Operation/reg
 import { ReportGoodsInStockVm } from 'src/shared/Domain/ViewModels/_Operation/report-goods-in-stock-vm';
 import { ReportOperationDetailVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-detail-vm';
 import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
+import { UpdateOperationVm } from 'src/shared/Domain/ViewModels/_Operation/update-operation-vm';
 import { CustomerFactorGoodsVm } from 'src/shared/Domain/ViewModels/_stockOperationDetail/customer-factor-goods-vm';
 import { FacadService } from '../_Core/facad.service';
 
@@ -68,7 +69,8 @@ export class OperationService implements OnDestroy {
   constructor(private http: HttpClient, private _coreService: FacadService) { }
 
 
-  // Get
+
+  //#region Get
   ListOfOperation() {
     this._isLoading$.next(true);
     return this.http.get<ResultDto<ReportOperationVm[]>>(this.baseUrl + "ListOfOperation").pipe(
@@ -193,7 +195,9 @@ export class OperationService implements OnDestroy {
     );
 
   }
-  // Post
+  //#endregion
+
+  //#region Post
   RegisterOperation(opModel: RegisterOperationVm) {
     this._isLoading$.next(true);
     return this.http.post<ResultDto<boolean>>(this.baseUrl + "RegisterOperation", opModel).pipe(
@@ -219,7 +223,33 @@ export class OperationService implements OnDestroy {
 
   }
 
-  // Put
+  //#endregion
+  
+  //#region Put
+  update(updateModel:UpdateOperationVm){
+    this._isLoading$.next(true);
+    return this.http.put<ResultDto<boolean>>(this.baseUrl+'UpdateOperation',updateModel).pipe(
+      map((result: ResultDto<boolean>) => {
+        if (result.isSuccess) {
+        }
+        return result;
+      }),
+      catchError((err) => {
+        this._coreService.notification.showNotiffication(
+          NotificationType.Error,
+          err
+        );
+
+        return of(null);
+      }),
+      finalize(() => {
+        this._isLoading$.next(false);
+        this._isCompleteStep$.next({ searc: true });
+      }),
+      shareReplay()
+    );
+  }
+  //#endregion
 
   // Delete
   delete(spId: number) {
@@ -247,7 +277,7 @@ export class OperationService implements OnDestroy {
   }
 
   //#region Other
-  setRemittanceDetails(details:CustomerFactorGoodsVm[]){
+  setRemittanceDetails(details: CustomerFactorGoodsVm[]) {
     this._remittanceDetails.next(details);
   }
   //#endregion  

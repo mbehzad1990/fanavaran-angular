@@ -50,7 +50,7 @@ export class SetDateModalComponent implements OnInit {
     });
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+    this.dateSelected =moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
   }
   done(des:string){
     const model=new RegisterStockOperationVm();

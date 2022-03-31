@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'jalali-moment';
-import { ReplaySubject, Subject, takeUntil } from 'rxjs';
+import { ReplaySubject, Subject, Subscription, takeUntil } from 'rxjs';
 import { GoodDetailDto } from 'src/shared/Domain/Dto/_Good/good-detail-dto';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { Unit } from 'src/shared/Domain/Models/_Unit/unit';
@@ -15,11 +15,11 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
   templateUrl: './add-details.component.html',
   styleUrls: ['./add-details.component.scss']
 })
-export class AddDetailsComponent implements OnInit{
+export class AddDetailsComponent implements OnInit, OnDestroy {
   //#region Private
   private numberChars = new RegExp("[^0-9]", "g")
-  private units:Unit[]=[];
-
+  private units: Unit[] = [];
+  private subscriptions: Subscription[] = [];
   //#endregion
 
   //#region Public
@@ -45,28 +45,29 @@ export class AddDetailsComponent implements OnInit{
   public goodFilterCtrl: FormControl = new FormControl();
   protected _onDestroy = new Subject<void>();
   public filterGoods: ReplaySubject<GoodDetailsVm[]> = new ReplaySubject<GoodDetailsVm[]>(1);
-  dateSelected:string='';
+  dateSelected: string = '';
   // unit_selected!:Unit;
-  numberPattern='^[0-9]*$';
-  isOperationRun:boolean=false;
+  numberPattern = '^[0-9]*$';
+  isOperationRun: boolean = false;
   //#endregion
 
   //#region Input & Output & Others
-  @Output() itemForAdd=new EventEmitter<GoodDetailDto>();
+  @Output() itemForAdd = new EventEmitter<GoodDetailDto>();
 
   //#endregion
 
-  constructor(private _coreService:FacadService,private fb: FormBuilder) { }
+  constructor(private _coreService: FacadService, private fb: FormBuilder) { }
+
 
   ngOnInit(): void {
     this.getGoods();
     this.formElementInit();
 
     this.goodFilterCtrl.valueChanges
-    .pipe(takeUntil(this._onDestroy))
-    .subscribe(() => {
-      this.filterInGoods();
-    });
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterInGoods();
+      });
   }
 
   formElementInit() {
@@ -76,7 +77,7 @@ export class AddDetailsComponent implements OnInit{
       price: [null, Validators.required],
       batchNumber: [null],
       dec: [null],
-     
+
       // stockFilterCtrl: [''],
     });
   }
@@ -89,25 +90,25 @@ export class AddDetailsComponent implements OnInit{
     );
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
   }
-  add(form: FormGroup){
+  add(form: FormGroup) {
     const addModel = new GoodDetailDto();
 
-    addModel.goodId=form.value.goodCtrl.id;
-    addModel.goodName=form.value.goodCtrl.name;
-    addModel.bacthNumber=form.value.batchNumber;
-    
-    if(this.dateSelected!=''){
-      addModel.expireDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    addModel.goodId = form.value.goodCtrl.id;
+    addModel.goodName = form.value.goodCtrl.name;
+    addModel.bacthNumber = form.value.batchNumber;
+
+    if (this.dateSelected != '') {
+      addModel.expireDate = new Date(moment.from(this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
     }
- 
-    addModel.count=form.value.count;
+
+    addModel.count = form.value.count;
     const val = form.value.price;
-    addModel.price=Number(val.replace(this.numberChars, ""));
-    addModel.amount=addModel.count*addModel.price;
-    addModel.description=form.value.dec;
-    addModel.unitName=form.value.goodCtrl.unitName;
+    addModel.price = Number(val.replace(this.numberChars, ""));
+    addModel.amount = addModel.count * addModel.price;
+    addModel.description = form.value.dec;
+    addModel.unitName = form.value.goodCtrl.unitName;
 
     // For your convenience
     // Don't save formatting, remove commas and dots
@@ -118,26 +119,28 @@ export class AddDetailsComponent implements OnInit{
     }
 
     this.pageForm.reset();
-    
+
     this.itemForAdd.emit(addModel);
   }
-  getGoods(){
-    const sb=this._coreService.good.items$.subscribe(good=>{
-      this.goods=good;
+  getGoods() {
+    const sb = this._coreService.good.items$.subscribe(good => {
+      this.goods = good;
       this.filterGoods.next(this.goods.slice());
-      
+
     });
+    this.subscriptions.push(sb);
   }
-  getUnits(){
-    const sb=this._coreService.unit.items$.subscribe(unit=>{
-      this.units=unit;
+  getUnits() {
+    const sb = this._coreService.unit.items$.subscribe(unit => {
+      this.units = unit;
     });
+    this.subscriptions.push(sb);
   }
-  getUnitNameById(unitId:number):string{
-    let _unitName:string='';
-    this.units.forEach(item=>{
-      if(item.id==unitId){
-        _unitName=item.name;
+  getUnitNameById(unitId: number): string {
+    let _unitName: string = '';
+    this.units.forEach(item => {
+      if (item.id == unitId) {
+        _unitName = item.name;
       }
     })
     return _unitName;
@@ -159,5 +162,7 @@ export class AddDetailsComponent implements OnInit{
       this.goods.filter(g => g.name.toLowerCase().indexOf(search) > -1)
     );
   }
-
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sb => sb.unsubscribe());
+  }
 }
