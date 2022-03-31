@@ -61,6 +61,7 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
   _currentGoodCount: number = 0;
   _currentGood!: GoodOfRemittanceDto;
 
+
   isEditMode: boolean = false;
   //#endregion
 
@@ -69,7 +70,7 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
   @Input() remittanceReturnType!: boolean; //false= return Remittance true= defualt remittance
   @Output() itemExport=new EventEmitter<ReportOperationDetailVm>();
   @Output() actionMode=new EventEmitter<boolean>();
-
+  
 
   //#endregion
   constructor(private _coreService: FacadService, private fb: FormBuilder, private decimalPipe: DecimalPipe, private _localService: EditRemittanceSharedService) {
@@ -99,17 +100,17 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
       goodCtrl: [null, Validators.required,],
       count: [null, Validators.required],
       price: [null, Validators.required,],
-      batchNumber: [null],
+      batchNumber: [''],
       datePicker: [null],
       dec: [null],
 
       // stockFilterCtrl: [''],
     });
-    if (!this.remittanceReturnType) {
-      this.pageForm.controls['price'].disable();
-      this.pageForm.controls['batchNumber'].disable();
-      this.pageForm.controls['datePicker'].disable();
-    }
+    // if (!this.remittanceReturnType) {
+    //   this.pageForm.controls['price'].disable();
+    //   this.pageForm.controls['batchNumber'].disable();
+    //   this.pageForm.controls['datePicker'].disable();
+    // }
   }
   errorHandling(control: string, error: string) {
     return this._coreService.errorHandler.conrollerErrorHandler(
@@ -130,7 +131,7 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
     }
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
   }
   add(form: FormGroup) {
     // if (parseInt(form.value.count) > this._currentGoodCount) {
@@ -172,7 +173,7 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
       } else {
         console.log(`${typeof val} ${val}`);
       }
-
+      debugger
       this.pageForm.reset();
       this.actionMode.emit(this.isEditMode);
       this.itemForAdd.emit(addModel);
@@ -190,6 +191,14 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
     this.pageForm.controls['goodCtrl'].setValue(this.getGoodModelById(value.goodId));
     this._currentGoodCount = value.count;
     this._currentGood = value;
+    console.log(this.pageForm);
+  }
+  reset(){
+    this.pageForm.reset();
+  }
+  clearDate(event:Event){
+    event.stopPropagation();
+    this.pageForm.controls['datePicker'].setValue('');
   }
   //#endregion
 
@@ -215,7 +224,7 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
   private getGoods() {
     //false= return Remittance true= defualt remittance
 
-    if (this.remittanceReturnType) {
+    // if (this.remittanceReturnType) {
       const sb = this._coreService.good.items$.subscribe(goods => {
         if (goods.length > 0) {
           this.goods = goods;
@@ -231,19 +240,19 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
       })
       this.listOfGoodIsOK = true;
       this.subscriptions.push(sb);
-    } else {
-      this.fetchData();
-      let goodName: string = '';
-      const sb = this._coreService.good.items$.subscribe(data => {
-        if (data.length > 0) {
-          this.goods = data;
-          if (!this.listOfGoodIsOK) {
-            this.getData();
-          }
-        }
-      })
-      this.subscriptions.push(sb);
-    }
+    // } else {
+    //   this.fetchData();
+    //   let goodName: string = '';
+    //   const sb = this._coreService.good.items$.subscribe(data => {
+    //     if (data.length > 0) {
+    //       this.goods = data;
+    //       if (!this.listOfGoodIsOK) {
+    //         this.getData();
+    //       }
+    //     }
+    //   })
+    //   this.subscriptions.push(sb);
+    // }
 
   }
   private getAllUnit() {

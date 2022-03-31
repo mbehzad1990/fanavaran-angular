@@ -8,6 +8,7 @@ import { InventoryStockComponent } from './Components/inventory-stock/inventory-
 import { ListOfRemittanceComponent } from './Components/list-of-remittance/list-of-remittance.component';
 import { RemittanceMainComponent } from './Components/remittance-main/remittance-main.component';
 import { ReturnRemittanceComponent } from './Components/return-remittance/return-remittance.component';
+import { PathDataControlGuard } from './guard/path-data-control.guard';
 import { StockOperationComponent } from './stock-operation.component';
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
       { path: 'remittance-list', component: ListOfRemittanceComponent },
       { path: 'inventory', component: InventoryStockComponent },
       { path: 'good-cardex', component: GoodCardexComponent },
-      { path: 'remittance-edit', component: EditRemittanceComponent },
+      { path: 'remittance-edit', component: EditRemittanceComponent ,canActivate:[PathDataControlGuard]},
     ]
   },
   { path: '**', component: ErrorPageComponent, pathMatch: 'full' },

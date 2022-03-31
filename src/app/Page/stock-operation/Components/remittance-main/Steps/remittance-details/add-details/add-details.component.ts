@@ -90,7 +90,7 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
     );
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
   }
   add(form: FormGroup) {
     const addModel = new GoodDetailDto();

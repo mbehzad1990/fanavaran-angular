@@ -180,7 +180,7 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
   getDate(): string {
     const sb = this._shareData.returnHeader$.subscribe(data => {
       if (data) {
-        this.dateSelected = moment(data.registerDate.toString()).format("jYYYY/jMM/jDD");
+        this.dateSelected = moment(data.registerDate.toString()).add(1,'day').format("jYYYY/jMM/jDD");
       }
     });
     this.subscriptions.push(sb);

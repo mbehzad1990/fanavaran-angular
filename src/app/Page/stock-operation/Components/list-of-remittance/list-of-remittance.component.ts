@@ -244,7 +244,6 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
 
   }
   edit(item: ReportOperationVm) {
-    
     this.rout.navigate(['/remittance/remittance-edit'], { state: {data:item} });
   }
 

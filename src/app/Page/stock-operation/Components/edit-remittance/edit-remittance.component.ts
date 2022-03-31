@@ -9,12 +9,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
 import { stringify } from '@angular/compiler/src/util';
-import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
+import { NotificationType, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { EditRemittanceSharedService } from './Service/edit-remittance-shared.service';
 import { ReportOperationDetailVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-detail-vm';
 import { GoodOfRemittanceDto } from 'src/shared/Domain/Dto/_Good/good-of-remittance-dto';
 import { RemittanceCrudElementComponent } from './components/remittance-crud-element/remittance-crud-element.component';
 import { RemittanceTableElementComponent } from './components/remittance-table-element/remittance-table-element.component';
+import { UpdateOperationHeaderVm } from 'src/shared/Domain/ViewModels/_Operation/update-operation-header-vm';
+import { UpdateOperationVm } from 'src/shared/Domain/ViewModels/_Operation/update-operation-vm';
+import { MatButton } from '@angular/material/button';
+import { UpdateOperationDetailsVm } from 'src/shared/Domain/ViewModels/_Operation/update-operation-details-vm';
 
 
 @Component({
@@ -25,7 +29,8 @@ import { RemittanceTableElementComponent } from './components/remittance-table-e
 export class EditRemittanceComponent implements OnInit, OnDestroy {
   //#region Private field
   private subscriptions: Subscription[] = [];
-  private _actionMode!:boolean;
+  private _actionMode!: boolean;
+  private _EditItems: ReportOperationDetailVm[] = [];
   //#endregion
 
   //#region Public field
@@ -52,19 +57,23 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
   _Edit_Stock: boolean = false;
   _operationType!: boolean; // false = return operation
   _selectDefualtPerson!: Customer;
+
+  isLoading$!: Observable<boolean>;
+
   //#endregion
 
   //#endregion
 
   //#region Input & OutPut & Other
-  @ViewChild('crudElement') crudElement!:RemittanceCrudElementComponent;
-  @ViewChild('dataTable') dataTable!:RemittanceTableElementComponent;
+  @ViewChild('crudElement') crudElement!: RemittanceCrudElementComponent;
+  @ViewChild('dataTable') dataTable!: RemittanceTableElementComponent;
   //#endregion
 
   constructor(private router: Router, private fb: FormBuilder, private _coreService: FacadService, private _localService: EditRemittanceSharedService, public activatedRoute: ActivatedRoute) {
     this.isLoadComponents$ = this._localService.showComponents$;
     this.getInitData(this.router);
     this._operationType = this.detectOperation(this._initData.stockOperationType);
+    this.isLoading$ = this._coreService.Operation.isLoading$;
   }
   ngOnInit(): void {
     this.formElementInit();
@@ -179,6 +188,9 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
     this._initData.description = urlData.data.description;
     this._localService.setRemittanceDefualtData(this._initData);
   }
+  private resetEditItem() {
+    this._EditItems = [];
+  }
   //#endregion
 
   //#region Public Methods
@@ -189,7 +201,8 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
   }
 
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+    const s=event.value;
+    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
     this._initData.registerDate = new Date(moment.from(this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
   }
 
@@ -237,22 +250,65 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
     //   this.dataSource.data = data;
     // });
   }
-  getItemForEdit(item:ReportOperationDetailVm){
-    const editModel=new GoodOfRemittanceDto();
-    editModel.amount=item.amount;
-    editModel.bacthNumber=item.bacthNumber;
-    editModel.count=item.count;
-    editModel.expireDate=item.expireDate!;
-    editModel.goodId=item.goodId;
-    editModel.name=item.goodName;
-    editModel.price=item.price;
+  getItemForEdit(item: ReportOperationDetailVm[]) {
+    this.resetEditItem();
+    const editModel = new GoodOfRemittanceDto();
+    editModel.amount = item[0].amount;
+    editModel.bacthNumber = item[0].bacthNumber;
+    editModel.count = item[0].count;
+    editModel.expireDate = item[0].expireDate!;
+    editModel.goodId = item[0].goodId;
+    editModel.name = item[0].goodName;
+    editModel.price = item[0].price;
+    this._EditItems.push(item[0]);
+    debugger
     this.crudElement.editMode(editModel);
   }
-  getItemExported(item:ReportOperationDetailVm){
-    this.dataTable.updateTableDataSource(this._actionMode,item);
+  getItemExported(item: ReportOperationDetailVm) {
+    this._EditItems.push(item);
+    this.dataTable.updateTableDataSource(this._EditItems);
+    this.resetEditItem();
   }
-  getActionMode(mode:boolean){
-    this._actionMode=mode;
+  getActionMode(mode: boolean) {
+    this._actionMode = mode;
+  }
+  changePerson(person:Customer){
+    this._initData.personId=person.id;
+    this._initData.personName=person.name;
+  }
+  changeStock(stock:Stock){
+    this._initData.stockId=stock.id;
+    this._initData.stockName=stock.name;
+  }
+  save(btn: MatButton) {
+    var updateModel = new UpdateOperationVm();
+    var header = new UpdateOperationHeaderVm();
+    var detail=new UpdateOperationDetailsVm();
+    header.personId = this._initData.personId;
+    header.operationId = this._initData.id;
+    header.refId = this._initData.refId;
+    header.registerDate = this._initData.registerDate;
+    header.stockId = this._initData.stockId;
+    header.stockOperationType = this._initData.stockOperationType;
+    updateModel.header = header;
+    debugger
+    detail.goodDetails=this.dataTable.prepareDataForDb();
+    updateModel.detail = detail;
+    if (updateModel.detail.goodDetails.length == 0) {
+      this._coreService.notification.showNotiffication(NotificationType.Warning, 'ریزقلمی برای ذخیره برای این حواله وجود ندارد');
+    } else {
+      this._coreService.Operation.update(updateModel).subscribe(result => {
+        if (result?.isSuccess) {
+          this._coreService.notification.showNotiffication(
+            NotificationType.Success, 'ویرایش با موفقیت انجام شد');
+          btn.disabled = true;
+        }
+      })
+    }
+
+  }
+  back(){
+    this.router.navigate(['/remittance/remittance-list']);
   }
   //#endregion
 

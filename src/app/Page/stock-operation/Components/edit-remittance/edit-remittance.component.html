@@ -1,5 +1,6 @@
 <mat-card class="section-container ">
-  <div fxLayout="column">
+
+  <div fxLayout="column" >
     <div fxLayout="row" fxLayoutAlign="center center">
       <p class="mat-h2 modal-title">ویرایش حواله- {{getTitleOperationType(_initData.stockOperationType)}}</p>
     </div>
@@ -59,7 +60,7 @@
               </div>
               <ng-template #editCustomer>
                 <mat-form-field class=" w-50 input-text-size mt-2" appearance="outline">
-                  <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect">
+                  <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect" (selectionChange)="changePerson(personSelect.value)">
                     <mat-select-trigger>
                       {{ personSelect.value?.name }}
                     </mat-select-trigger>
@@ -72,9 +73,6 @@
                       <span> {{person.name}}</span>
                     </mat-option>
                   </mat-select>
-                  <!-- <mat-error *ngIf="errorHandling('personSelect', 'required')">
-                                    انتخاب شخص اجباری است
-                                  </mat-error> -->
                 </mat-form-field>
               </ng-template>
               <button mat-icon-button class="mt-2" (click)="_Edit_Customer=!_Edit_Customer" matTooltip="ویرایش">
@@ -93,7 +91,7 @@
               </div>
               <ng-template #editStock>
                 <mat-form-field class="me-1 mt-2 w-50 input-text-size" appearance="outline">
-                  <mat-select placeholder="انبار" #stockSelect formControlName="stockSelect" disableOptionCentering>
+                  <mat-select placeholder="انبار" #stockSelect formControlName="stockSelect" disableOptionCentering (selectionChange)="changeStock(stockSelect.value)">
                     <mat-select-trigger>
                       {{ stockSelect.value?.name }}
                     </mat-select-trigger>
@@ -116,9 +114,6 @@
                     </mat-option>
 
                   </mat-select>
-                  <!-- <mat-error *ngIf="errorHandling('stockSelect', 'required')">
-                                انتخاب انبار اجباری است
-                              </mat-error> -->
                 </mat-form-field>
               </ng-template>
               <button mat-icon-button class="mt-2" (click)="_Edit_Stock=!_Edit_Stock" matTooltip="ویرایش">
@@ -129,11 +124,7 @@
                   <mat-icon>edit_off</mat-icon>
                 </ng-template>
               </button>
-
-
-
             </div>
-
           </div>
 
         </div>
@@ -141,7 +132,7 @@
         <!-- Table edit -->
         <div fxLayout="column" fxLayoutGap="10px" class="  mt-3">
           <p>ریز قلم حواله :</p>
-          <div fxLayout="column" class="content p-2">
+          <div fxLayout="column" class="content p-3">
             <div *ngIf="!(isLoadComponents$|async)">
               <app-remittance-crud-element [remittanceReturnType]="_operationType" #crudElement
                 (itemExport)="getItemExported($event)" (actionMode)="getActionMode($event)"></app-remittance-crud-element>
@@ -149,10 +140,23 @@
               </app-remittance-table-element>
             </div>
           </div>
+
         </div>
       </div>
 
-
     </form>
   </div>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="text-left mt-3 button-Add">
+    <button mat-button color="warn" class="ms-3" (click)="back()">
+      <span>برگشت</span>
+    </button>
+    <button #btn mat-raised-button color="primary" (click)="save(btn)">
+      <span fxLayout fxLayoutAlign="center center">
+        <span>ذخیره و ویرایش</span>
+        <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
+        </mat-spinner>
+      </span>
+    </button>
+  </div>
+ 
 </mat-card>

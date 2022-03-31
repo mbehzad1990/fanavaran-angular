@@ -7,6 +7,7 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
 import { ReportOperationDetailVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-detail-vm';
 import { EditRemittanceSharedService } from '../../Service/edit-remittance-shared.service';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
+import { GoodDetail } from 'src/shared/Domain/ViewModels/_stockOperationDetail/good-detail';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class RemittanceTableElementComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private _itemSelected!: ReportOperationDetailVm;
   private _listFData: ReportOperationDetailVm[] = [];
+  private numberChars = new RegExp("[^0-9]", "g")
 
   //#endregion
 
@@ -30,11 +32,11 @@ export class RemittanceTableElementComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<ReportOperationDetailVm>([]);
   displayedColumns: string[] = ['index', 'goodId', 'goodName', 'unitName', 'bacthNumber', 'expireDate', 'count', 'price', 'amount', 'menu'];
 
-
+  
   //#endregion
 
   //#region Input & OutPut & Other
-  @Output() editItem = new EventEmitter<ReportOperationDetailVm>();
+  @Output() editItem = new EventEmitter<ReportOperationDetailVm[]>();
   //#endregion
   constructor(private _coreService: FacadService, private _localService: EditRemittanceSharedService) {
     const sb = this._localService.remittanceDefualtData$.subscribe(data => {
@@ -70,44 +72,81 @@ export class RemittanceTableElementComponent implements OnInit, OnDestroy {
     return '';
   }
   edit(item: ReportOperationDetailVm) {
+    var itemExport: ReportOperationDetailVm[] = [];
+    itemExport.push(item);
     this._itemSelected = item;
-    this.editItem.emit(item);
+    this.editItem.emit(itemExport);
     // this._localService.setItemForEdit(item);
   }
-  updateTableDataSource(isEditMode: boolean, itemEdited: ReportOperationDetailVm) {
-
-    if (this.dataSource.data.filter(p => p.goodId == itemEdited.goodId).length != 0) {
-      this.dataSource.data.forEach(item => {
-        if (!isEditMode) {
-          if (item.price != itemEdited.price) {
-            this._coreService.notification.showNotiffication(NotificationType.Warning, 'قیمت واحد را بررسی کنید');
-          } else {
-            item.count = parseInt(item.count.toString()) + parseInt(itemEdited.count.toString());
-            item.amount = item.amount + itemEdited.amount;
+  updateTableDataSource(itemEdited: ReportOperationDetailVm[]) {
+    //itemEdited[0] ==> current 
+    debugger
+    if (itemEdited.length == 1) {
+      // New Item
+      if (this.dataSource.data.filter(p => p.goodId == itemEdited[0].goodId).length != 0) {
+        this.dataSource.data.forEach(item => {
+          if (item.goodId == itemEdited[0].goodId) {
+            if (item.price != itemEdited[0].price) {
+              this._coreService.notification.showNotiffication(NotificationType.Warning, 'قیمت واحد را بررسی کنید');
+            } else {
+              item.count = parseInt(item.count.toString()) + parseInt(itemEdited[0].count.toString());
+              item.amount = item.amount + itemEdited[0].amount;
+              item.bacthNumber = itemEdited[0].bacthNumber;
+              item.description = itemEdited[0].description;
+              item.expireDate = itemEdited[0].expireDate
+              item.goodId = itemEdited[0].goodId;
+              item.goodName = itemEdited[0].goodName;
+              item.price = itemEdited[0].price;
+              item.unitName = itemEdited[0].unitName;
+            }
           }
-        } else {
-          if (item.goodId == this._itemSelected.goodId) {
-            this.deletItemFromList(this._itemSelected);
-            item.amount = itemEdited.amount;
-            item.bacthNumber = itemEdited.bacthNumber;
-            item.count = itemEdited.count;
-            item.description = itemEdited.description;
-            item.expireDate = itemEdited.expireDate
-            item.goodId = itemEdited.goodId;
-            item.goodName = itemEdited.goodName;
-            item.price = itemEdited.price;
-            item.unitName = itemEdited.unitName;
-          }
-        }
-      })
-    }
-    else {
-      if (this.dataSource.data.filter(p => p.goodId == this._itemSelected.goodId).length != 0) {
-        this.deletItemFromList(this._itemSelected);
+        })
+      } else {
+        // this.dataSource.data=[];
+        this._listFData.push(itemEdited[0]);
+        this.dataSource.data = this._listFData;
       }
-      this._listFData.push(itemEdited);
-      this.dataSource.data = this._listFData;
+    } else {
+      // Edit Item
+      if (itemEdited[0].goodId == itemEdited[1].goodId) {
+        this.dataSource.data.forEach(item => {
+          if (item.goodId == itemEdited[1].goodId) {
+            item.amount = itemEdited[1].amount;
+            item.bacthNumber = itemEdited[1].bacthNumber;
+            item.count = itemEdited[1].count;
+            item.description = itemEdited[1].description;
+            item.expireDate = itemEdited[1].expireDate
+            item.goodId = itemEdited[1].goodId;
+            item.goodName = itemEdited[1].goodName;
+            item.price = itemEdited[1].price;
+            item.unitName = itemEdited[1].unitName;
+          }
+        })
+      }else{
+        this.deletItemFromList(itemEdited[0]);
+        this._listFData.push(itemEdited[1]);
+        this.dataSource.data = this._listFData;
+      }
     }
+  }
+  delete(item: ReportOperationDetailVm){
+    this.deletItemFromList(item);
+  }
+  prepareDataForDb():GoodDetail[]{
+    let goodDetails: GoodDetail[] = [];
+    this.dataSource.data.forEach(item => {
+      const _goodItem = new GoodDetail();
+      _goodItem.goodId = item.goodId;
+      _goodItem.price = Number(item.price.toString().replace(this.numberChars, ""));
+      _goodItem.count = item.count;
+      _goodItem.Description = item.description;
+      _goodItem.amount = Number(item.amount.toString().replace(this.numberChars, ""));
+      _goodItem.bacthNumber = item.bacthNumber;
+      _goodItem.expireDate = item.expireDate!;
+
+      goodDetails.push(_goodItem);
+    })
+    return goodDetails;
   }
   //#endregion
 
@@ -141,7 +180,7 @@ export class RemittanceTableElementComponent implements OnInit, OnDestroy {
     // this.filterGoods.next(this.goodOfRemittance.slice());
     this.subscriptions.push(sb);
   }
-  deletItemFromList(deleteItem: ReportOperationDetailVm) {
+  private deletItemFromList(deleteItem: ReportOperationDetailVm) {
     const data = this.dataSource.data;
     const index: number = data.indexOf(deleteItem);
     if (index !== -1) {
@@ -151,6 +190,10 @@ export class RemittanceTableElementComponent implements OnInit, OnDestroy {
       this._listFData = this.dataSource.data;
 
     }
+  }
+  private searchItemInDataSource(item: ReportOperationDetailVm): ReportOperationDetailVm {
+    const itemSearch = this.dataSource.data.filter(c => c.goodId == item.goodId)[0];
+    return itemSearch;
   }
   //#endregion
   ngOnDestroy(): void {

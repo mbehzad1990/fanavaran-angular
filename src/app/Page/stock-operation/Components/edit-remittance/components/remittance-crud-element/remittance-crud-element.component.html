@@ -1,9 +1,8 @@
-<form [formGroup]="pageForm" (ngSubmit)="add(pageForm)">
-  <div fxLayout="row" fxLayoutGap="6px" fxLayoutAlign="center center" fxFill>
+<form [formGroup]="pageForm" >
+  <div fxLayout="row" fxLayoutGap="6px" fxLayoutAlign="start center" fxFill>
     <mat-form-field class="mt-1 input-size input-text-size" appearance="outline">
       <mat-label>کالا</mat-label>
-      <mat-select placeholder="کالا" #goodCtrl formControlName="goodCtrl" disableOptionCentering
-        (selectionChange)="getDetails(pageForm,goodCtrl.value)">
+      <mat-select placeholder="کالا" #goodCtrl formControlName="goodCtrl" disableOptionCentering>
         <mat-select-trigger>
           {{ goodCtrl.value?.name }}
         </mat-select-trigger>
@@ -20,20 +19,23 @@
         انتخاب انبار اجباری است
       </mat-error>
     </mat-form-field>
-    <mat-form-field class="mt-1 input-size input-text-size numberTextView-width-size" appearance="outline"
-      color="primary">
+    <mat-form-field class="mt-1 input-field-width" appearance="outline" color="primary">
       <mat-label>شماره بچ (batch)</mat-label>
       <input matInput placeholder="شماره بچ : 1234..." #batchNumber formControlName="batchNumber"
-        [pattern]="numberPattern" />
+        class="input-field-size" />
       <!-- <mat-error *ngIf="errorHandling('batchNumber', 'required')">
           وارد کردن شماره بچ اجباری است
         </mat-error> -->
       <!-- <mat-hint>Hint</mat-hint> -->
     </mat-form-field>
-    <mat-form-field class="mt-1 input-size input-text-size" appearance="outline" color="primary">
+    <mat-form-field class="mt-1 input-field-width" appearance="outline" color="primary">
       <mat-label> تاریخ انقضا</mat-label>
       <input matInput [matDatepicker]="picker" placeholder="تاریخ انقضا" #datePicker readonly
-        (dateChange)="onChange($event)" formControlName="datePicker">
+        (dateChange)="onChange($event)" formControlName="datePicker" class="input-field-size">
+        <button matDatepickerToggleIcon *ngIf="datePicker.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearDate($event)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <!-- <mat-icon matDatepickerToggleIcon *ngIf="datePicker.value" (click)="clearDate($event)">clear</mat-icon> -->
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker>
         <mat-datepicker-actions>
@@ -46,10 +48,10 @@
         </mat-error> -->
     </mat-form-field>
 
-    <mat-form-field class="mt-1 input-size input-text-size numberTextView-width-size" appearance="outline"
-      color="primary">
+    <mat-form-field class="mt-1 input-count-field-width " appearance="outline" color="primary">
       <mat-label>تعداد</mat-label>
-      <input matInput placeholder="1 ..." #count formControlName="count" [pattern]="numberPattern" />
+      <input matInput placeholder="1 ..." #count formControlName="count" [pattern]="numberPattern"
+        class="input-field-size" />
       <mat-error *ngIf="errorHandling('count', 'required')">
         وارد کردن تعداد اجباری است
       </mat-error>
@@ -58,15 +60,16 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="mt-1 input-size input-text-size" appearance="outline" color="primary">
+    <mat-form-field class="mt-1 input-field-width" appearance="outline" color="primary">
       <mat-label> قیمت (ریال)</mat-label>
-      <input matInput placeholder="1,000" #price formControlName="price" PersianCurency />
+      <input matInput placeholder="1,000" #price formControlName="price" PersianCurency class="input-field-size" />
       <mat-error *ngIf="errorHandling('price', 'required')">
         انتخاب انبار اجباری است
       </mat-error>
     </mat-form-field>
-    <div fxLayout="row" fxLayoutAlign="center center" class="ms-3">
-      <button mat-raised-button color="primary" [disabled]="pageForm.invalid" class="mb-2">
+
+    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center" class="ms-3">
+      <button mat-raised-button color="primary" [disabled]="pageForm.invalid" class="mb-2" (click)="add(pageForm)">
         <div *ngIf="!isEditMode;else edit">
           <i class="icon-plus-square icon-19px _white-color"></i>
           <span class="me-1">افزودن</span>
@@ -75,8 +78,14 @@
           <i class="icon-edit icon-19px _white-color"></i>
           <span class="me-1">ویرایش</span>
         </ng-template>
-  
+
       </button>
+      <div [hidden]="pageForm.invalid">
+        <button mat-button color="warn" (click)="reset()" class="mb-2">
+          <span>انصراف</span>
+        </button>
+      </div>
     </div>
   </div>
+
 </form>

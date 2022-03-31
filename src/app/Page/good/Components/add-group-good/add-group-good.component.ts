@@ -119,7 +119,7 @@ export class AddGroupGoodComponent implements OnInit,OnDestroy {
       model.unitId=item.unitId;
       model.name=item.name;
       model.manualId=item.manualId;
-      debugger
+      
       if( item.latinName=="" || item.latinName==null){
         model.latinName='';
 
@@ -134,7 +134,7 @@ export class AddGroupGoodComponent implements OnInit,OnDestroy {
       }
       goodList.push(model);
     })
-    debugger
+    
     const sb=this._coreService.good.addlist(goodList).subscribe(result => {
       if (result?.isSuccess) {
         this._coreService.notification.showNotiffication(
@@ -151,6 +151,8 @@ export class AddGroupGoodComponent implements OnInit,OnDestroy {
     });
     this.subscriptions.push(sb);
   }
+  
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb=>sb.unsubscribe());
   }

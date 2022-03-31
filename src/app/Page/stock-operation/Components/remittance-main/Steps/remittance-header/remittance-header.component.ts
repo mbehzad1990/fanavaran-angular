@@ -140,13 +140,6 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
     );
   }
 
-  nextStep(){
-    this.headerInfo.emit(this._headerInfo);
-    this.headerInfoDto.emit(this._headerDto);
-    this.nextStepper.completed = true;
-    this.nextStepper._stepper.next();
-
-  }
 
   submit(form: FormGroup){
     
@@ -177,7 +170,7 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
 
 
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toString()).format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());
