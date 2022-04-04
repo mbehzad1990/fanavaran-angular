@@ -30,6 +30,18 @@
             <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodName}} </td>
             <td mat-footer-cell *matFooterCellDef> جمع کل : </td>
           </ng-container>
+          <!-- goodId Column -->
+          <ng-container matColumnDef="goodId">
+            <th mat-header-cell *matHeaderCellDef class=" text-right">کد</th>
+            <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodId}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <!-- manuelId Column -->
+          <ng-container matColumnDef="manuelId">
+            <th mat-header-cell *matHeaderCellDef class=" text-right">کد دستی</th>
+            <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodManuelId}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
           <!-- batch Column -->
           <ng-container matColumnDef="batch">
             <th mat-header-cell *matHeaderCellDef class=" text-right">بچ</th>
@@ -83,7 +95,7 @@
       </div>
 
     </ng-template>
-    <div fxLayout="row" fxFlexAlign="end" fxLayoutGap="15px" class="text-left mt-3 button-Add" align="end">
+    <div fxLayout="row" fxFlexAlign="end" fxLayoutGap="15px" class="text-left mt-3 button-Add" align="end" [hidden]="isLoading$ | async">
       <mat-dialog-actions>
         <button mat-button mat-dialog-close>بستن</button>
       </mat-dialog-actions>

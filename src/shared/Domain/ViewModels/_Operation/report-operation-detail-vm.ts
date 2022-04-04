@@ -1,5 +1,6 @@
 export class ReportOperationDetailVm {
     public goodId!:number;
+    public goodManuelId!:number;
     public bacthNumber:string|null=null;
     public expireDate:Date|null=null;
     public goodName!:string;

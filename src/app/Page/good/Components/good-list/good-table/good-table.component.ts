@@ -6,6 +6,7 @@ import { DeleteModalComponent } from 'src/shared/components/Modals/delete-modal/
 import { AddEditGoodModalComponent } from 'src/shared/components/Modals/_Good/add-edit-good-modal/add-edit-good-modal.component';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
 import { ActionType, DeleteOperationType, NotificationType } from 'src/shared/Domain/Enums/global-enums';
+import { DeleteGoodVm } from 'src/shared/Domain/ViewModels/_Good/delete-good-vm';
 import { GoodDetailsVm } from 'src/shared/Domain/ViewModels/_Good/good-details-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 
@@ -24,7 +25,7 @@ export class GoodTableComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<GoodDetailsVm>();
   isHover: boolean = false;
 
-  displayedColumns: string[] = ['index', 'id','manualId', 'name', 'latinName', 'unitName','unitId','desc', 'menu'];
+  displayedColumns: string[] = ['index', 'id', 'manualId', 'name', 'latinName', 'unitName', 'unitId', 'desc', 'menu'];
 
 
   isLoading$!: Observable<boolean>;
@@ -33,14 +34,18 @@ export class GoodTableComponent implements OnInit, OnDestroy {
 
   //#region Input & OutPut & Other
   //#endregion
-  constructor(private _coreService: FacadService,private dialog: MatDialog) {
+  constructor(private _coreService: FacadService, private dialog: MatDialog) {
     this.isLoading$ = this._coreService.stock.isLoading$;
   }
   ngOnInit(): void {
     this.getData();
   }
 
-  delete(row:GoodDetailsVm){
+  delete(row: GoodDetailsVm) {
+    var deletModel = new DeleteGoodVm();
+    deletModel.goodId = row.id;
+    deletModel.manualId = row.manualId;
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
@@ -54,28 +59,29 @@ export class GoodTableComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DeleteModalComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result) {
-        const sb=this._coreService.good.delete(row.id).subscribe(result=>{
-          if(result?.isSuccess){
-            const actionText=this._coreService.errorHandler.getErrorText(result.resultAction);
-            this._coreService.notification.showNotiffication(NotificationType.Success,actionText);
-          }else{
-    
+        const sb = this._coreService.good.delete(deletModel).subscribe(result => {
+          if (result?.isSuccess) {
+            const actionText = this._coreService.errorHandler.getErrorText(result.resultAction);
+            this._coreService.notification.showNotiffication(NotificationType.Success, actionText);
+          } else {
+            const actionText = this._coreService.errorHandler.getErrorText(result!.resultAction);
+            this._coreService.notification.showNotiffication(NotificationType.Warning, actionText);
           }
         });
         this.subscriptions.push(sb);
       }
     });
   }
-  edit(row:GoodDetailsVm){
+  edit(row: GoodDetailsVm) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    const modal_data=new RequestModalDto<GoodDetailsVm>();
-    modal_data.action=ActionType.Update;
-    modal_data.data=row;
+    const modal_data = new RequestModalDto<GoodDetailsVm>();
+    modal_data.action = ActionType.Update;
+    modal_data.data = row;
 
-    dialogConfig.data=modal_data;
+    dialogConfig.data = modal_data;
 
     const dialogRef = this.dialog.open(AddEditGoodModalComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
@@ -83,9 +89,9 @@ export class GoodTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  getData(){
-    const sb=this._coreService.good.items$.subscribe(data=>{
-      this.dataSource.data=data;
+  getData() {
+    const sb = this._coreService.good.items$.subscribe(data => {
+      this.dataSource.data = data;
     });
   }
 
