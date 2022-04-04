@@ -60,7 +60,8 @@ export class CustomerTableComponent implements OnInit,OnDestroy {
             const actionText=this._coreService.errorHandler.getErrorText(result.resultAction);
             this._coreService.notification.showNotiffication(NotificationType.Success,actionText);
           }else{
-    
+            const actionText=this._coreService.errorHandler.getErrorText(result!.resultAction);
+            this._coreService.notification.showNotiffication(NotificationType.Warning,actionText);
           }
         });
         this.subscriptions.push(sb);

@@ -41,6 +41,8 @@ export class AddEditGoodModalComponent implements OnInit , OnDestroy {
 
   units: Unit[] = [];
   unit_selected!:Unit;
+
+  isActiveAddUnitBtn:boolean=false;
   //#endregion
 
   //#region Input & Output & Others
@@ -58,6 +60,9 @@ export class AddEditGoodModalComponent implements OnInit , OnDestroy {
     this.setTitle();
     this.getUnit();
     this.formElementInit();
+    if (this.data.action == ActionType.Update){
+      this.getGoodState(this.data.data.id);
+    }
   }
   formElementInit() {
     if (this.data.action == ActionType.Add) {
@@ -181,6 +186,16 @@ export class AddEditGoodModalComponent implements OnInit , OnDestroy {
         // this.isBrandSelected = true;
       }
     }
+  }
+  getGoodState(goodId:number){
+    const sb=this._coreService.good.findGoodInRemittance(goodId).subscribe(result=>{
+      if(result?.data){
+        this.modalForm.controls['unit'].disable();
+        this.modalForm.controls['manualId'].disable();
+        this.isActiveAddUnitBtn=true;
+      }
+    });
+    this.subscriptions.push(sb);
   }
 
   onNoClick(): void {

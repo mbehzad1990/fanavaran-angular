@@ -1,5 +1,5 @@
 export enum ResultAction {
-  ExceptionFaild=0,
+  ExceptionFaild = 0,
   ActionFaild,
   NoSeed,
   Success,
@@ -23,47 +23,51 @@ export enum ResultAction {
   GoodNotExist,
   StockOperationNotExist,
   StockOperationHasRefId,
-  
-    ServiceException
-  }
-  
-  export enum NotificationType {
-    Success,
-    Error,
-    Warning,
-  }
-  export enum ResultType {
-    None = 0,
-    Successfully = 1,
-    warning = 2,
-    error = 3,
-    Critical = 4,
-    Info = 5,
-  }
-  export enum DeleteOperationType {
-    User,
-    Stock,
-    Unit,
-    Good,
-    Operation
-  }
-  
-  export enum ActionType {
-    Add,
-    Update,
-    Delete,
-    ShowDetails
-  }
-  
-  export enum StockOperationType{
-    Sell,
-    Buy,
-    ReSell,
-    ReBuy,
-    Damage
-  }
-  export enum  serachRemittanceController{
-    isDropDownShow,
-    isTextBoxShow,
-    isDateBoxShow,
-  }
+  UpdateOperaionDetailsFailed,
+  UnitAlreadyExist,
+  GoodManuelIdAlreadyUse,
+  GoodAlreadyUseInRemittance,
+  PersonAlreadyUseInRemittance,
+  ServiceException
+}
+
+export enum NotificationType {
+  Success,
+  Error,
+  Warning,
+}
+export enum ResultType {
+  None = 0,
+  Successfully = 1,
+  warning = 2,
+  error = 3,
+  Critical = 4,
+  Info = 5,
+}
+export enum DeleteOperationType {
+  User,
+  Stock,
+  Unit,
+  Good,
+  Operation
+}
+
+export enum ActionType {
+  Add,
+  Update,
+  Delete,
+  ShowDetails
+}
+
+export enum StockOperationType {
+  Sell,
+  Buy,
+  ReSell,
+  ReBuy,
+  Damage
+}
+export enum serachRemittanceController {
+  isDropDownShow,
+  isTextBoxShow,
+  isDateBoxShow,
+}

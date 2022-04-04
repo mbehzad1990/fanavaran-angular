@@ -20,7 +20,7 @@ export class RemittanceDetailsModalComponent implements OnInit, OnDestroy {
   //#region Public
   listOfdetails: ReportOperationDetailVm[] = [];
   dataSource = new MatTableDataSource<ReportOperationDetailVm>();
-  displayedColumns: string[] = ['index', 'name','batch','exp', 'count', 'price', 'amount', 'unitName', 'desc',];
+  displayedColumns: string[] = ['index','goodId','manuelId','name','batch','exp', 'count', 'price', 'amount', 'unitName', 'desc',];
 
   isLoading$!: Observable<boolean>;
   //#endregion

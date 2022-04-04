@@ -37,6 +37,18 @@ export class ErrorHandlerService {
       case ResultAction.StockOperationHasRefId:
         resultText = 'برای این حواله فاکتور برگشت وجود دارد';
         break;
+      case ResultAction.UnitAlreadyExist:
+        resultText = 'این واحد قبلا اضافه شده است';
+        break;
+      case ResultAction.GoodManuelIdAlreadyUse:
+        resultText ='این کد دستی کالا قبلا استفاده شده است';
+        break;
+      case ResultAction.GoodAlreadyUseInRemittance:
+        resultText ='این کالا در فاکتوری ثبت شده است';
+        break;
+      case ResultAction.PersonAlreadyUseInRemittance:
+        resultText ='این شخص در فاکتوری ثبت شده است';
+        break;
       default:
         resultText = 'UnHandled';
 
