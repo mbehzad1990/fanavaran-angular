@@ -73,6 +73,7 @@ export class OperationService implements OnDestroy {
   //#region Get
   ListOfOperation() {
     this._isLoading$.next(true);
+    debugger
     return this.http.get<ResultDto<ReportOperationVm[]>>(this.baseUrl + "ListOfOperation").pipe(
       map((result: ResultDto<ReportOperationVm[]>) => {
         if (result.isSuccess) {

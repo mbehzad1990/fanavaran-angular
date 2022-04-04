@@ -65,7 +65,9 @@
     white-space: nowrap;
   }
 }
-
+.table-header-color{
+  background-color: #ECF0F1;
+}
 /*#endregion rtl*/
 /*#region ltr*/
 ::ng-deep [dir="ltr"] {

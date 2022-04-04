@@ -180,9 +180,11 @@
   overflow: auto;
 }
 .table-fullHeights{
-  height: 50vh;
+  height: 70vh;
 }
-
+.table-header-color{
+  background-color: #ECF0F1;
+}
 .element-row:not(.expanded):hover {
   background: #f5f5f5;
 }

@@ -142,13 +142,13 @@
     </button>
 
     <div class="ms-3">
-      <div *ngIf="_operationComplete">
-        <button mat-button  color="warn" (click)=" newOperation();;stepper.reset()">
+      <div *ngIf="_operationComplete;else cancel">
+        <button mat-button  color="warn" (click)=" newOperation();stepper.reset()">
           <span>انصراف</span>
         </button>
       </div>
       <ng-template #cancel>
-        <button mat-raised-button  color="primary" (click)=" newOperation();;stepper.reset()">
+        <button mat-raised-button  color="primary" (click)=" newOperation();stepper.reset()">
           <span>حواله جدید</span>
         </button>
         </ng-template>

@@ -1,4 +1,4 @@
-<div class="mb-1" fxLayout="column" fxFill >
+<div class="mb-1" fxLayout="column" fxFill>
   <form [formGroup]="headerForm">
     <div>
 
@@ -20,9 +20,10 @@
           </mat-error>
         </mat-form-field>
 
-    
+
         <mat-form-field fxFlex="30%" class=" w-100 input-text-size" appearance="outline">
-          <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect" >
+          <mat-label>شخص/مشتری</mat-label>
+          <mat-select placeholder="شخص/مشتری ..." #personSelect formControlName="personSelect">
             <mat-select-trigger>
               {{ personSelect.value?.name }}
             </mat-select-trigger>
@@ -47,6 +48,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="30%" class=" w-100 input-text-size" appearance="outline">
+          <mat-label>انبار</mat-label>
           <mat-select placeholder="انبار" #stockSelect formControlName="stockSelect" disableOptionCentering>
             <mat-select-trigger>
               {{ stockSelect.value?.name }}
@@ -59,7 +61,7 @@
               <span class="mt-2">
                 {{stock.name}}
               </span>
-              
+
               <!-- <div fxLayout="row" fxLayoutAlign="space-between">
                               <div>
                                   <span class="ms-2">{{i+1}}</span>
@@ -86,7 +88,7 @@
 
     <div class="text-left mt-3 button-Add" align="end">
       <!-- [disabled]="headerForm.invalid" -->
-      <button mat-flat-button mat-Stroked-button color="primary" [disabled]="headerForm.invalid" 
+      <button mat-flat-button mat-Stroked-button color="primary" [disabled]="headerForm.invalid"
         (click)="submit(headerForm)">
         <span color="primary">ثبت ریز اقلام</span>
       </button>

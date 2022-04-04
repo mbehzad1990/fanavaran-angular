@@ -28,6 +28,7 @@ export enum ResultAction {
   GoodManuelIdAlreadyUse,
   GoodAlreadyUseInRemittance,
   PersonAlreadyUseInRemittance,
+  StockAlreadyUseInRemittance,
   ServiceException
 }
 

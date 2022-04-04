@@ -165,7 +165,6 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   }
   resetStep(){
     this.headerForm.reset();
-  
   }
 
 

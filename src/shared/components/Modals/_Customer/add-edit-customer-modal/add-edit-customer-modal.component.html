@@ -18,12 +18,8 @@
         </mat-form-field>
         <mat-form-field fxFlex="50%" class="input-size" appearance="outline" color="primary">
           <mat-label>کد مشتری</mat-label>
-          <input matInput type="number" placeholder="کد مشتری" #customerCode formControlName="name"
+          <input matInput type="number" placeholder="کد مشتری" #customerCode formControlName="customerCode"
             [pattern]="numberPattern" />
-          <mat-error *ngIf="errorHandling('customerCode', 'required')">
-            وارد کردن کد مشتری اجباری است
-          </mat-error>
-          <!-- <mat-hint>Hint</mat-hint> -->
         </mat-form-field>
 
       </div>

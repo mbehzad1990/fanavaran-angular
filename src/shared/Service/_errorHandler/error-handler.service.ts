@@ -49,6 +49,9 @@ export class ErrorHandlerService {
       case ResultAction.PersonAlreadyUseInRemittance:
         resultText ='این شخص در فاکتوری ثبت شده است';
         break;
+      case ResultAction.StockAlreadyUseInRemittance:
+        resultText ='این انبار در فاکتوری ثبت شده است';
+        break;
       default:
         resultText = 'UnHandled';
 

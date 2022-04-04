@@ -79,7 +79,7 @@ import { RemittanceDetailsModalComponent } from './remittance-details-modal/remi
     ])
   ],
 })
-export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ListOfRemittanceComponent implements OnInit, OnDestroy {
   //#region Private field
   private subscriptions: Subscription[] = [];
   editrow = false;
@@ -93,7 +93,8 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
   txtfilter = new FormControl();
   currentRow = -1;
   //dataSource = new MatTableDataSource<ReportOperationVm>();
-  dataSource!: MatTableDataSource<ReportOperationVm>;
+  // dataSource!: MatTableDataSource<ReportOperationVm>;
+  dataSource = new MatTableDataSource<ReportOperationVm>();
   tempdata: ReportOperationVm[] = [];
   displayedColumns: string[] = ['index', 'id', 'personName', 'stockName', 'remittenceType', 'date','refId', 'desc', 'menu'];
 
@@ -122,20 +123,21 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy, AfterViewIn
     this.getData();
     this.contollSearchControl(this.searchType);
   }
-  ngAfterViewInit(): void {
-  }
-
 
   getData() {
     const sb = this._coreService.Operation.ListOfOperation().subscribe(result => {
+      debugger
       if (result?.isSuccess) {
         this.dataLoad();
+      }else{
+        this.dataSource.data = [];
       }
     });
     this.subscriptions.push(sb);
   }
   dataLoad() {
     const sb = this._coreService.Operation.operationlist$.subscribe(data => {
+      debugger
       this.dataSource = new MatTableDataSource(data);
     });
   }
