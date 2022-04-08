@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
 import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { ActionType, NotificationType, ResultType } from 'src/shared/Domain/Enums/global-enums';
@@ -17,7 +17,7 @@ import { FacadService } from 'src/shared/Service/_Core/facad.service';
   templateUrl: './add-edit-good-modal.component.html',
   styleUrls: ['./add-edit-good-modal.component.scss']
 })
-export class AddEditGoodModalComponent implements OnInit , OnDestroy {
+export class AddEditGoodModalComponent implements OnInit, OnDestroy {
 
   //#region Private
   private subscriptions: Subscription[] = [];
@@ -37,30 +37,32 @@ export class AddEditGoodModalComponent implements OnInit , OnDestroy {
   isSetManualId: boolean = false;
 
   isLoading = false;
+  isLoading$!: Observable<boolean>;
   isOpen = false;
 
   units: Unit[] = [];
-  unit_selected!:Unit;
+  unit_selected!: Unit;
 
-  isActiveAddUnitBtn:boolean=false;
+  isActiveAddUnitBtn: boolean = false;
   //#endregion
 
   //#region Input & Output & Others
   //#endregion
   constructor(
     private _coreService: FacadService,
-    private router:Router,
+    private router: Router,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEditGoodModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: RequestModalDto<GoodDetailsVm>
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: RequestModalDto<GoodDetailsVm>) {
+      this.isLoading$=this._coreService.good.isLoading$;
+    }
 
 
   ngOnInit(): void {
     this.setTitle();
     this.getUnit();
     this.formElementInit();
-    if (this.data.action == ActionType.Update){
+    if (this.data.action == ActionType.Update) {
       this.getGoodState(this.data.data.id);
     }
   }
@@ -146,12 +148,12 @@ export class AddEditGoodModalComponent implements OnInit , OnDestroy {
       this.add(addModel);
     } else {
       const updatModel = new UpdateGoodVm();
-      updatModel.id=this.data.data.id;
-      updatModel.name=form.value.name;
-      updatModel.latinName=form.value.latinName;
-      updatModel.manualId=parseInt(form.value.manualId);
-      updatModel.description=form.value.description;
-      updatModel.unitId=parseInt(form.value.unit);
+      updatModel.id = this.data.data.id;
+      updatModel.name = form.value.name;
+      updatModel.latinName = form.value.latinName;
+      updatModel.manualId = parseInt(form.controls['manualId'].value);
+      updatModel.description = form.value.description;
+      updatModel.unitId = parseInt(form.controls['unit'].value);
 
       this.update(updatModel);
     }
@@ -173,7 +175,7 @@ export class AddEditGoodModalComponent implements OnInit , OnDestroy {
 
     this.subscriptions.push(sb);
   }
-  navigate(e:any){
+  navigate(e: any) {
     e.preventDefault();
     this.router.navigate(['/unit']);
     this.dialogRef.close();
@@ -187,12 +189,12 @@ export class AddEditGoodModalComponent implements OnInit , OnDestroy {
       }
     }
   }
-  getGoodState(goodId:number){
-    const sb=this._coreService.good.findGoodInRemittance(goodId).subscribe(result=>{
-      if(result?.data){
+  getGoodState(goodId: number) {
+    const sb = this._coreService.good.findGoodInRemittance(goodId).subscribe(result => {
+      if (!result?.data) {
         this.modalForm.controls['unit'].disable();
         this.modalForm.controls['manualId'].disable();
-        this.isActiveAddUnitBtn=true;
+        this.isActiveAddUnitBtn = true;
       }
     });
     this.subscriptions.push(sb);

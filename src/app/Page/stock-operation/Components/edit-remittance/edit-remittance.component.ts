@@ -31,6 +31,7 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private _actionMode!: boolean;
   private _EditItems: ReportOperationDetailVm[] = [];
+  private _regDate!:Date;
   //#endregion
 
   //#region Public field
@@ -59,6 +60,8 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
   _selectDefualtPerson!: Customer;
 
   isLoading$!: Observable<boolean>;
+
+  _registerDateString!: string;
 
   //#endregion
 
@@ -144,7 +147,6 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
     // get the search keyword
 
     let search = this.stockFilterCtrl.value;
-    debugger
     if (!search) {
       this.filterstock.next(this.stocks.slice());
       return;
@@ -188,6 +190,9 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
     this._initData.description = urlData.data.description;
     this._localService.setRemittanceDefualtData(this._initData);
   }
+  private getDateString(date:Date):string{
+    return this._coreService.UtilityFunction.convertMiladiDateToString(date);
+  }
   private resetEditItem() {
     this._EditItems = [];
   }
@@ -201,9 +206,9 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
   }
 
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    const s=event.value;
-    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
-    this._initData.registerDate = new Date(moment.from(this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    const s = event.value;
+    // this.dateSelected = moment(event.value?.toISOString()).format("jYYYY/jMM/jDD");
+    this._initData.registerDate = this._coreService.UtilityFunction.getMiladiDatefromStringDate(event.value!.toISOString());
   }
 
   getTitleOperationType(type: StockOperationType): string {
@@ -256,12 +261,13 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
     editModel.amount = item[0].amount;
     editModel.bacthNumber = item[0].bacthNumber;
     editModel.count = item[0].count;
-    editModel.expireDate = item[0].expireDate!;
+    if(item[0].expireDate!=''){
+      editModel.expireDate =item[0].expireDate!
+    }
     editModel.goodId = item[0].goodId;
     editModel.name = item[0].goodName;
     editModel.price = item[0].price;
     this._EditItems.push(item[0]);
-    debugger
     this.crudElement.editMode(editModel);
   }
   getItemExported(item: ReportOperationDetailVm) {
@@ -272,27 +278,27 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
   getActionMode(mode: boolean) {
     this._actionMode = mode;
   }
-  changePerson(person:Customer){
-    this._initData.personId=person.id;
-    this._initData.personName=person.name;
+  changePerson(person: Customer) {
+    this._initData.personId = person.id;
+    this._initData.personName = person.name;
   }
-  changeStock(stock:Stock){
-    this._initData.stockId=stock.id;
-    this._initData.stockName=stock.name;
+  changeStock(stock: Stock) {
+    this._initData.stockId = stock.id;
+    this._initData.stockName = stock.name;
   }
   save(btn: MatButton) {
     var updateModel = new UpdateOperationVm();
     var header = new UpdateOperationHeaderVm();
-    var detail=new UpdateOperationDetailsVm();
+    var detail = new UpdateOperationDetailsVm();
     header.personId = this._initData.personId;
     header.operationId = this._initData.id;
     header.refId = this._initData.refId;
-    header.registerDate = this._initData.registerDate;
+    header.registerDate=this.getDateString( this._initData.registerDate);
     header.stockId = this._initData.stockId;
     header.stockOperationType = this._initData.stockOperationType;
+
     updateModel.header = header;
-    debugger
-    detail.goodDetails=this.dataTable.prepareDataForDb();
+    detail.goodDetails = this.dataTable.prepareDataForDb();
     updateModel.detail = detail;
     if (updateModel.detail.goodDetails.length == 0) {
       this._coreService.notification.showNotiffication(NotificationType.Warning, 'ریزقلمی برای ذخیره برای این حواله وجود ندارد');
@@ -307,7 +313,7 @@ export class EditRemittanceComponent implements OnInit, OnDestroy {
     }
 
   }
-  back(){
+  back() {
     this.router.navigate(['/remittance/remittance-list']);
   }
   //#endregion

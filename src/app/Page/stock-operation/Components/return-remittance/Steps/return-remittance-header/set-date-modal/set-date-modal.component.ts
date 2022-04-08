@@ -34,7 +34,7 @@ export class SetDateModalComponent implements OnInit {
 
   //#region Input & Output & Others
   //#endregion
-  constructor(private _shareData: ReturnShareDataService,
+  constructor(private _shareData: ReturnShareDataService,private _coreService:FacadService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<SetDateModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ReturnHeaderDto) { }
@@ -50,7 +50,7 @@ export class SetDateModalComponent implements OnInit {
     });
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected =moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
+    this.dateSelected =moment(event.value?.toISOString()).format("jYYYY/jMM/jDD");
   }
   done(des:string){
     const model=new RegisterStockOperationVm();
@@ -58,7 +58,9 @@ export class SetDateModalComponent implements OnInit {
     model.refId=this.data.refId;
     model.stockId=this.data.stockId;
     model.stockOperationType=this.data.stockOperationType;
-    model.registerDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    const _dateSelected=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    // this._headerInfo.registerDate=this._coreService.UtilityFunction.convertMiladiDateToString(_dateSelected);
+    model.registerDate=this._coreService.UtilityFunction.convertMiladiDateToString(_dateSelected);
     model.description=des;
 
     this._shareData.setReturnHeaders(model);

@@ -5,7 +5,7 @@
       <p class="mat-h2 modal-title">تاریخ تنظیم سند</p>
     </div>
     <div fxLayout="column" class="data-container mt-2">
-      <div fxLayout="column" class="mt-3">
+      <div fxLayout="column" >
         <mat-form-field fxFlex="20%" class="input-size input-text-size" appearance="outline" color="primary">
             <mat-label>تاریخ تنظیم</mat-label>
             <input matInput [matDatepicker]="picker" placeholder="تاریخ تنظیم " #datePicker formControlName="datePicker" readonly
@@ -18,7 +18,7 @@
               </mat-datepicker-actions>
             </mat-datepicker>
           </mat-form-field>
-        <mat-form-field class="w-100 mt-3" appearance="outline" color="primary">
+        <mat-form-field class="w-100 " appearance="outline" color="primary">
           <mat-label>توضیحات</mat-label>
           <textarea matInput placeholder="توضیحات" #description class="description-field-height"
             formControlName="description"></textarea>

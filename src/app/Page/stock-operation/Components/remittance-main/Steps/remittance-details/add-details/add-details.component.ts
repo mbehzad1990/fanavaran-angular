@@ -75,6 +75,7 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
       goodCtrl: [null, Validators.required,],
       count: [null, Validators.required],
       price: [null, Validators.required],
+      datePicker: [null],
       batchNumber: [null],
       dec: [null],
 
@@ -90,17 +91,24 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
     );
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).format("jYYYY/jMM/jDD");
+  }
+  clearDate(event:Event){
+    event.stopPropagation();
+    this.pageForm.controls['datePicker'].setValue('');
   }
   add(form: FormGroup) {
     const addModel = new GoodDetailDto();
 
     addModel.goodId = form.value.goodCtrl.id;
+    addModel.goodManuelId=this.getGoodManuelId(addModel.goodId);
     addModel.goodName = form.value.goodCtrl.name;
     addModel.bacthNumber = form.value.batchNumber;
 
     if (this.dateSelected != '') {
-      addModel.expireDate = new Date(moment.from(this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+      const _dateSelected=new Date(moment.from( this.dateSelected ,'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+      addModel.expireDate=this._coreService.UtilityFunction.convertMiladiDateToString(_dateSelected);
+      // addModel.expireDate = new Date(moment.from(this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')).toString();
     }
 
     addModel.count = form.value.count;
@@ -119,7 +127,7 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
     }
 
     this.pageForm.reset();
-
+    this.dateSelected='';
     this.itemForAdd.emit(addModel);
   }
   getGoods() {
@@ -162,6 +170,14 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
       this.goods.filter(g => g.name.toLowerCase().indexOf(search) > -1)
     );
   }
+  private getGoodManuelId(goodId:number):number{
+    const model=this.goods.filter(p=>p.id==goodId)[0];
+    return model.manualId;
+  }
+  // formElementDataReset(){
+  //   this.pageForm.reset();
+  //   this.
+  // }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());
   }

@@ -124,7 +124,6 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
     return date;
   }
   getStockNameById(stockId: number): string {
-
     let stockName: string = '';
     const sb = this._coreService.stock.stock$.subscribe(data => {
       data.forEach(item => {
@@ -135,13 +134,6 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
     });
     return stockName;
   }
-  // getDetailFromRemittance(item:CustomerFactorDetailsVm,person:Customer){
-
-  //   this._coreService.Operation.setRemittanceDetails(item.customerFactorGoods);
-  //   this._remittanceMabna.emit(item.customerFactorGoods);
-  //   this.nextStepper.completed = true;
-  //   this.nextStepper._stepper.next();
-  // }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -180,12 +172,19 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
   getDate(): string {
     const sb = this._shareData.returnHeader$.subscribe(data => {
       if (data) {
-        this.dateSelected = moment(data.registerDate.toString()).add(1,'day').format("jYYYY/jMM/jDD");
+        this.dateSelected = moment(data.registerDate.toString()).format("jYYYY/jMM/jDD");
       }
     });
     this.subscriptions.push(sb);
     return this.dateSelected;
   }
+  // private updateGoodsDate(goods:CustomerFactorGoodsVm[]):CustomerFactorGoodsVm[]{
+  //   goods.forEach(item=>{
+  //     if(item.expireDate!=''){
+
+  //     }
+  //   })
+  // }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sp => sp.unsubscribe());
   }

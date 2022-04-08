@@ -1,9 +1,7 @@
 <div class="add-stock-modal modal-container">
-    <form [formGroup]="modalForm" (ngSubmit)="
-        submit(modalForm)
-          ">
+    <form [formGroup]="modalForm" (ngSubmit)="submit(modalForm)">
       <div>
-        <p class="mat-h2 modal-title">افزودن انبار</p>
+        <p class="mat-h2 modal-title">افزودن کالا</p>
       </div>
       <div fxLayout="column" class="data-container mt-2">
         <div fxLayout="column" class="mt-2">
@@ -88,7 +86,7 @@
       </app-result-message>
       <div mat-dialog-actions align="end">
         <button mat-button mat-dialog-close class="ms-2 curve-btn">انصراف</button>
-        <button mat-raised-button color="primary" class="curve-btn" [disabled]="modalForm.invalid">
+        <button mat-raised-button color="primary" class="curve-btn" [disabled]="modalForm.invalid || (isLoading$|async)">
           اعمال تغییرات
         </button>
       </div>

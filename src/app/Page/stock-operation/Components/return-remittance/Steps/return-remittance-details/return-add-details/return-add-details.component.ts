@@ -13,6 +13,7 @@ import { ReturnShareDataService } from '../../Service/return-share-data.service'
 import { GoodDetailDto } from 'src/shared/Domain/Dto/_Good/good-detail-dto';
 import { DecimalPipe } from '@angular/common';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -58,7 +59,8 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
   goods: GoodDetailsVm[] = [];
   listOfGoodIsOK: boolean = false;
   _currentGoodCount: number = 0;
-  _currentGood!:GoodOfRemittanceDto;
+  _currentGood!: GoodOfRemittanceDto;
+
 
   //#endregion
 
@@ -67,7 +69,8 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
 
   //#endregion
 
-  constructor(private _coreService: FacadService, private fb: FormBuilder, private _shareData: ReturnShareDataService, private decimalPipe: DecimalPipe) { }
+  constructor(private _coreService: FacadService, private fb: FormBuilder, private _shareData: ReturnShareDataService, 
+    private decimalPipe: DecimalPipe) { }
 
   ngOnInit(): void {
     this.formElementInit();
@@ -79,6 +82,7 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.filterInGoods();
       });
+
   }
   formElementInit() {
     this.pageForm = this.fb.group({
@@ -103,7 +107,7 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
     );
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).format("jYYYY/jMM/jDD");
   }
 
   getUnits() {
@@ -117,16 +121,17 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
       this._coreService.notification.showNotiffication(NotificationType.Error, 'تعداد بیش از حد مجاز است');
     }
     else {
-      
+
       const addModel = new GoodDetailDto();
       addModel.goodId = this._currentGood.goodId;
       addModel.goodName = form.controls['goodCtrl'].value.name;
       addModel.bacthNumber = form.controls['batchNumber'].value;
-      if(form.controls['datePicker'].value!=undefined ){
-        const date = moment(form.controls['datePicker'].value.toString()).format("jYYYY/jMM/jDD");
-        addModel.expireDate = new Date(moment.from(date, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+      if (form.controls['datePicker'].value != undefined) {
+        addModel.expireDate=this._coreService.UtilityFunction.convertMiladiDateToString(form.controls['datePicker'].value.toString());
+
+        // addModel.expireDate = new Date(moment.from(date, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')).toString();
       }
-      addModel.expireDate=null;
+      // addModel.expireDate=null;
       addModel.count = form.value.count;
       const val = form.controls['price'].value;
       addModel.price = Number(val.replace(this.numberChars, ""));
@@ -173,7 +178,8 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
           good.name = this.getGoodName(good.goodId);
           good.bacthNumber = item.bacthNumber;
           good.count = item.count;
-          if(good.expireDate!=null){
+          good.goodManuelId = item.goodManuelId;
+          if (good.expireDate != null) {
             good.expireDate = item.expireDate!;
           }
           good.price = item.price;
@@ -202,8 +208,9 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
     form.controls['price'].patchValue(this.format(value.price.toString()));
     form.controls['batchNumber'].setValue(value.bacthNumber);
     form.controls['datePicker'].setValue(value.expireDate);
+    form.controls['count'].setValue(value.count);
     this._currentGoodCount = value.count;
-    this._currentGood=value;
+    this._currentGood = value;
   }
   private getGood() {
     this._coreService.good.getAll();
@@ -244,13 +251,11 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
     // 3. replace the input value with formatted numbers
     // this.renderer.setProperty(this.el.nativeElement, 'value', usd);
   }
-  editItem(_item:GoodDetailDto){
-    this.pageForm.controls['goodCtrl'].setValue(_item.goodId);
-    this.pageForm.controls['count'].setValue(_item.count);
-    this.pageForm.controls['price'].patchValue(this.format(_item.price.toString()));
-    this.pageForm.controls['batchNumber'].setValue(_item.bacthNumber);
-    this.pageForm.controls['datePicker'].setValue(_item.expireDate);
+  private getGoodManuelId(goodId: number): number {
+    const model = this.goods.filter(p => p.id == goodId)[0];
+    return model.manualId;
   }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sp => sp.unsubscribe());
   }

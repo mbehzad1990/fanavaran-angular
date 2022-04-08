@@ -1,7 +1,8 @@
 export class GoodDetail {
     public bacthNumber:string|null=null;
-    public expireDate!:Date;
+    public expireDate:string='';
     public goodId!:number;
+    public goodManuelId!:number;
     public count!:number;
     public price!:number;
     public amount!:number;

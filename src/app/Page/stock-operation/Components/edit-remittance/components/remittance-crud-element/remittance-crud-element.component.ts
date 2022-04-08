@@ -28,6 +28,7 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
   private units: Unit[] = [];
   private currencyChars = new RegExp('[\.,]', 'g')
   private _defaultData!: ReportOperationVm;
+  private _expDate!:Date;
   //#endregion
 
   //#region Public
@@ -131,40 +132,28 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
     }
   }
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
+
+    this.dateSelected = moment(event.value?.toISOString()).format("jYYYY/jMM/jDD");
+    this._expDate = new Date(moment.from( this.dateSelected ,'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
   }
   add(form: FormGroup) {
-    // if (parseInt(form.value.count) > this._currentGoodCount) {
-    //   this._coreService.notification.showNotiffication(NotificationType.Error, 'تعداد بیش از حد مجاز است');
-    // }
-    // else {
       const model=new ReportOperationDetailVm();
-      const addModel = new GoodDetailDto();
-      addModel.goodId = form.controls['goodCtrl'].value.goodId;
       model.goodId = form.controls['goodCtrl'].value.goodId;
       model.goodName = form.controls['goodCtrl'].value.name;
       model.bacthNumber = form.controls['batchNumber'].value;
-      addModel.goodName = form.controls['goodCtrl'].value.name;
-      addModel.bacthNumber = form.controls['batchNumber'].value;
-      if ( form.controls['datePicker'].value!=null) {
-        const date = moment(form.controls['datePicker'].value.toString()).format("jYYYY/jMM/jDD");
-        addModel.expireDate = new Date(moment.from(date, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
-        model.expireDate = new Date(moment.from(date, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+      if ( form.controls['datePicker'].value!='' && form.controls['datePicker'].value!=null) {
+        // const date = moment(form.controls['datePicker'].value.toString()).format("jYYYY/jMM/jDD");
+        model.expireDate=this._coreService.UtilityFunction.convertMiladiDateToString(form.controls['datePicker'].value.toString());
+      }else{
+        model.expireDate='';
       }
-      addModel.expireDate = null;
-      model.expireDate = null;
-      model.count = form.value.count;      
-      addModel.count = form.value.count;      
+      model.count = form.value.count;          
 
       const val = form.controls['price'].value;
       model.price = Number(val.replace(this.numberChars, ""));
       model.description = form.value.dec;
-      addModel.price = Number(val.replace(this.numberChars, ""));
-      addModel.amount = addModel.count * addModel.price;
-      model.amount = addModel.count * addModel.price;
-      addModel.description = form.value.dec;
+      model.amount = model.count * model.price;
       model.unitName=this.getUnitNameByGoodId(model.goodId);
-      // addModel.unitName = this.getUnitNameByUnitId(addModel.goodId);
 
       // For your convenience
       // Don't save formatting, remove commas and dots
@@ -173,10 +162,8 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
       } else {
         console.log(`${typeof val} ${val}`);
       }
-      debugger
       this.pageForm.reset();
       this.actionMode.emit(this.isEditMode);
-      this.itemForAdd.emit(addModel);
       this.itemExport.emit(model);
       this.isEditMode = false;
     // }
@@ -261,46 +248,10 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
       this.units = data;
     })
   }
-  private getUnitNameByUnitId(unitId: number): string {
-    let unitName: string = '';
-    this.units.forEach(item => {
-      if (item.id == unitId) {
-        unitName = item.name;
-      }
-    })
-    return unitName;
-  }
   private getUnitNameByGoodId(goodId:number):string{
     let unitName: string = '';
     const goodUintId=this.goods.filter(p=>p.id==goodId)[0];
     return goodUintId.unitName;
-  }
-  private fetchData() {
-    const sb = this._coreService.Operation.GetListOfOperationDetails(this._defaultData.id).subscribe();
-    this.subscriptions.push(sb);
-  }
-  private getData() {
-    const sb = this._coreService.Operation.operationDetailList$.subscribe(data => {
-      if (data.length > 0) {
-        data.forEach(item => {
-          const good = new GoodOfRemittanceDto();
-          good.goodId = item.goodId;
-          good.name = item.goodName
-          good.bacthNumber = item.bacthNumber;
-          good.count = item.count;
-          if (good.expireDate != null) {
-            good.expireDate = item.expireDate!;
-          }
-          good.price = item.price;
-          good.amount = item.amount;
-
-          this.goodOfRemittance.push(good);
-        })
-      }
-    });
-    this.listOfGoodIsOK = true;
-    this.filterGoods.next(this.goodOfRemittance.slice());
-    this.subscriptions.push(sb);
   }
   private format(val: string): string {
     // 1. test for non-number characters and replace/remove them
@@ -314,7 +265,6 @@ export class RemittanceCrudElementComponent implements OnInit, OnDestroy {
   private getGoodModelById(goodId: number): GoodOfRemittanceDto {
     return this.goodOfRemittance.filter(p => p.goodId == goodId)[0];
   }
-
   //#endregion
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());

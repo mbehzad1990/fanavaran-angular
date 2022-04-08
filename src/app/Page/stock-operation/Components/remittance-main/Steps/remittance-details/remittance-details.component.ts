@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { MatStepper } from '@angular/material/stepper';
+import { MatStep, MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 import { GoodDetailDto } from 'src/shared/Domain/Dto/_Good/good-detail-dto';
@@ -44,6 +44,7 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
   @Input() headerInfo!: RegisterStockOperationVm;
   @Input() headerInfoDto!: HeaderInfoDto;
   @Input() stepper!: MatStepper;
+  @Input() headerStep!: MatStep;
   @Output() OperationComplete = new EventEmitter<boolean>();
 
   //#endregion
@@ -54,39 +55,32 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   }
-  getShamsi(strDate: Date|null): string {
-    if(strDate!=null){
-      let MomentDate = moment(strDate, 'YYYY/MM/DD');
-      return MomentDate.locale('fa').format('YYYY/M/D');
-    }
-    return '';
+  // getShamsi(strDate: Date|null): string {
+  //   if(strDate!=null){
+  //     let MomentDate = moment(strDate, 'YYYY/MM/DD');
+  //     return MomentDate.locale('fa').format('YYYY/M/D');
+  //   }
+  //   return '';
+  // }
+  getShamsi(strDate: string): string {
+    return this._coreService.UtilityFunction.getShamsiString(strDate);
   }
   getItem(_item: GoodDetailDto) {
     let isExist = false;
-    // this.listOfGood.forEach(item => {
-    //   if (item.goodName == _item.goodName) {
-    //     isExist = true;
-    //   }
-    // })
-
-    this.listOfGood.forEach(item => {
-      if (item.goodId == _item.goodId) {
-        isExist = true;
-        if(item.price!=_item.price){
-          this._coreService.notification.showNotiffication(NotificationType.Warning, 'قیمت واحد را بررسی کنید');
-        }else{
-          item.count =parseInt(item.count.toString()) +parseInt( _item.count.toString());
-          item.amount=item.count* item.price;
-        }
+    const indexItem = this.dataSource.data.findIndex(p => p.goodId == _item.goodId && p.bacthNumber?.trim() == _item.bacthNumber?.trim());
+    if (indexItem >= 0) {
+      if (this.dataSource.data[indexItem].price != _item.price) {
+        this._coreService.notification.showNotiffication(NotificationType.Warning, 'قیمت واحد را بررسی کنید');
+      } else {
+        this.dataSource.data[indexItem].count = parseInt(this.dataSource.data[indexItem].count.toString()) + parseInt(_item.count.toString());
+        this.dataSource.data[indexItem].amount = this.dataSource.data[indexItem].count * this.dataSource.data[indexItem].price;
       }
-    })
-    if (!isExist) {
+
+    } else {
       this.listOfGood.push(_item);
       this.dataSource.data = this.listOfGood;
-    } 
-    else {
-      this.dataSource.data = this.listOfGood;
     }
+
   }
   deletItemFromList(deleteItem: GoodDetailDto) {
     const data = this.dataSource.data;
@@ -114,6 +108,8 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
         _goodItem.amount = Number(item.amount.toString().replace(this.numberChars, ""));
         _goodItem.bacthNumber = item.bacthNumber;
         _goodItem.expireDate = item.expireDate!;
+        _goodItem.goodManuelId=item.goodManuelId;
+        
 
         goodDetails.push(_goodItem);
       })
@@ -152,7 +148,6 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
     this.listOfGood = [];
     this.dataSource.data = [];
     this.headerInfoDto = new HeaderInfoDto();
-
     this.OperationComplete.emit(this._operationComplete);
     this._operationComplete = false;
   }

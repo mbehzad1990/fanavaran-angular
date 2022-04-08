@@ -126,7 +126,6 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy {
 
   getData() {
     const sb = this._coreService.Operation.ListOfOperation().subscribe(result => {
-      debugger
       if (result?.isSuccess) {
         this.dataLoad();
       }else{
@@ -137,7 +136,6 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy {
   }
   dataLoad() {
     const sb = this._coreService.Operation.operationlist$.subscribe(data => {
-      debugger
       this.dataSource = new MatTableDataSource(data);
     });
   }

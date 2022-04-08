@@ -7,6 +7,7 @@ import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { ActionType, NotificationType, ResultType } from 'src/shared/Domain/Enums/global-enums';
 import { Stock } from 'src/shared/Domain/Models/_Stock/stock';
 import { RegisterStokVm } from 'src/shared/Domain/ViewModels/Stock/register-stok-vm';
+import { UpdateStockVm } from 'src/shared/Domain/ViewModels/Stock/update-stock-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
 
 @Component({
@@ -96,7 +97,8 @@ export class AddEditStockModalComponent implements OnInit,OnDestroy {
     });
     this.subscriptions.push(sb);
   }
-  updateStock(updateModel:Stock){
+  updateStock(updateModel:UpdateStockVm){
+    
      const sb=this._coreService.stock.editStock(updateModel).subscribe(result=>{
       if (result?.isSuccess) {
         this._coreService.notification.showNotiffication(
@@ -122,7 +124,7 @@ export class AddEditStockModalComponent implements OnInit,OnDestroy {
       
       this.addStock(model);
     }else{
-      const model=new Stock();
+      const model=new UpdateStockVm();
       model.name=name;
       model.address=address;
       model.phone=phone;

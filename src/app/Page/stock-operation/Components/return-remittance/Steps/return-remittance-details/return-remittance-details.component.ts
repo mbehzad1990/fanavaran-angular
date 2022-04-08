@@ -67,12 +67,9 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
   getTotalCount() {
     return this.dataSource.data.map(t => t.count).reduce((acc, value) => parseInt(acc.toString()) + parseInt(value.toString()), 0);
   }
-  getShamsi(strDate: Date|null): string {
-    if(strDate!=null){
-      let MomentDate = moment(strDate, 'YYYY/MM/DD');
-      return MomentDate.locale('fa').format('YYYY/M/D');
-    }
-    return '';
+
+  getShamsi(strDate: string): string {
+    return this._coreService.UtilityFunction.getShamsiString(strDate);
   }
   getItem(_item: GoodDetailDto) {
     let isExist = false;

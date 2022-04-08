@@ -1,6 +1,7 @@
 <form [formGroup]="pageForm" (ngSubmit)="add(pageForm)">
   <div fxLayout fxLayoutGap="6px">
     <mat-form-field class="mt-1 input-size input-text-size" appearance="outline">
+      <mat-label>کالا</mat-label>
       <mat-select placeholder="کالا" #goodCtrl formControlName="goodCtrl" disableOptionCentering
         (selectionChange)="getDetails(pageForm,goodCtrl.value)">
         <mat-select-trigger>
@@ -11,7 +12,11 @@
             noEntriesFoundLabel="موردی یافت نشد"></ngx-mat-select-search>
         </mat-option>
         <mat-option class="mt-2" *ngFor="let good of filterGoods | async ;let i=index;" [value]="good">
-          {{good.name}}
+          <div fxLayout="row" fxLayoutGap="10px" fxFill>
+
+            <span fxFlex="30%"> {{good.name}}</span>
+            <span fxFlex="70%">شماره بچ : <span class="batchTextStyle"><strong>{{good.bacthNumber}}</strong></span></span>
+          </div>
         </mat-option>
 
       </mat-select>

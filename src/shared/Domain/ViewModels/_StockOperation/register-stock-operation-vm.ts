@@ -5,6 +5,6 @@ export class RegisterStockOperationVm {
     public personId!:number;
     public refId:number=0;
     public stockOperationType!:StockOperationType;
-    public registerDate!:Date;
+    public registerDate!:string;
     public description!:string;
 }

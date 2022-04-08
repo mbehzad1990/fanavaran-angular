@@ -3,12 +3,12 @@
 /*#region rtl*/
 ::ng-deep[dir="rtl"] {
   .date-modal {
-    min-width: 400px;
-    min-height: 280px;
+    min-width: 300px;
+    min-height: 170px;
   }
 
   .data-container {
-    min-height: 300px;
+    min-height: 180px;
 
     &_img {
       height: 100px;
@@ -20,7 +20,7 @@
 
       p.mat-h3 {
         font-weight: 500 !important;
-        font-size: 16px !important;
+        font-size: 12px !important;
         color: mat-color($cornflower-palette, 400);
       }
     }

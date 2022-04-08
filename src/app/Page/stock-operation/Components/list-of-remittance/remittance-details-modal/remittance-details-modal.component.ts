@@ -20,7 +20,8 @@ export class RemittanceDetailsModalComponent implements OnInit, OnDestroy {
   //#region Public
   listOfdetails: ReportOperationDetailVm[] = [];
   dataSource = new MatTableDataSource<ReportOperationDetailVm>();
-  displayedColumns: string[] = ['index','goodId','manuelId','name','batch','exp', 'count', 'price', 'amount', 'unitName', 'desc',];
+  // displayedColumns: string[] = ['index','goodId','manuelId','name','batch','exp', 'count', 'price', 'amount', 'unitName', 'desc',];
+  displayedColumns: string[] = ['index','goodId','manuelId','name','batch','exp', 'count', 'price', 'amount', 'unitName'];
 
   isLoading$!: Observable<boolean>;
   //#endregion
@@ -58,17 +59,12 @@ export class RemittanceDetailsModalComponent implements OnInit, OnDestroy {
   }
   getData() {
     const sb = this._coreService.Operation.operationDetailList$.subscribe(data => {
-      debugger
       this.dataSource.data = data;
     });
   }
 
-  getShamsi(strDate: Date|null): string {
-    if(strDate!=null){
-      let MomentDate = moment(strDate, 'YYYY/MM/DD');
-      return MomentDate.locale('fa').format('YYYY/M/D');
-    }
-    return '';
+  getShamsi(strDate: string): string {
+    return this._coreService.UtilityFunction.getShamsiString(strDate);
   }
 
 }

@@ -87,6 +87,9 @@ rest(){
 }
 getOperationStatus(operationResult:boolean){
   this._operationResult=operationResult;
+  if(!this._operationResult){
+    this.stepHeader.resetElementData();
+  }
 }
  ngOnDestroy(): void {
    this.subscriptions.forEach(sb=>sb.unsubscribe());

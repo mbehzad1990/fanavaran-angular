@@ -87,7 +87,6 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
       personFilterCtrl: [null],
       description: [null],
      
-      // stockFilterCtrl: [''],
     });
   }
   getPerson(){
@@ -149,13 +148,14 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
      this._headerInfo.personId=form.value.personSelect.id;
      this._headerInfo.stockId=form.value.stockSelect.id;
      this._headerInfo.stockOperationType=this.stockOperationType;
-     this._headerInfo.registerDate=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+     const _dateSelected=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+     this._headerInfo.registerDate=this._coreService.UtilityFunction.convertMiladiDateToString(_dateSelected);
     
      this._headerDto=new HeaderInfoDto();
      this._headerDto.stockName=form.value.stockSelect.name;
      this._headerDto.personName=form.value.personSelect.name;
      this._headerDto.description=form.value.personSelect;
-     this._headerDto.registerDate=this.dateSelected;
+     this._headerDto.registerDate=this._coreService.UtilityFunction.getShamsiString( this._headerInfo.registerDate);
     // _headerInfo.registerDate=
     this.headerInfo.emit(this._headerInfo);
     this.headerInfoDto.emit(this._headerDto);
@@ -166,10 +166,17 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   resetStep(){
     this.headerForm.reset();
   }
+  resetElementData(){
+    this.headerForm.controls['datePicker'].reset();
+    this.headerForm.controls['personSelect'].reset();
+    this.headerForm.controls['stockSelect'].reset();
+    this.headerForm.controls['personFilterCtrl'].reset();
+    this.headerForm.controls['description'].reset();
+  }
 
 
   onChange(event: MatDatepickerInputEvent<moment.Moment>) {
-    this.dateSelected = moment(event.value?.toISOString()).add(1,'day').format("jYYYY/jMM/jDD");
+    this.dateSelected = moment(event.value?.toISOString()).format("jYYYY/jMM/jDD");
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sb => sb.unsubscribe());

@@ -1,10 +1,20 @@
-.button-size{
-    height: 3rem;
-    margin-top: 9px;
+.button-size {
+  height: 3rem;
+  margin-top: 9px;
 }
-.input-text-size{
-    font-size: 11px;
+
+.input-text-size {
+  font-size: 11px;
 }
-.numberTextView-width-size{
-    width: 130px;
+
+.numberTextView-width-size {
+  width: 130px;
+}
+
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after,
+.mat-input-element:disabled {
+  color: rgb(0, 119, 255) !important;
+}
+.batchTextStyle{
+    color: rgb(0, 132, 255) !important;
 }

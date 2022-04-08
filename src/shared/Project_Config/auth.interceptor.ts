@@ -26,7 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
       }),
       catchError((error: any): Observable<any> => {
         if (error instanceof HttpErrorResponse) {
-          debugger
           if (error.status === 401) {
             return this.handleHttpResponseError(request, next);
           }else{
@@ -50,7 +49,6 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         })
       }
-      debugger
       return request;
     } catch (error) {
       console.log('setTokenRequest_Error: ' + error);

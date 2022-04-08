@@ -23,7 +23,7 @@
               <mat-form-field class="my-2 input-size" appearance="outline">
                 <mat-label>رمزعبور</mat-label>
                 <input matInput placeholder="رمزعبور را وارد کنید" [type]="hidePassword ? 'password' : 'text'" #password
-                  formControlName="password" />
+                  formControlName="password" autocomplete="true"/>
                 <mat-icon class="cursor-pointer" matSuffix (click)="hidePassword = !hidePassword">
                   {{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
                 <mat-hint>ترکیبی از حروف و عدد</mat-hint>

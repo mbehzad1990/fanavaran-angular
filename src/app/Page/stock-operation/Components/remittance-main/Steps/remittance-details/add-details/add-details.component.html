@@ -39,8 +39,11 @@
     </mat-form-field>
     <mat-form-field class="mt-1 input-size input-text-size" appearance="outline" color="primary">
       <mat-label> تاریخ انقضا</mat-label>
-      <input matInput [matDatepicker]="picker" placeholder="تاریخ انقضا" #datePicker readonly
+      <input matInput [matDatepicker]="picker" placeholder="تاریخ انقضا" #datePicker readonly formControlName="datePicker"
         (dateChange)="onChange($event)" >
+        <button matDatepickerToggleIcon *ngIf="datePicker.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearDate($event)">
+          <mat-icon>close</mat-icon>
+        </button>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker>
         <mat-datepicker-actions>

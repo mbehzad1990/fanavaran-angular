@@ -7,6 +7,7 @@ import { ResultDto } from 'src/shared/Domain/Dto/_Modal/result-dto';
 import { NotificationType } from 'src/shared/Domain/Enums/global-enums';
 import { Stock } from 'src/shared/Domain/Models/_Stock/stock';
 import { RegisterStokVm } from 'src/shared/Domain/ViewModels/Stock/register-stok-vm';
+import { UpdateStockVm } from 'src/shared/Domain/ViewModels/Stock/update-stock-vm';
 import { FacadService } from '../_Core/facad.service';
 
 @Injectable({
@@ -120,8 +121,9 @@ export class StockService implements OnDestroy {
     );
   }
   // Put
-  editStock(model: Stock) {
+  editStock(model: UpdateStockVm) {
     this._isLoading$.next(true);
+    
     return this.http.put<ResultDto<boolean>>(this.baseUrl + "EditStock", model).pipe(
       map((result: ResultDto<boolean>) => {
         if (result.isSuccess) {

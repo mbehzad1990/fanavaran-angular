@@ -6,6 +6,6 @@ export class UpdateOperationHeaderVm {
     public refId:number=0;
     public personId!:number;
     public stockOperationType!:StockOperationType;
-    public registerDate!:Date;
+    public registerDate:string='';
     public description!:string;
 }

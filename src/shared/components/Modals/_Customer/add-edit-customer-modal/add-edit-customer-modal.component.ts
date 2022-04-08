@@ -54,6 +54,7 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
 
  formElementInit() {
    if(this.data.action==ActionType.Add){
+     
      this.crudForm = this.fb.group({
        name: ['', Validators.required],
        address: [''],
@@ -140,7 +141,9 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
      model.phone=phone;
      model.description=dec;
      model.mobile=mobile;
-     model.personCode=parseInt(customerCode);
+     if(customerCode!=''){
+       model.personCode=parseInt(customerCode);
+     }
      
      this.add(model);
    }else{
@@ -151,7 +154,9 @@ export class AddEditCustomerModalComponent implements OnInit,OnDestroy {
      model.description=dec;
      model.mobile=mobile;
      model.id=this.data.data.id;
-     model.personCode=parseInt(customerCode);
+     if(customerCode!=''){
+      model.personCode=parseInt(customerCode);
+    }
       
      this.edit(model);
    }

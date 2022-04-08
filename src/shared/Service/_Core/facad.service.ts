@@ -11,6 +11,7 @@ import { StockService } from '../_stock/stock.service';
 import { UnitService } from '../_unit/unit.service';
 import { GoodService } from '../_good/good.service';
 import { OperationService } from '../_Operation/operation.service';
+import { UitiliyFuncService } from '../_utility/uitiliy-func.service';
 
 @Injectable({
   providedIn: 'root'
@@ -107,5 +108,12 @@ export class FacadService {
       this._Operation = this.injector.get(OperationService);
     }
     return this._Operation;
+  }
+  private _UtilityFunction!: UitiliyFuncService;
+  public get UtilityFunction(): UitiliyFuncService {
+    if (!this._UtilityFunction) {
+      this._UtilityFunction = this.injector.get(UitiliyFuncService);
+    }
+    return this._UtilityFunction;
   }
 }
