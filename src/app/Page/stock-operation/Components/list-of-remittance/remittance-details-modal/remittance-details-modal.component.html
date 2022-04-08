@@ -17,8 +17,8 @@
         [ngClass]="dataSource.data.length == 0 ? 'table-fullHeights' : ''">
           <!-- Index Column -->
           <ng-container matColumnDef="index">
-            <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">ردیف</th>
-            <td class=" mat-column-small-width text-right" mat-cell *matCellDef="let element;index as i;">
+            <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right ">ردیف</th>
+            <td class=" mat-column-small-width text-right table-data-fontsize" mat-cell *matCellDef="let element;index as i;">
               {{i+1}}
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
@@ -27,57 +27,57 @@
           <!-- name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class=" text-right">نام کالا</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodName}} </td>
-            <td mat-footer-cell *matFooterCellDef> جمع کل : </td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{element.goodName}} </td>
+            <td mat-footer-cell *matFooterCellDef class="table-data-fontsize"> جمع کل : </td>
           </ng-container>
           <!-- goodId Column -->
           <ng-container matColumnDef="goodId">
             <th mat-header-cell *matHeaderCellDef class=" text-right">کد</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodId}} </td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{element.goodId}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <!-- manuelId Column -->
           <ng-container matColumnDef="manuelId">
             <th mat-header-cell *matHeaderCellDef class=" text-right">کد دستی</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{element.goodManuelId}} </td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{element.goodManuelId}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <!-- batch Column -->
           <ng-container matColumnDef="batch">
             <th mat-header-cell *matHeaderCellDef class=" text-right">بچ</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{element.bacthNumber}} </td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{element.bacthNumber}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <!-- exp Column -->
           <ng-container matColumnDef="exp">
             <th mat-header-cell *matHeaderCellDef class=" text-right">تاریخ انقضا</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{getShamsi(element.expireDate)}} </td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{getShamsi(element.expireDate)}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <!-- count Column -->
           <ng-container matColumnDef="count">
             <th mat-header-cell *matHeaderCellDef class="text-right">تعداد</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{element.count}}</td>
-            <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalCount() }} </strong> </td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{element.count}}</td>
+            <td mat-footer-cell *matFooterCellDef class="table-data-fontsize"> <strong>{{getTotalCount() }} </strong> </td>
 
           </ng-container>
           <!-- price Column -->
           <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef class="text-right">فی(ریال)</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{element.price| persianCurencyPipe}}</td>
-            <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalFi() | persianCurencyPipe}} </strong> ریال </td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{element.price| persianCurencyPipe}}</td>
+            <td mat-footer-cell *matFooterCellDef class="table-data-fontsize"> <strong>{{getTotalFi() | persianCurencyPipe}} </strong> ریال </td>
           </ng-container>
           <!-- amount Column -->
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef class="text-right">کل(ریال)</th>
-            <td mat-cell class="text-right" *matCellDef="let element" PersianCurency>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element" PersianCurency>
               {{element.amount | persianCurencyPipe}}</td>
-            <td mat-footer-cell *matFooterCellDef> <strong>{{getTotalCost() | persianCurencyPipe}} </strong> ریال </td>
+            <td mat-footer-cell *matFooterCellDef class="table-data-fontsize"> <strong>{{getTotalCost() | persianCurencyPipe}} </strong> ریال </td>
           </ng-container>
           <!-- unitName Column -->
           <ng-container matColumnDef="unitName">
             <th mat-header-cell *matHeaderCellDef class="text-right">واحد</th>
-            <td mat-cell class="text-right" *matCellDef="let element"> {{element.unitName}}</td>
+            <td mat-cell class="text-right table-data-fontsize" *matCellDef="let element"> {{element.unitName}}</td>
             <td mat-footer-cell *matFooterCellDef> </td>
           </ng-container>
           <!-- desc Column -->
