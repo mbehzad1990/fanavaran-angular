@@ -94,7 +94,7 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
       let detail = new RegisterStockOperationDetail();
       model.Header = this._header;
 
-      debugger
+      
       let goodDetails: GoodDetail[] = [];
       this.dataSource.data.forEach(item => {
         const _goodItem = new GoodDetail();
@@ -139,10 +139,6 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
       this._header=data;
     })
   }
-  // editItem(item:GoodDetailDto){
-  //   this.isEditItem=true;
-  //   this.crudItem.editItem(item);
-  // }
   deletItemFromList(deleteItem: GoodDetailDto) {
     const data = this.dataSource.data;
     const index: number = data.indexOf(deleteItem);

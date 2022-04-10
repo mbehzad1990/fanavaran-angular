@@ -1,6 +1,10 @@
 <div fxLayout="column" fxFill>
   <!-- Header Info -->
   <div fxFill fxLayoutGap="25px" class="header mt-2" fxLayoutAlign="space-between">
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center" *ngIf="headerInfoDto?.manuelId!=null">
+      <span>کد(دستی) حواله :</span>
+      <span><strong>{{headerInfoDto?.manuelId}}</strong></span>
+    </div>
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
       <span>تاریخ :</span>
       <span><strong>{{headerInfoDto?.registerDate}}</strong></span>

@@ -29,4 +29,8 @@ export class UitiliyFuncService {
   getMiladiString(date:Date|null):string{
     return new Date(moment.from( date!.toString() ,'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD')).toLocaleDateString();
   }
+  convertShamsiStringDateToMiladiStringDate(shamsiDate:string){
+    const _dateSelected=new Date(moment.from( shamsiDate, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+   return this.convertMiladiDateToString(_dateSelected);
+  }
 }

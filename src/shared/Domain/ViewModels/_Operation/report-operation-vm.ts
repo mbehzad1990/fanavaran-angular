@@ -2,6 +2,7 @@ import { StockOperationType } from "../../Enums/global-enums";
 
 export class ReportOperationVm {
     public id!:number;
+    public manuelId!:string;
     public refId!:number;
     public stockId!:number;
     public stockName!:string;

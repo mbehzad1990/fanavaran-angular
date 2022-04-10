@@ -11,9 +11,11 @@ import { blub, fadeOut } from 'src/shared/Adnimation/template.animations';
 import { DeleteModalComponent } from 'src/shared/components/Modals/delete-modal/delete-modal.component';
 import { RequestModalDto } from 'src/shared/Domain/Dto/_Modal/request-modal-dto';
 import { EditRemittanceDto } from 'src/shared/Domain/Dto/_Operation/edit-remittance-dto';
+import { EditRemittanceManuelIdDto } from 'src/shared/Domain/Dto/_Operation/edit-remittance-manuel-id-dto';
 import { ActionType, DeleteOperationType, NotificationType, serachRemittanceController, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
 import { FacadService } from 'src/shared/Service/_Core/facad.service';
+import { EditRemittanceManuelIdComponent } from './edit-remittance-manuel-id/edit-remittance-manuel-id.component';
 import { RemittanceDetailsModalComponent } from './remittance-details-modal/remittance-details-modal.component';
 
 @Component({
@@ -96,7 +98,7 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy {
   // dataSource!: MatTableDataSource<ReportOperationVm>;
   dataSource = new MatTableDataSource<ReportOperationVm>();
   tempdata: ReportOperationVm[] = [];
-  displayedColumns: string[] = ['index', 'id', 'personName', 'stockName', 'remittenceType', 'date','refId', 'desc', 'menu'];
+  displayedColumns: string[] = ['index', 'id','manuelId', 'personName', 'stockName', 'remittenceType', 'date','refId', 'desc', 'menu'];
 
   isLoading$!: Observable<boolean>;
 
@@ -242,6 +244,30 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+  editManuelId(item: ReportOperationVm){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const modal_data = new RequestModalDto<EditRemittanceManuelIdDto>();
+    modal_data.action = ActionType.Update;
+    const _editData=new EditRemittanceManuelIdDto();
+    _editData.operationId=item.id;
+    _editData.operationManuelId=item.manuelId;
+    _editData.registerDate=this.getShamsi(item.registerDate);
+    _editData.personName=item.personName;
+    modal_data.data = _editData;
+
+    dialogConfig.data = modal_data;
+
+    const dialogRef = this.dialog.open(EditRemittanceManuelIdComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((result:boolean) => {
+      console.log(result)
+      if(result){
+        this.getData();
+      }
+    });
   }
   edit(item: ReportOperationVm) {
     this.rout.navigate(['/remittance/remittance-edit'], { state: {data:item} });

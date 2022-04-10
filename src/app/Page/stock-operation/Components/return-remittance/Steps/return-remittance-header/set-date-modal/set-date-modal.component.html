@@ -5,32 +5,42 @@
       <p class="mat-h2 modal-title">تاریخ تنظیم سند</p>
     </div>
     <div fxLayout="column" class="data-container mt-2">
-      <div fxLayout="column" >
+      <div fxLayout="column">
         <mat-form-field fxFlex="20%" class="input-size input-text-size" appearance="outline" color="primary">
-            <mat-label>تاریخ تنظیم</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="تاریخ تنظیم " #datePicker formControlName="datePicker" readonly
-            (dateChange)="onChange($event)" formControlName="datePicker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker>
-              <mat-datepicker-actions>
-                <button mat-button matDatepickerCancel>انصراف</button>
-                <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
-              </mat-datepicker-actions>
-            </mat-datepicker>
-          </mat-form-field>
+          <mat-label>تاریخ تنظیم</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="تاریخ تنظیم " #datePicker formControlName="datePicker"
+            readonly (dateChange)="onChange($event)" formControlName="datePicker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>انصراف</button>
+              <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="input-size input-text-size" appearance="outline" color="primary">
+          <mat-label>کد دستی حواله</mat-label>
+          <input matInput placeholder="123آ ب" #manuelId formControlName="manuelId" />
+        </mat-form-field>
         <mat-form-field class="w-100 " appearance="outline" color="primary">
           <mat-label>توضیحات</mat-label>
           <textarea matInput placeholder="توضیحات" #description class="description-field-height"
             formControlName="description"></textarea>
         </mat-form-field>
       </div>
-
+      <app-result-message *ngIf="isFinishOperation" [ResultType]="messageResultType" [resultSmessageText]="resultMessage">
+      </app-result-message>
     </div>
     <div mat-dialog-actions align="end">
       <button mat-button mat-dialog-close class="ms-2 curve-btn">انصراف</button>
       <button mat-raised-button color="primary" class="curve-btn" [disabled]="form.invalid">
-        تایید
-      </button>
+        <span fxLayout fxLayoutAlign="center center">
+          <span color="primary">تایید</span>
+          <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
+          </mat-spinner>
+        </span>
+       </button>
     </div>
   </form>
 </div>
