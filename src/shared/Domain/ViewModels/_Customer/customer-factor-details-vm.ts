@@ -3,6 +3,7 @@ import { CustomerFactorGoodsVm } from "../_stockOperationDetail/customer-factor-
 
 export class CustomerFactorDetailsVm {
     public stockOperationId!:number;
+    public manuelId!:string;
     public refId!:number;
     public registerDate!:Date;
     public stockId!:number;

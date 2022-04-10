@@ -5,6 +5,11 @@
       <div fxLayout="row" fxLayoutGap="10px">
 
         <mat-form-field fxFlex="20%" class="input-size input-text-size" appearance="outline" color="primary">
+          <mat-label>کد دستی حواله</mat-label>
+          <input matInput placeholder="123آ ب" #manuelId formControlName="manuelId" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="20%" class="input-size input-text-size" appearance="outline" color="primary">
           <mat-label>تاریخ</mat-label>
           <input matInput [matDatepicker]="picker" placeholder="تاریخ تنظیم سند" #datePicker readonly
             (dateChange)="onChange($event)" formControlName="datePicker">
@@ -19,7 +24,6 @@
             وارد کردن تاریخ اجباری است
           </mat-error>
         </mat-form-field>
-
 
         <mat-form-field fxFlex="30%" class=" w-100 input-text-size" appearance="outline">
           <mat-label>شخص/مشتری</mat-label>
@@ -90,7 +94,11 @@
       <!-- [disabled]="headerForm.invalid" -->
       <button mat-flat-button mat-Stroked-button color="primary" [disabled]="headerForm.invalid"
         (click)="submit(headerForm)">
-        <span color="primary">ثبت ریز اقلام</span>
+        <span fxLayout fxLayoutAlign="center center">
+          <span color="primary">ثبت ریز اقلام</span>
+          <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
+          </mat-spinner>
+        </span>
       </button>
 
     </div>

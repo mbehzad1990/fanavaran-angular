@@ -12,6 +12,7 @@ import { ReportGoodsInStockVm } from 'src/shared/Domain/ViewModels/_Operation/re
 import { ReportOperationDetailVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-detail-vm';
 import { ReportOperationVm } from 'src/shared/Domain/ViewModels/_Operation/report-operation-vm';
 import { UpdateOperationVm } from 'src/shared/Domain/ViewModels/_Operation/update-operation-vm';
+import { UpdateRemittanceManuelIdVm } from 'src/shared/Domain/ViewModels/_StockOperation/update-remittance-manuel-id-vm';
 import { CustomerFactorGoodsVm } from 'src/shared/Domain/ViewModels/_stockOperationDetail/customer-factor-goods-vm';
 import { FacadService } from '../_Core/facad.service';
 
@@ -28,6 +29,7 @@ export class OperationService implements OnDestroy {
   private _remittanceDetails = new BehaviorSubject<CustomerFactorGoodsVm[]>([]);
   private _operationDetailList$ = new BehaviorSubject<ReportOperationDetailVm[]>([]);
   private _isLoading$ = new BehaviorSubject<boolean>(false);
+  private _isModalLoading$ = new BehaviorSubject<boolean>(false);
   private _isoperationDetailListLoading$ = new BehaviorSubject<boolean>(false);
   private _isCompleteStep$ = new BehaviorSubject<{}>({});
   private _isFirstLoading$ = new BehaviorSubject<boolean>(true);
@@ -40,6 +42,9 @@ export class OperationService implements OnDestroy {
   //#region Getter
   get isLoading$() {
     return this._isLoading$.asObservable();
+  }
+  get isModalLoading$() {
+    return this._isModalLoading$.asObservable();
   }
   get remittanceDetails$() {
     return this._remittanceDetails.asObservable();
@@ -90,6 +95,27 @@ export class OperationService implements OnDestroy {
       }),
       finalize(() => {
         this._isLoading$.next(false);
+        this._isCompleteStep$.next({ searc: true });
+      }),
+      shareReplay()
+    );
+  }
+  CheckRemittanceMAnuelId(manuelId:string,regDate:string) {
+    this._isModalLoading$.next(true);
+    return this.http.get<ResultDto<boolean>>(this.baseUrl + `CheckRemittanceMAnuelId?manuelId=${manuelId}&registerDate=${regDate}`).pipe(
+      map((result: ResultDto<boolean>) => {
+        return result;
+      }),
+      catchError((err) => {
+        this._coreService.notification.showNotiffication(
+          NotificationType.Error,
+          err
+        );
+
+        return of(null);
+      }),
+      finalize(() => {
+        this._isModalLoading$.next(false);
         this._isCompleteStep$.next({ searc: true });
       }),
       shareReplay()
@@ -147,7 +173,6 @@ export class OperationService implements OnDestroy {
 
   GetGoodCardex(stockId: number, goodId: number): Observable<any> {
     this._isLoading$.next(true);
-    debugger
     return this.http.get<ResultDto<GoodCardexVM[]>>(this.baseUrl + `GetGoodCardex?stockId=${stockId}&&goodId=${goodId}`).pipe(
       map((result: ResultDto<GoodCardexVM[]>) => {
         // if (result.isSuccess) {
@@ -229,6 +254,29 @@ export class OperationService implements OnDestroy {
   update(updateModel:UpdateOperationVm){
     this._isLoading$.next(true);
     return this.http.put<ResultDto<boolean>>(this.baseUrl+'UpdateOperation',updateModel).pipe(
+      map((result: ResultDto<boolean>) => {
+        if (result.isSuccess) {
+        }
+        return result;
+      }),
+      catchError((err) => {
+        this._coreService.notification.showNotiffication(
+          NotificationType.Error,
+          err
+        );
+
+        return of(null);
+      }),
+      finalize(() => {
+        this._isLoading$.next(false);
+        this._isCompleteStep$.next({ searc: true });
+      }),
+      shareReplay()
+    );
+  }
+  UpdateOperationManuelId(updateModel:UpdateRemittanceManuelIdVm){
+    this._isLoading$.next(true);
+    return this.http.put<ResultDto<boolean>>(this.baseUrl+'UpdateOperationManuelId',updateModel).pipe(
       map((result: ResultDto<boolean>) => {
         if (result.isSuccess) {
         }

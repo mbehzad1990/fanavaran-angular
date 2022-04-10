@@ -45,7 +45,7 @@ export class ReturnRemittanceHeaderComponent implements OnInit, OnDestroy {
   filterPerson: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
 
   dataSource = new MatTableDataSource<CustomerFactorDetailsVm>([]);
-  displayedColumns: string[] = ['collapse', 'index', 'stockOperationId', 'registerDate', 'stockName', 'description', 'select'];
+  displayedColumns: string[] = ['collapse', 'index', 'stockOperationId','manuelId', 'registerDate', 'stockName', 'description', 'select'];
   expandedElement!: CustomerFactorDetailsVm | null;
   form!: FormGroup;
   toggleFilters = true;

@@ -1,0 +1,47 @@
+@import "/src/assets/scss/mat-color-palette.scss";
+@import "/src/assets/scss/variables";
+/*#region rtl*/
+::ng-deep[dir="rtl"] {
+  .editManuelId-modal {
+    min-width: 450px;
+    min-height: 250px;
+  }
+
+  .data-container {
+    min-height: 250px;
+
+    &_img {
+      height: 100px;
+      width: 100px;
+    }
+
+    &_info {
+      margin-right: 16px;
+
+      p.mat-h3 {
+        font-weight: 500 !important;
+        font-size: 13px !important;
+        color: mat-color($cornflower-palette, 400);
+      }
+    }
+  }
+}
+.header {
+    background-color: #f9f9f9;
+    border-radius: $radius-small;
+    text-align: center;
+    width: 100%;
+    // border: 1px solid mat-color($semantic-palette , success);
+    // margin-bottom: 1rem;
+    width: fit-content;
+    min-height: 100px;
+    padding: .5rem 1rem;
+    // color:  mat-color($semantic-palette , success);
+    // display: inline-flex;
+  }
+  .current_ManuelId{
+      color: #60A917;
+  }
+  .not_current_ManuelId{
+      color: #E51400;
+  }

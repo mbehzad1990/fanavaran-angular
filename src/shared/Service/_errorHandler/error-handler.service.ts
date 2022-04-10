@@ -52,6 +52,10 @@ export class ErrorHandlerService {
       case ResultAction.StockAlreadyUseInRemittance:
         resultText ='این انبار در فاکتوری ثبت شده است';
         break;
+      case ResultAction.ManuelIdAlreadyUseInRemittance
+      :
+        resultText ='این کد حواله قبلا استفاده شده است';
+        break;
       default:
         resultText = 'UnHandled';
 

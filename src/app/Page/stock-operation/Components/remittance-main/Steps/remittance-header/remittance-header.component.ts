@@ -3,9 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatStep } from '@angular/material/stepper';
 import * as moment from 'jalali-moment';
-import { ReplaySubject, Subject, Subscription, takeUntil } from 'rxjs';
+import { Observable, ReplaySubject, Subject, Subscription, takeUntil } from 'rxjs';
 import { HeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/header-info-dto';
-import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
+import { NotificationType, StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { Customer } from 'src/shared/Domain/Models/_Customer/customer';
 import { Stock } from 'src/shared/Domain/Models/_Stock/stock';
 import { RegisterStockOperationVm } from 'src/shared/Domain/ViewModels/_StockOperation/register-stock-operation-vm';
@@ -41,6 +41,7 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   dateSelected:string='';
 
   numberPattern='^[0-9]*$';
+  isLoading$!: Observable<boolean>;
 
   
   //#endregion
@@ -51,7 +52,9 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
   @Output() headerInfo=new EventEmitter<RegisterStockOperationVm>();
   @Output() headerInfoDto=new EventEmitter<HeaderInfoDto>();
   //#endregion
-  constructor(private _coreService: FacadService, private fb: FormBuilder) { }
+  constructor(private _coreService: FacadService, private fb: FormBuilder) {
+    this.isLoading$=this._coreService.Operation.isModalLoading$;
+   }
 
 
   ngOnInit(): void {
@@ -84,6 +87,7 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
       datePicker: [moment, Validators.required],
       personSelect: [null, Validators.required],
       stockSelect: [null, Validators.required],
+      manuelId: [null],
       personFilterCtrl: [null],
       description: [null],
      
@@ -147,6 +151,7 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
      this._headerInfo.description=form.value.description;
      this._headerInfo.personId=form.value.personSelect.id;
      this._headerInfo.stockId=form.value.stockSelect.id;
+     this._headerInfo.manuelId=form.value.manuelId;
      this._headerInfo.stockOperationType=this.stockOperationType;
      const _dateSelected=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
      this._headerInfo.registerDate=this._coreService.UtilityFunction.convertMiladiDateToString(_dateSelected);
@@ -155,12 +160,27 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
      this._headerDto.stockName=form.value.stockSelect.name;
      this._headerDto.personName=form.value.personSelect.name;
      this._headerDto.description=form.value.personSelect;
+     this._headerDto.manuelId=form.value.manuelId;
      this._headerDto.registerDate=this._coreService.UtilityFunction.getShamsiString( this._headerInfo.registerDate);
+
+     const sb=this._coreService.Operation.CheckRemittanceMAnuelId(this._headerDto.manuelId,this._headerInfo.registerDate).subscribe(result=>{
+      if(result?.isSuccess){
+        if(result.data){
+          this.headerInfo.emit(this._headerInfo);
+          this.headerInfoDto.emit(this._headerDto);
+          this.nextStepper.completed = true;
+          this.nextStepper._stepper.next();
+        }else{
+          const actionText=this._coreService.errorHandler.getErrorText(result!.resultAction);
+          this._coreService.notification.showNotiffication(
+            NotificationType.Warning,actionText
+          );
+        }
+      }
+    })
+    this.subscriptions.push(sb);
     // _headerInfo.registerDate=
-    this.headerInfo.emit(this._headerInfo);
-    this.headerInfoDto.emit(this._headerDto);
-    this.nextStepper.completed = true;
-    this.nextStepper._stepper.next();
+
 
   }
   resetStep(){
@@ -172,6 +192,7 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
     this.headerForm.controls['stockSelect'].reset();
     this.headerForm.controls['personFilterCtrl'].reset();
     this.headerForm.controls['description'].reset();
+    this.headerForm.controls['manuelId'].reset();
   }
 
 

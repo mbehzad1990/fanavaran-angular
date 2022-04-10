@@ -1,0 +1,54 @@
+<div class="editManuelId-modal modal-container">
+  <form [formGroup]="form" (ngSubmit)="validationManuelId(form)">
+    <div>
+      <p class="mat-h2 modal-title">ویرایش کد دستی سند</p>
+    </div>
+    <div fxLayout="column">
+        <div fxLayout="row" fxFill class="header" fxLayoutAlign="space-between" fxLayoutGap="10px">
+            <div fxLayout="row" fxLayoutGap="10px">
+                <span>تاریخ تنظیم :</span>
+                <span>{{operationData.registerDate}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <span>کد سند :</span>
+                <span>{{operationData.operationId}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <span>مشتری :</span>
+                <span>{{operationData.personName}}</span>
+            </div>
+        </div>
+        <div fxLayout="column"   fxLayoutGap="30px" class="mt-4">
+            <div fxLayout="row" fxLayoutGap="10px">
+                <span >کد دستی جاری :</span>
+                <div *ngIf="operationData.operationManuelId!=null;else not">
+                    <span class="current_ManuelId">{{operationData.operationManuelId}}</span>
+                </div>
+                <ng-template #not>
+                    <span class="not_current_ManuelId">کد دستی ثبت نشده است</span>
+                </ng-template>
+                
+            </div>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                <span class="mb-3">کد دستی جدید</span>
+                <mat-form-field class="input-size input-text-size" appearance="outline" color="primary">
+                    <!-- <mat-label>کد دستی حواله</mat-label> -->
+                    <input matInput placeholder="123آ ب" #manuelId formControlName="manuelId" />
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <app-result-message *ngIf="isFinishOperation" [ResultType]="messageResultType" [resultSmessageText]="resultMessage">
+    </app-result-message>
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close class="ms-2 curve-btn">انصراف</button>
+        <button mat-raised-button color="primary" class="curve-btn" [disabled]="form.invalid">
+          <span fxLayout fxLayoutAlign="center center">
+            <span color="primary">ویرایش</span>
+            <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">
+            </mat-spinner>
+          </span>
+         </button>
+      </div>
+  </form>
+</div>
