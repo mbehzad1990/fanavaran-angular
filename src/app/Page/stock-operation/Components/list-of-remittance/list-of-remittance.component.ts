@@ -263,7 +263,7 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(EditRemittanceManuelIdComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((result:boolean) => {
-      console.log(result)
+     // console.log(result)
       if(result){
         this.getData();
       }
