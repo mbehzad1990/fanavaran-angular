@@ -8,7 +8,6 @@ export const environment = {
   //"http://185.81.96.33",
   //"https://localhost:7071"
   version:"2.2.0"
-
 };
 
 /*
