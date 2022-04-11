@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatStep, MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
@@ -55,31 +55,11 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   }
-  // getShamsi(strDate: Date|null): string {
-  //   if(strDate!=null){
-  //     let MomentDate = moment(strDate, 'YYYY/MM/DD');
-  //     return MomentDate.locale('fa').format('YYYY/M/D');
-  //   }
-  //   return '';
-  // }
   getShamsi(strDate: string): string {
     return this._coreService.UtilityFunction.getShamsiString(strDate);
   }
   getItem(_item: GoodDetailDto) {
-    // let isExist = false;
-    // const indexItem = this.dataSource.data.findIndex(p => p.goodId == _item.goodId && p.bacthNumber?.trim() == _item.bacthNumber?.trim());
-    // if (indexItem >= 0) {
-    //   if (this.dataSource.data[indexItem].price != _item.price) {
-    //     this._coreService.notification.showNotiffication(NotificationType.Warning, 'قیمت واحد را بررسی کنید');
-    //   } else {
-    //     this.dataSource.data[indexItem].count = parseInt(this.dataSource.data[indexItem].count.toString()) + parseInt(_item.count.toString());
-    //     this.dataSource.data[indexItem].amount = this.dataSource.data[indexItem].count * this.dataSource.data[indexItem].price;
-    //   }
 
-    // } else {
-    //   this.listOfGood.push(_item);
-    //   this.dataSource.data = this.listOfGood;
-    // }
     this.listOfGood.push(_item);
     this.dataSource.data = this.listOfGood;
 

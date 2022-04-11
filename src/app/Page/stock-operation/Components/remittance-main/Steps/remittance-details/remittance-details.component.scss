@@ -36,3 +36,9 @@
   .batch-col-width{
     width: 100px;
   }
+  .example-table-container {
+    position: relative;
+    min-height: 200px;
+    max-height: 40vh;
+    overflow: auto;
+  }

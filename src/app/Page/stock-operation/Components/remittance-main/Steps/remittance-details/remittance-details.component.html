@@ -26,9 +26,9 @@
     <app-add-details class="w-100" (itemForAdd)="getItem($event)"></app-add-details>
   </div>
   <div fxLayout="column" fxFlex="100%">
-    <div class="example-table-container">
+    <div class=" mb-4">
       <!-- [@listAnimation]="dataSource.data.length" -->
-      <table mat-table [dataSource]="dataSource" class="w-100 text-right "
+      <table #datatable mat-table [dataSource]="dataSource" class="w-100 text-right "
         [ngClass]="dataSource.data.length == 0 ? 'table-fullHeight' : ''" style="padding-right: 0px !important;">
 
         <!-- Index Column -->

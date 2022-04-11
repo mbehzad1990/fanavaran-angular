@@ -1,7 +1,9 @@
 <form [formGroup]="pageForm" (ngSubmit)="add(pageForm)">
   <div fxLayout fxLayoutGap="6px">
     <mat-form-field class="mt-1 input-size input-text-size" appearance="outline">
+      <mat-label>کالا</mat-label>
       <mat-select placeholder="کالا" #goodCtrl formControlName="goodCtrl" disableOptionCentering>
+
         <mat-select-trigger>
           {{ goodCtrl.value?.name }}
         </mat-select-trigger>
