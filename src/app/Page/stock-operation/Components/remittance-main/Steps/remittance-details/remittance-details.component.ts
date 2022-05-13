@@ -131,7 +131,7 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
     this.dataSource.data = [];
     this.headerInfoDto = new HeaderInfoDto();
     this.OperationComplete.emit(this._operationComplete);
-    this._operationComplete = false;
+    this._operationComplete = true;
   }
   buttonStatus(): boolean {
     if (this.dataSource.data.length > 0 && this._operationComplete) {

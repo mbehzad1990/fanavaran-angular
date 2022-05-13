@@ -89,7 +89,7 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
       goodCtrl: [null, Validators.required,],
       count: [null, Validators.required],
       price: [null, Validators.required,],
-      batchNumber: [null, Validators.required],
+      batchNumber: ["", Validators.required],
       datePicker: [moment, Validators.required],
       dec: [null],
 
@@ -125,7 +125,11 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
       const addModel = new GoodDetailDto();
       addModel.goodId = this._currentGood.goodId;
       addModel.goodName = form.controls['goodCtrl'].value.name;
-      addModel.bacthNumber = form.controls['batchNumber'].value;
+      if(form.controls['batchNumber'].value===null || form.controls['batchNumber'].value===undefined){
+        addModel.bacthNumber="";
+      }else{
+        addModel.bacthNumber = form.controls['batchNumber'].value;
+      }
       if (form.controls['datePicker'].value != undefined) {
         addModel.expireDate=this._coreService.UtilityFunction.convertMiladiDateToString(form.controls['datePicker'].value.toString());
 

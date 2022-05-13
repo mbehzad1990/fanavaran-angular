@@ -12,6 +12,7 @@ import { UnitService } from '../_unit/unit.service';
 import { GoodService } from '../_good/good.service';
 import { OperationService } from '../_Operation/operation.service';
 import { UitiliyFuncService } from '../_utility/uitiliy-func.service';
+import { ReportService } from '../_report/report.service';
 
 @Injectable({
   providedIn: 'root'
@@ -115,5 +116,12 @@ export class FacadService {
       this._UtilityFunction = this.injector.get(UitiliyFuncService);
     }
     return this._UtilityFunction;
+  }
+  private _report!: ReportService;
+  public get report(): ReportService {
+    if (!this._report) {
+      this._report = this.injector.get(ReportService);
+    }
+    return this._report;
   }
 }

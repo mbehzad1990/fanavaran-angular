@@ -76,7 +76,7 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
       count: [null, Validators.required],
       price: [null, Validators.required],
       datePicker: [null],
-      batchNumber: [null],
+      batchNumber: [""],
       dec: [null],
 
       // stockFilterCtrl: [''],
@@ -103,7 +103,11 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
     addModel.goodId = form.value.goodCtrl.id;
     addModel.goodManuelId=this.getGoodManuelId(addModel.goodId);
     addModel.goodName = form.value.goodCtrl.name;
-    addModel.bacthNumber = form.value.batchNumber;
+    if(form.value.batchNumber===null || form.value.batchNumber===undefined){
+      addModel.bacthNumber="";
+    }else{
+      addModel.bacthNumber = form.value.batchNumber;
+    }
 
     if (this.dateSelected != '') {
       const _dateSelected=new Date(moment.from( this.dateSelected ,'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));

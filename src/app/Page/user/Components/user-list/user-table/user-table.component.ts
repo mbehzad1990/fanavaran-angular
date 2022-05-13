@@ -38,7 +38,6 @@ export class UserTableComponent implements OnInit,OnDestroy {
     this.isLoading$=this._coreService.user.isLoading$;
   }
 
-
   ngOnInit(): void {
     this.getData();
   }
@@ -50,7 +49,6 @@ export class UserTableComponent implements OnInit,OnDestroy {
     this.subscriptions.push(sb);
   }
   deleteUser(user:User){
-    debugger
     if(!user.userName.includes('admin')){
 
       const dialogConfig = new MatDialogConfig();
