@@ -58,15 +58,15 @@ export class ReportService {
     this._isLoading$.next(true);
     const httpOptions = {
       headers: new HttpHeaders({
-        'user': 'admin',
-        'pass': 'admin1369'
+        'user': 'kobel',
+        'pass': 'k0bel@DarO'
       })
     };
-    let headers = new HttpHeaders()
-    headers.append('user',"admin");
-    headers.append('pass',"admin1369")
-    console.log(headers);
-    return this.http.get<ResultDto<ItemRemainBatchVm[]>>(this.baseUrl + `GetRemain?from=${from}&&to=${to}`, httpOptions)
+    // let headers = new HttpHeaders()
+    // headers.append('user',"admin");
+    // headers.append('pass',"admin1369")
+    // console.log(headers);
+    return this.http.get<ResultDto<ItemRemainBatchVm[]>>(this.baseUrl + `GetRemainBatch?from=${from}&&to=${to}`, httpOptions)
       .pipe(
         map((result: ResultDto<ItemRemainBatchVm[]>) => {
           if (result.isSuccess) {
@@ -94,14 +94,16 @@ export class ReportService {
     this._isLoading$.next(true);
     const httpOptions = {
       headers: new HttpHeaders({
+        // 'user': 'kobel',
+        // 'pass': 'k0bel@DarO'
         'user': 'admin',
         'pass': 'admin1369'
       })
     };
-    let headers = new HttpHeaders()
-    headers.append('user',"admin");
-    headers.append('pass',"admin1369")
-    console.log(headers);
+    // let headers = new HttpHeaders()
+    // headers.append('user',"k0bel@DarO");
+    // headers.append('pass',"k0bel@DarO")
+    // console.log(headers);
     return this.http.get<ResultDto<ItemSalesBatchVm[]>>(this.baseUrl + `GetItemSaleBatch?from=${from}&&to=${to}`, httpOptions)
       .pipe(
         map((result: ResultDto<ItemSalesBatchVm[]>) => {

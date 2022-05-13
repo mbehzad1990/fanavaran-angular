@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  serverUrl:"http://185.81.96.33",
+  serverUrl:"http://localhost:5071",
   //"http://185.81.96.33",
   //"https://localhost:7071"
   version:"2.2.1"
