@@ -7,7 +7,7 @@ export const environment = {
   serverUrl:"http://185.81.96.33",
   //"http://185.81.96.33",
   //"https://localhost:7071"
-  version:"2.2.0"
+  version:"2.2.1"
 };
 
 /*
