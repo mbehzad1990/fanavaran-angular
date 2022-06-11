@@ -23,7 +23,7 @@ export class ItemSaleBatchTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['index', 'invno', 'invno_Manuel',
    'salesDate','itemCodeDb', 'itemManuelCode',
    'itemName', 'batchNumber', 'qTY', 'price', 'amount',
-    'customerCodeDb', 'customerManuelCode', 'customerName', 'month',
+    'customerCodeDb', 'customerManuelCode', 'customerName', 'month','isTransferdsSaleBatch'
   ];
 
 

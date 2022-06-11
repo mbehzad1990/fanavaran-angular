@@ -12,4 +12,5 @@ export class ItemRemainBatchVm {
     public damage!:number;
     public way!:number;
     public return!:number;
+    public isTransferdRemainBatch!:boolean;
 }

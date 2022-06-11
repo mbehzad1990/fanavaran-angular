@@ -78,6 +78,19 @@
       <th mat-header-cell *matHeaderCellDef class="name-col-width text-right">مشتری</th>
       <td mat-cell class="text-right" *matCellDef="let element"> {{element.customerName}} </td>
     </ng-container>
+    <!-- isTransferdsSaleBatch Column -->
+    <ng-container matColumnDef="isTransferdsSaleBatch">
+      <th mat-header-cell *matHeaderCellDef class="name-col-width text-right">وضعیت جمع آوری</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> 
+        <div *ngIf="element.isTransferdRemainBatch==true;else notDone">
+          <span style="color:rgb(0, 202, 17) ;">انجام شده</span>
+
+        </div>
+        <ng-template #notDone>
+          <span style="color:rgb(202, 0, 0) ;">انجام نشده</span>
+        </ng-template>
+      </td>
+    </ng-container>
 
 
 

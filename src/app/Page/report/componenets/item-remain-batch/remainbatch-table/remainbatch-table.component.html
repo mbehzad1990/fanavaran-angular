@@ -1,75 +1,90 @@
 <div class="table-container">
-    <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width " 
+  <table mat-table [dataSource]="dataSource" class="w-100 text-right table-width "
     [ngClass]="dataSource.data.length == 0 ? 'table-fullHeight' : ''">
-      <!-- Index Column -->
-      <ng-container matColumnDef="index">
-        <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">#</th>
-        <td class=" mat-column-small-width text-right" mat-cell *matCellDef="let element;index as i;">
-          {{i+1}}
-        </td>
-      </ng-container>
-      <!-- itemCode Column -->
-      <ng-container matColumnDef="itemCode">
-        <th mat-header-cell *matHeaderCellDef class="id-col-width text-right">کد کالا</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.itemCode}}</td>
-      </ng-container>
-      <!-- itemManuelCode Column -->
-      <ng-container matColumnDef="itemManuelCode">
-        <th mat-header-cell *matHeaderCellDef class="name-col-width text-right">کد دستی کالا</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.itemManuelCode}} </td>
-      </ng-container>
-      <!-- itemName Column -->
-      <ng-container matColumnDef="itemName">
-        <th mat-header-cell *matHeaderCellDef class="address-col-width text-right">نام کالا</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.itemName}} </td>
-      </ng-container>
-      <!-- month Column -->
-      <ng-container matColumnDef="month">
-        <th mat-header-cell *matHeaderCellDef class="text-right">تاریخ</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.month}}</td>
-      </ng-container>
-      <!-- BatchNumber Column -->
-      <ng-container matColumnDef="BatchNumber">
-        <th mat-header-cell *matHeaderCellDef class="text-right">بچ</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.batchNumber}}</td>
-      </ng-container>
-      <!-- price Column -->
-      <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef class="text-right">فی</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.price| persianCurencyPipe}}</td>
-      </ng-container>
-      <!-- amount Column -->
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef class="text-right">قیمت کل</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.amount| persianCurencyPipe}}</td>
-      </ng-container>
-      <!-- expireDate Column -->
-      <ng-container matColumnDef="expireDate">
-        <th mat-header-cell *matHeaderCellDef class="text-right">تاریخ انقضا</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{getShamsi(element.expireDate)}}</td>
-      </ng-container>
-      <!-- stock Column -->
-      <ng-container matColumnDef="stock">
-        <th mat-header-cell *matHeaderCellDef class="text-right">موجودی</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.stock}}</td>
-      </ng-container>
-      <!-- damage Column -->
-      <ng-container matColumnDef="damage">
-        <th mat-header-cell *matHeaderCellDef class="text-right">ضایعات</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.damage}}</td>
-      </ng-container>
-      <!-- way Column -->
-      <ng-container matColumnDef="way">
-        <th mat-header-cell *matHeaderCellDef class="text-right">بین راهی</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.way}}</td>
-      </ng-container>
-      <!-- return Column -->
-      <ng-container matColumnDef="return">
-        <th mat-header-cell *matHeaderCellDef class="text-right">بازگشتی</th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.return}}</td>
-      </ng-container>
-      <!-- menu -->
-      <!-- <ng-container matColumnDef="menu">
+    <!-- Index Column -->
+    <ng-container matColumnDef="index">
+      <th class="text-center" mat-header-cell *matHeaderCellDef class="mat-column-small-width text-right">#</th>
+      <td class=" mat-column-small-width text-right" mat-cell *matCellDef="let element;index as i;">
+        {{i+1}}
+      </td>
+    </ng-container>
+    <!-- itemCode Column -->
+    <ng-container matColumnDef="itemCode">
+      <th mat-header-cell *matHeaderCellDef class="id-col-width text-right">کد کالا</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.itemCode}}</td>
+    </ng-container>
+    <!-- itemManuelCode Column -->
+    <ng-container matColumnDef="itemManuelCode">
+      <th mat-header-cell *matHeaderCellDef class="name-col-width text-right">کد دستی کالا</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.itemManuelCode}} </td>
+    </ng-container>
+    <!-- itemName Column -->
+    <ng-container matColumnDef="itemName">
+      <th mat-header-cell *matHeaderCellDef class="address-col-width text-right">نام کالا</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.itemName}} </td>
+    </ng-container>
+    <!-- month Column -->
+    <ng-container matColumnDef="month">
+      <th mat-header-cell *matHeaderCellDef class="text-right">تاریخ</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.month}}</td>
+    </ng-container>
+    <!-- BatchNumber Column -->
+    <ng-container matColumnDef="BatchNumber">
+      <th mat-header-cell *matHeaderCellDef class="text-right">بچ</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.batchNumber}}</td>
+    </ng-container>
+    <!-- price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef class="text-right">فی</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.price| persianCurencyPipe}}</td>
+    </ng-container>
+    <!-- amount Column -->
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef class="text-right">قیمت کل</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.amount| persianCurencyPipe}}</td>
+    </ng-container>
+    <!-- expireDate Column -->
+    <ng-container matColumnDef="expireDate">
+      <th mat-header-cell *matHeaderCellDef class="text-right">تاریخ انقضا</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{getShamsi(element.expireDate)}}</td>
+    </ng-container>
+    <!-- stock Column -->
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef class="text-right">موجودی</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.stock}}</td>
+    </ng-container>
+    <!-- damage Column -->
+    <ng-container matColumnDef="damage">
+      <th mat-header-cell *matHeaderCellDef class="text-right">ضایعات</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.damage}}</td>
+    </ng-container>
+    <!-- way Column -->
+    <ng-container matColumnDef="way">
+      <th mat-header-cell *matHeaderCellDef class="text-right">بین راهی</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.way}}</td>
+    </ng-container>
+    <!-- return Column -->
+    <ng-container matColumnDef="return">
+      <th mat-header-cell *matHeaderCellDef class="text-right">بازگشتی</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.return}}</td>
+    </ng-container>
+
+    <!-- isTransferd Column -->
+    <ng-container matColumnDef="isTransferdRemainBatch">
+      <th mat-header-cell *matHeaderCellDef class="text-right">وضعیت جمع آوری</th>
+      <td mat-cell class="text-right" *matCellDef="let element">
+        <div *ngIf="element.isTransferdRemainBatch==true;else notDone">
+          <!-- <span style="color:rgba(34, 145, 7, 0) ;">انجام شده</span> -->
+          <span style="color:rgb(0, 202, 17) ;">انجام شده</span>
+
+        </div>
+        <ng-template #notDone>
+          <span style="color:rgb(202, 0, 0) ;">انجام نشده</span>
+        </ng-template>
+      </td>
+    </ng-container>
+    <!-- menu -->
+    <!-- <ng-container matColumnDef="menu">
         <th mat-header-cell class="text-center" *matHeaderCellDef></th>
         <td mat-cell  class="text-left menu-width" *matCellDef="let row">
           <div [hidden]="row.id != currentRow">
@@ -84,32 +99,33 @@
           </div>
         </td>
       </ng-container> -->
-  
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"  class="table-header-color"></tr>
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" [colSpan]="displayedColumns.length+1">
-          <div fxLayout="row" fxFill fxLayoutAlign="center center">
-            <div *ngIf="isLoading$ | async; else noData">
-                <div class="loading-shade" *ngIf="isLoading$ | async">
-                    <div fxLayout="column" fxLayoutAlign="center center">
-                      <mat-progress-spinner [strokeWidth]="3" [diameter]="30" [mode]="'indeterminate'" *ngIf="isLoading$ | async"></mat-progress-spinner>
-                      <h3 class="mt-3">در حال دریافت اطلاعت از سرور ...</h3>
-                    </div>
-                  </div>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true" class="table-header-color"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" [colSpan]="displayedColumns.length+1">
+        <div fxLayout="row" fxFill fxLayoutAlign="center center">
+          <div *ngIf="isLoading$ | async; else noData">
+            <div class="loading-shade" *ngIf="isLoading$ | async">
+              <div fxLayout="column" fxLayoutAlign="center center">
+                <mat-progress-spinner [strokeWidth]="3" [diameter]="30" [mode]="'indeterminate'"
+                  *ngIf="isLoading$ | async"></mat-progress-spinner>
+                <h3 class="mt-3">در حال دریافت اطلاعت از سرور ...</h3>
+              </div>
             </div>
-            <ng-template #noData>
-                <div class="warning-box">
-                    <span>اطلاعاتی جهت نمایش وجود ندارد</span>
-                  </div>      
-            </ng-template>
-        
           </div>
-        </td>
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered}"
-        (mouseover)="row.hovered = true" (mouseover)="currentRow = row.id" (mouseout)="currentRow= -1"
-        (mouseout)="row.hovered = false">
-      </tr>
-    </table>
-  </div>
+          <ng-template #noData>
+            <div class="warning-box">
+              <span>اطلاعاتی جهت نمایش وجود ندارد</span>
+            </div>
+          </ng-template>
+
+        </div>
+      </td>
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered}"
+      (mouseover)="row.hovered = true" (mouseover)="currentRow = row.id" (mouseout)="currentRow= -1"
+      (mouseout)="row.hovered = false">
+    </tr>
+  </table>
+</div>

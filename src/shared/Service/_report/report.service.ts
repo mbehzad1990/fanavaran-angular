@@ -62,10 +62,6 @@ export class ReportService {
         'pass': 'k0bel@DarO'
       })
     };
-    // let headers = new HttpHeaders()
-    // headers.append('user',"admin");
-    // headers.append('pass',"admin1369")
-    // console.log(headers);
     return this.http.get<ResultDto<ItemRemainBatchVm[]>>(this.baseUrl + `GetRemainBatch?from=${from}&&to=${to}`, httpOptions)
       .pipe(
         map((result: ResultDto<ItemRemainBatchVm[]>) => {

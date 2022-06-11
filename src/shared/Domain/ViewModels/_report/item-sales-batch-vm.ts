@@ -13,5 +13,6 @@ export class ItemSalesBatchVm {
     public qTY!:number;
     public price!:number;
     public amount!:number;
+    public isTransferdsSaleBatch!:boolean;
 
 }

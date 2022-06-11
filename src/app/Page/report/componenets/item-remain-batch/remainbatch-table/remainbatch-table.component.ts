@@ -23,7 +23,7 @@ export class RemainbatchTableComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['index', 'itemCode', 'itemManuelCode',
     'itemName', 'month', 'BatchNumber', 'price', 'amount', 'expireDate'
-    , 'stock', 'damage', 'way', 'return'];
+    , 'stock', 'damage', 'way', 'return','isTransferdRemainBatch'];
 
 
   isLoading$!: Observable<boolean>;
