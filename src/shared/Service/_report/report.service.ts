@@ -94,10 +94,10 @@ export class ReportService {
     this._isLoading$.next(true);
     const httpOptions = {
       headers: new HttpHeaders({
-        // 'user': 'kobel',
-        // 'pass': 'k0bel@DarO'
-        'user': 'admin',
-        'pass': 'admin1369'
+        'user': 'kobel',
+        'pass': 'k0bel@DarO'
+        // 'user': 'admin',
+        // 'pass': 'admin1369'
       })
     };
     // let headers = new HttpHeaders()
