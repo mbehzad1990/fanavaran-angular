@@ -1,0 +1,49 @@
+<div fxLayout>
+  <mat-card class="report-list position-relative card-height" fxFlex="100%">
+    <div fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <p class="mat-h2 modal-title">گزارش لحظه ای کالا در انبار</p>
+      </div>
+      <!-- menu -->
+          <form [formGroup]="frmReport">
+            <div fxLayout="row" fxLayoutGap="15px">
+              <mat-form-field class="input-size input-text-size" appearance="outline" color="primary">
+                <mat-label>از تاریخ</mat-label>
+                <input matInput [matDatepicker]="fromPicker" placeholder="از تاریخ" #from readonly
+                  (dateChange)="fromDateOnChange($event)" formControlName="from">
+                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>انصراف</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="input-size input-text-size" appearance="outline" color="primary">
+                <mat-label>تا تاریخ</mat-label>
+                <input matInput [matDatepicker]="toPicker" placeholder="تا تاریخ" #to readonly
+                  (dateChange)="toDateOnChange($event)" formControlName="to">
+                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>انصراف</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>تایید</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+              </mat-form-field>
+              <button mat-flat-button class="btn-search" color="primary" (click)=" getData()">
+                <i class="icon-plus-square icon-20px _white-color ms-1"></i>
+                <span>ساخت گزارش</span>
+              </button>
+            </div>
+        
+          </form>
+      <!-- menu -->
+
+      <!-- DataTable -->
+      <app-remainbatch-table #dataTable></app-remainbatch-table>
+      <!-- DataTable -->
+
+    </div>
+  </mat-card>
+</div>

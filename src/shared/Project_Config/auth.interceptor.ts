@@ -17,6 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private _coreService:FacadService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log(request.headers);
     
     return next.handle(this.setTokenRequest(request)).pipe(
       tap((event: HttpEvent<any>) => {
@@ -45,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-            'Authorization': `Bearer ${jwt.jwtToken}`
+            'Authorization': `Bearer ${jwt.jwtToken}`,
           }
         })
       }

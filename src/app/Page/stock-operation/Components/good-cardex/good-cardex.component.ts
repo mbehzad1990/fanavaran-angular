@@ -120,7 +120,6 @@ export class GoodCardexComponent implements OnInit {
     );
   }
   getCardex(stock:Stock,good:GoodDetailsVm){
-    debugger
     this.dataTable.getData(stock.id,good.id);
   }
 }

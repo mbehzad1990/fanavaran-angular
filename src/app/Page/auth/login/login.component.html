@@ -38,7 +38,7 @@
               </mat-checkbox>
    -->
               <div class="text-center">
-                <button mat-raised-button color="primary" class="w-50">
+                <button mat-raised-button color="primary" class="w-50" [disabled]="(isLoading$ | async)">
                   <span fxLayout fxLayoutAlign="center center">
                     <span>ورود </span>
   

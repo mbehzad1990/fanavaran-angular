@@ -10,6 +10,7 @@ const routes: Routes = [
     {path:'unit',loadChildren:()=>import('../Page/unit/unit.module').then(m=>m.UnitModule)},
     {path:'good',loadChildren:()=>import('../Page/good/good.module').then(m=>m.GoodModule)},
     {path:'remittance',loadChildren:()=>import('../Page/stock-operation/stock-operation.module').then(m=>m.StockOperationModule)},
+    {path:'report',loadChildren:()=>import('../Page/report/report.module').then(m=>m.ReportModule)},
   ]},
 ];
 

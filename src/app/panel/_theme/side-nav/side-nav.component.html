@@ -1,108 +1,108 @@
 <div class="user-profile mt-5">
-    <div class="user-profile_img" [ngClass]="{'small-img' : !isOpen}">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL_IbRQvlVj5_heS6MBUBdPrmF7MUJdswsAw&usqp=CAU"
-        alt="">
-      <span class="user-profile_img_state _success-bg-color"></span>
-    </div>
-    <div *ngIf="isOpen" class="user-profile_name me-2 mb-0">
-      {{user_name}} </div>
+  <div class="user-profile_img" [ngClass]="{'small-img' : !isOpen}">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL_IbRQvlVj5_heS6MBUBdPrmF7MUJdswsAw&usqp=CAU"
+      alt="">
+    <span class="user-profile_img_state _success-bg-color"></span>
   </div>
-  
-  <div class="mt-5 make-overflow-y sidebar-items" [ngClass]="{'closed-menu' : !isOpen}">
-    <cdk-accordion class="sidebar-accordion">
-      <!--  -->
-      <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item  "
-        [routerLinkActive]="['active-accordion-item']" #accordionItem="cdkAccordionItem">
-        <div class="sidebar-accordion-item-header" fxLayout fxLayoutAlign="start center" (click)="accordionItem.toggle()">
-          <i class="icon-sidebar icon-20px"></i>
-          <span *ngIf="isOpen">اطلاعات اولیه</span>
-          <i class="icon-20px" [ngClass]="accordionItem.expanded ? 'icon-chevron-up' : 'icon-chevron-down' "></i>
-  
-        </div>
-        <div class="sidebar-accordion-item-body" [style.display]="accordionItem.expanded ? '' : 'none' ">
-          <mat-nav-list>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/user']"
-                routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">کاربران سیستم</h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link"
-                [routerLink]="['/stock']" routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">انبارها</h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link"
-                [routerLink]="['/customer']" routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">مشتریان</h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link"
-                [routerLink]="['/good']" routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">کالا ها</h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link"
-                [routerLink]="['/unit']" routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">واحد سنجش</h4>
-              </a>
-            </mat-list-item>
-          </mat-nav-list>
-        </div>
-      </cdk-accordion-item>
-      <!-- Person -->
-      <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item "
-        [routerLinkActive]="['active-accordion-item']" #accordionItem2="cdkAccordionItem">
-        <div class="sidebar-accordion-item-header" fxLayout fxLayoutAlign="start center"
-          (click)="accordionItem2.toggle()">
-  
-          <i class="icon-codesandbox icon-20px"></i>
-          <span *ngIf="isOpen">ثبت حواله </span>
-          <i class="icon-20px" [ngClass]="accordionItem2.expanded ? 'icon-chevron-up' : 'icon-chevron-down' "></i>
-        </div>
-        <div class="sidebar-accordion-item-body" [style.display]="accordionItem2.expanded ? '' : 'none' ">
-          <mat-nav-list>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-buy']"
-                routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">حواله خرید </h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-rebuy']"
-                routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">حواله برگشت از خرید</h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-sell']"
-                routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">حواله فروش</h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-resell']"
-                routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">حواله برگشت از فروش</h4>
-              </a>
-            </mat-list-item>
-            <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
-              <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-damage']"
-                routerLinkActive="router-link-active">
-                <h4 class="mat-body" mat-line *ngIf="isOpen">حواله ضایعات</h4>
-              </a>
-            </mat-list-item>
-       
-          </mat-nav-list>
-        </div>
-      </cdk-accordion-item>
-      
-      <!-- Customer -->
-      <!-- <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item "
+  <div *ngIf="isOpen" class="user-profile_name me-2 mb-0">
+    {{user_name}} </div>
+</div>
+
+<div class="mt-5 make-overflow-y sidebar-items" [ngClass]="{'closed-menu' : !isOpen}">
+  <cdk-accordion class="sidebar-accordion">
+    <!--  -->
+    <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item  "
+      [routerLinkActive]="['active-accordion-item']" #accordionItem="cdkAccordionItem">
+      <div class="sidebar-accordion-item-header" fxLayout fxLayoutAlign="start center" (click)="accordionItem.toggle()">
+        <i class="icon-sidebar icon-20px"></i>
+        <span *ngIf="isOpen">اطلاعات اولیه</span>
+        <i class="icon-20px" [ngClass]="accordionItem.expanded ? 'icon-chevron-up' : 'icon-chevron-down' "></i>
+
+      </div>
+      <div class="sidebar-accordion-item-body" [style.display]="accordionItem.expanded ? '' : 'none' ">
+        <mat-nav-list>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/user']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">کاربران سیستم</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/stock']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">انبارها</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/customer']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">مشتریان</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/good']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">کالا ها</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/unit']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">واحد سنجش</h4>
+            </a>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </cdk-accordion-item>
+    <!-- Person -->
+    <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item "
+      [routerLinkActive]="['active-accordion-item']" #accordionItem2="cdkAccordionItem">
+      <div class="sidebar-accordion-item-header" fxLayout fxLayoutAlign="start center"
+        (click)="accordionItem2.toggle()">
+
+        <i class="icon-codesandbox icon-20px"></i>
+        <span *ngIf="isOpen">ثبت حواله </span>
+        <i class="icon-20px" [ngClass]="accordionItem2.expanded ? 'icon-chevron-up' : 'icon-chevron-down' "></i>
+      </div>
+      <div class="sidebar-accordion-item-body" [style.display]="accordionItem2.expanded ? '' : 'none' ">
+        <mat-nav-list>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-buy']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">حواله خرید </h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link"
+              [routerLink]="['/remittance/remittance-rebuy']" routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">حواله برگشت از خرید</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/remittance/remittance-sell']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">حواله فروش</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link"
+              [routerLink]="['/remittance/remittance-resell']" routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">حواله برگشت از فروش</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link"
+              [routerLink]="['/remittance/remittance-damage']" routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">حواله ضایعات</h4>
+            </a>
+          </mat-list-item>
+
+        </mat-nav-list>
+      </div>
+    </cdk-accordion-item>
+
+    <!-- Customer -->
+    <!-- <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item "
         [routerLinkActive]="['active-accordion-item']" #accordionItem5="cdkAccordionItem">
         <div class="sidebar-accordion-item-header" fxLayout fxLayoutAlign="start center"
           (click)="accordionItem5.toggle()">
@@ -128,8 +128,8 @@
           </mat-nav-list>
         </div>
       </cdk-accordion-item> -->
-      <!-- good -->
-      <!-- <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item "
+    <!-- good -->
+    <!-- <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item "
       [routerLinkActive]="['active-accordion-item']" #accordionItem3="cdkAccordionItem">
       <div class="sidebar-accordion-item-header" fxLayout fxLayoutAlign="start center"
         (click)="accordionItem3.toggle()">
@@ -189,6 +189,34 @@
         </mat-nav-list>
       </div>
     </cdk-accordion-item>
-    </cdk-accordion>
-  </div>
-  
+    <!-- Report -->
+
+    <cdk-accordion-item fxLayout="column" class="py-2 sidebar-cdk-accordion-item "
+      [routerLinkActive]="['active-accordion-item']" #accordionItem5="cdkAccordionItem">
+      <div class="sidebar-accordion-item-header" fxLayout fxLayoutAlign="start center"
+        (click)="accordionItem5.toggle()">
+
+        <i class="icon-file-text icon-20px"></i>
+        <span *ngIf="isOpen">گزارشات</span>
+        <i class="icon-20px" [ngClass]="accordionItem5.expanded ? 'icon-chevron-up' : 'icon-chevron-down' "></i>
+      </div>
+      <div class="sidebar-accordion-item-body" [style.display]="accordionItem5.expanded ? '' : 'none' ">
+        <mat-nav-list>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/report/item-remain-batch']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">گزارش لحظه ای کالا</h4>
+            </a>
+          </mat-list-item>
+          <mat-list-item [ngClass]="{'no-padding' : !isOpen}">
+            <a fxLayout fxLayoutAlign="start center" class="sidenav-link" [routerLink]="['/report/item-sale-batch']"
+              routerLinkActive="router-link-active">
+              <h4 class="mat-body" mat-line *ngIf="isOpen">گزارش فروش</h4>
+            </a>
+          </mat-list-item>
+
+        </mat-nav-list>
+      </div>
+    </cdk-accordion-item>
+  </cdk-accordion>
+</div>

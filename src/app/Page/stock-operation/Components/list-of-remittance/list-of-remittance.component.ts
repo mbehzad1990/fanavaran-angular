@@ -233,7 +233,7 @@ export class ListOfRemittanceComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result) {
         const sb = this._coreService.Operation.delete(item.id).subscribe(result => {
-          debugger
+
           if (result?.isSuccess) {
             this.getData();
           } else {

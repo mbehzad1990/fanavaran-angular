@@ -137,7 +137,7 @@
   </div>
 
   <div fxLayout="row" fxFlexAlign="end" fxLayoutGap="15px" class="text-left mt-3 button-Add" align="end">
-    <button mat-raised-button color="primary" (click)="addGoods()" [disabled]="buttonStatus()">
+    <button mat-raised-button color="primary" (click)="addGoods()" [disabled]="buttonStatus()" #saveButton>
       <span fxLayout fxLayoutAlign="center center">
         <span>ذخیره و تایید</span>
         <mat-spinner *ngIf="isLoading$ | async" class="mx-2" color="accent" diameter="20">

@@ -103,6 +103,7 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
         _goodItem.count = item.count;
         _goodItem.Description = item.description;
         _goodItem.amount = Number(item.amount.toString().replace(this.numberChars, ""));
+        
         _goodItem.bacthNumber=item.bacthNumber;
         _goodItem.expireDate=item.expireDate!;
   
