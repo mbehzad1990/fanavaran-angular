@@ -120,6 +120,11 @@ export class ReturnRemittanceDetailsComponent implements OnInit,OnDestroy {
           );
           btn.disabled=true;
           this._operationComplete=false;
+        }else{
+          this._coreService.notification.showNotiffication(
+            NotificationType.Error,this._coreService.errorHandler.getErrorText(result?.resultAction!)
+         
+          );
         }
       })
   

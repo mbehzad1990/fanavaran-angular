@@ -30,6 +30,8 @@ export enum ResultAction {
   PersonAlreadyUseInRemittance,
   StockAlreadyUseInRemittance,
   ManuelIdAlreadyUseInRemittance,
+  CannotInsertDataForOtherDay,
+  DateFormatIncorect,
   ServiceException
 }
 

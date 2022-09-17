@@ -52,10 +52,12 @@ export class ErrorHandlerService {
       case ResultAction.StockAlreadyUseInRemittance:
         resultText ='این انبار در فاکتوری ثبت شده است';
         break;
-      case ResultAction.ManuelIdAlreadyUseInRemittance
-      :
+      case ResultAction.ManuelIdAlreadyUseInRemittance:
         resultText ='این کد حواله قبلا استفاده شده است';
         break;
+        case ResultAction.CannotInsertDataForOtherDay:
+          resultText='سند مربوط به روز قبل قابل اضافه کردن نیست';
+          break;
       default:
         resultText = 'UnHandled';
 

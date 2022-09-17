@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { CustomerFactorGoodsVm } from 'src/shared/Domain/ViewModels/_stockOperationDetail/customer-factor-goods-vm';
 import * as moment from 'jalali-moment';
 import { MatStep } from '@angular/material/stepper';
@@ -21,7 +21,7 @@ export class RemittanceDetailTableComponent implements OnInit,OnDestroy {
   //#region Public field
   isLoading$!: Observable<boolean>;
   dataSource = new MatTableDataSource<CustomerFactorGoodsVm>([]);
-  displayedColumns: string[] = [ 'index', 'goodId','goodManuelId', 'bacthNumber', 'expireDate', 'count','price','amount','description'];
+  displayedColumns: string[] = [ 'index', 'goodId','goodManuelId','goodName', 'bacthNumber', 'expireDate', 'count','price','amount','description'];
 
   //#endregion
 
@@ -53,6 +53,13 @@ export class RemittanceDetailTableComponent implements OnInit,OnDestroy {
   // }
   getShamsi(strDate: string): string {
     return this._coreService.UtilityFunction.getShamsiString(strDate);
+  }
+  getGoodNameById(goodId:number):Observable<string>{
+    const goodName=this._coreService.good.items$.pipe(
+      map(goods=>goods.filter(p=>p.id==goodId)[0]),
+      map(good=>good.name)
+    );
+    return goodName;
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sp => sp.unsubscribe());

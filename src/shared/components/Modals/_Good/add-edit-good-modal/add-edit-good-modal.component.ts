@@ -136,11 +136,8 @@ export class AddEditGoodModalComponent implements OnInit, OnDestroy {
   submit(form: FormGroup) {
     if (this.data.action == ActionType.Add) {
       const addModel = new RegisterGoodVm();
-      if (this.isSetManualId) {
-        addModel.manualId = parseInt(form.value.manualId);
-      } else {
-        addModel.manualId = 0;
-      }
+        addModel.manualId = form.value.manualId==undefined?"":form.value.manualId;
+
       addModel.name = form.value.name;
       addModel.latinName = form.value.latinName;
       addModel.description = form.value.description;
@@ -151,7 +148,7 @@ export class AddEditGoodModalComponent implements OnInit, OnDestroy {
       updatModel.id = this.data.data.id;
       updatModel.name = form.value.name;
       updatModel.latinName = form.value.latinName;
-      updatModel.manualId = parseInt(form.controls['manualId'].value);
+      updatModel.manualId =form.controls['manualId'].value==undefined?"":form.controls['manualId'].value;
       updatModel.description = form.value.description;
       updatModel.unitId = parseInt(form.controls['unit'].value);
 

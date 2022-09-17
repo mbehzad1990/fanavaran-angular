@@ -13,6 +13,7 @@ import { GoodService } from '../_good/good.service';
 import { OperationService } from '../_Operation/operation.service';
 import { UitiliyFuncService } from '../_utility/uitiliy-func.service';
 import { ReportService } from '../_report/report.service';
+import { AppConfigService } from '../_config/app-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -123,5 +124,12 @@ export class FacadService {
       this._report = this.injector.get(ReportService);
     }
     return this._report;
+  }
+  private _appConfig!: AppConfigService;
+  public get appConfig(): AppConfigService {
+    if (!this._appConfig) {
+      this._appConfig = this.injector.get(AppConfigService);
+    }
+    return this._appConfig;
   }
 }

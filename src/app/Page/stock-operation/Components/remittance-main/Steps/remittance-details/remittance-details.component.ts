@@ -105,7 +105,13 @@ export class RemittanceDetailsComponent implements OnInit, OnDestroy {
             'حواله جدید ثبت شد'
           );
           this._operationComplete = false;
+        }else{
+          this._coreService.notification.showNotiffication(
+            NotificationType.Error,this._coreService.errorHandler.getErrorText(result?.resultAction!)
+         
+          )
         }
+     
       })
 
       this.subscriptions.push(sb);

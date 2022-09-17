@@ -80,7 +80,7 @@ export class AddDataComponent implements OnInit ,OnDestroy {
   }
   add(form: FormGroup){
     const addModel = new RegisterGoodVm();
-    addModel.manualId = 0;
+    addModel.manualId = "";
     addModel.name = form.value.name;
     addModel.latinName = form.value.latinName;
     addModel.description = form.value.description;

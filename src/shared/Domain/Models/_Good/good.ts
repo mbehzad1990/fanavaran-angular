@@ -1,6 +1,6 @@
 export class Good {
     public id!:number;
-    public manualId!:number;
+    public manualId!:string;
     public name!:string;
     public latinName!:string;
     public description!:string;

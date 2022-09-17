@@ -48,12 +48,14 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
 
   //#region Input & OutPut & Other
   @Input() nextStepper!: MatStep;
+  @Input() operationDateControl: boolean=true;
   @Input() stockOperationType!: StockOperationType;
   @Output() headerInfo=new EventEmitter<RegisterStockOperationVm>();
   @Output() headerInfoDto=new EventEmitter<HeaderInfoDto>();
   //#endregion
   constructor(private _coreService: FacadService, private fb: FormBuilder) {
     this.isLoading$=this._coreService.Operation.isModalLoading$;
+    console.log(this.operationDateControl);
    }
 
 
@@ -145,43 +147,18 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
 
 
   submit(form: FormGroup){
-    
-     this._headerInfo=new RegisterStockOperationVm();
-    //  this._headerInfo.bacthNumber=form.value.batchNumber;
-     this._headerInfo.description=form.value.description;
-     this._headerInfo.personId=form.value.personSelect.id;
-     this._headerInfo.stockId=form.value.stockSelect.id;
-     this._headerInfo.manuelId=form.value.manuelId;
-     this._headerInfo.stockOperationType=this.stockOperationType;
-     const _dateSelected=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
-     this._headerInfo.registerDate=this._coreService.UtilityFunction.convertMiladiDateToString(_dateSelected);
-    
-     this._headerDto=new HeaderInfoDto();
-     this._headerDto.stockName=form.value.stockSelect.name;
-     this._headerDto.personName=form.value.personSelect.name;
-     this._headerDto.description=form.value.personSelect;
-     this._headerDto.manuelId=form.value.manuelId;
-     this._headerDto.registerDate=this._coreService.UtilityFunction.getShamsiString( this._headerInfo.registerDate);
-
-     const sb=this._coreService.Operation.CheckRemittanceMAnuelId(this._headerDto.manuelId,this._headerInfo.registerDate).subscribe(result=>{
-      if(result?.isSuccess){
-        if(result.data){
-          this.headerInfo.emit(this._headerInfo);
-          this.headerInfoDto.emit(this._headerDto);
-          this.nextStepper.completed = true;
-          this.nextStepper._stepper.next();
-        }else{
-          const actionText=this._coreService.errorHandler.getErrorText(result!.resultAction);
-          this._coreService.notification.showNotiffication(
-            NotificationType.Warning,actionText
-          );
-        }
+    if(this.operationDateControl){
+      if(this._coreService.UtilityFunction.controlDateInRemittance(this.dateSelected)){
+       this.sendRemittanceHeader(form);
       }
-    })
-    this.subscriptions.push(sb);
-    // _headerInfo.registerDate=
-
-
+      else{
+        this._coreService.notification.showNotiffication(
+          NotificationType.Warning,"تاریخ وارد شده منطبق بر ماه جاری نیست"
+        );
+      }
+    }else{
+      this.sendRemittanceHeader(form);
+    }
   }
   resetStep(){
     this.headerForm.reset();
@@ -193,6 +170,40 @@ export class RemittanceHeaderComponent implements OnInit, OnDestroy {
     this.headerForm.controls['personFilterCtrl'].reset();
     this.headerForm.controls['description'].reset();
     this.headerForm.controls['manuelId'].reset();
+  }
+  sendRemittanceHeader(form: FormGroup){
+    const _dateSelected=new Date(moment.from( this.dateSelected, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD'));
+    this._headerInfo=new RegisterStockOperationVm();
+    this._headerInfo.description=form.value.description;
+    this._headerInfo.personId=form.value.personSelect.id;
+    this._headerInfo.stockId=form.value.stockSelect.id;
+    this._headerInfo.manuelId=form.value.manuelId;
+    this._headerInfo.stockOperationType=this.stockOperationType;
+    this._headerInfo.registerDate=this._coreService.UtilityFunction.convertMiladiDateToString(_dateSelected);
+   
+    this._headerDto=new HeaderInfoDto();
+    this._headerDto.stockName=form.value.stockSelect.name;
+    this._headerDto.personName=form.value.personSelect.name;
+    this._headerDto.description=form.value.personSelect;
+    this._headerDto.manuelId=form.value.manuelId;
+    this._headerDto.registerDate=this._coreService.UtilityFunction.getShamsiString( this._headerInfo.registerDate);
+
+    const sb=this._coreService.Operation.CheckRemittanceMAnuelId(this._headerDto.manuelId,this._headerInfo.registerDate).subscribe(result=>{
+     if(result?.isSuccess){
+       if(result.data){
+         this.headerInfo.emit(this._headerInfo);
+         this.headerInfoDto.emit(this._headerDto);
+         this.nextStepper.completed = true;
+         this.nextStepper._stepper.next();
+       }else{
+         const actionText=this._coreService.errorHandler.getErrorText(result!.resultAction);
+         this._coreService.notification.showNotiffication(
+           NotificationType.Warning,actionText
+         );
+       }
+     }
+   })
+   this.subscriptions.push(sb);
   }
 
 

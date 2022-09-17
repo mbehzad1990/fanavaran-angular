@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { HeaderInfoDto } from 'src/shared/Domain/Dto/_Remittance/header-info-dto';
 import { StockOperationType } from 'src/shared/Domain/Enums/global-enums';
 import { RegisterStockOperationVm } from 'src/shared/Domain/ViewModels/_StockOperation/register-stock-operation-vm';
@@ -90,6 +90,11 @@ getOperationStatus(operationResult:boolean){
   if(!this._operationResult){
     this.stepHeader.resetElementData();
   }
+}
+getOperationDateControl(){
+  return this._coreService.appConfig.appConfig$.pipe(
+    map(config=>config.operationDateControl)
+  )
 }
  ngOnDestroy(): void {
    this.subscriptions.forEach(sb=>sb.unsubscribe());

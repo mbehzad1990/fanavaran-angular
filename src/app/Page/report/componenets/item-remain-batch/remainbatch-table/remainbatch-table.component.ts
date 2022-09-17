@@ -21,9 +21,9 @@ export class RemainbatchTableComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<ItemRemainBatchVm>();
   isHover: boolean = false;
 
-  displayedColumns: string[] = ['index', 'itemCode', 'itemManuelCode',
+  displayedColumns: string[] = ['index','stockDate', 'itemCode', 'itemManuelCode',
     'itemName', 'month', 'BatchNumber', 'price', 'amount', 'expireDate'
-    , 'stock', 'damage', 'way', 'return','isTransferdRemainBatch'];
+    , 'stock', 'damage', 'way', 'buyreturn','sellreturn','isTransferdRemainBatch'];
 
 
   isLoading$!: Observable<boolean>;

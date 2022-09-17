@@ -13,6 +13,11 @@
       <th mat-header-cell *matHeaderCellDef class="id-col-width text-right">کد کالا</th>
       <td mat-cell class="text-right" *matCellDef="let element"> {{element.itemCode}}</td>
     </ng-container>
+    <!-- StockDate Column -->
+    <ng-container matColumnDef="stockDate">
+      <th mat-header-cell *matHeaderCellDef class="id-col-width text-right">تاریخ انبار</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.stockDate}}</td>
+    </ng-container>
     <!-- itemManuelCode Column -->
     <ng-container matColumnDef="itemManuelCode">
       <th mat-header-cell *matHeaderCellDef class="name-col-width text-right">کد دستی کالا</th>
@@ -63,10 +68,15 @@
       <th mat-header-cell *matHeaderCellDef class="text-right">بین راهی</th>
       <td mat-cell class="text-right" *matCellDef="let element"> {{element.way}}</td>
     </ng-container>
-    <!-- return Column -->
-    <ng-container matColumnDef="return">
-      <th mat-header-cell *matHeaderCellDef class="text-right">بازگشتی</th>
-      <td mat-cell class="text-right" *matCellDef="let element"> {{element.return}}</td>
+    <!-- buyreturn Column -->
+    <ng-container matColumnDef="buyreturn">
+      <th mat-header-cell *matHeaderCellDef class="text-right">بازگشتی خرید</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.buyReturn}}</td>
+    </ng-container>
+    <!-- sellreturn Column -->
+    <ng-container matColumnDef="sellreturn">
+      <th mat-header-cell *matHeaderCellDef class="text-right">بازگشتی فروش</th>
+      <td mat-cell class="text-right" *matCellDef="let element"> {{element.sellReturn}}</td>
     </ng-container>
 
     <!-- isTransferd Column -->

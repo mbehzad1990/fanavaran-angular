@@ -174,7 +174,7 @@ export class AddDetailsComponent implements OnInit, OnDestroy {
       this.goods.filter(g => g.name.toLowerCase().indexOf(search) > -1)
     );
   }
-  private getGoodManuelId(goodId:number):number{
+  private getGoodManuelId(goodId:number):string{
     const model=this.goods.filter(p=>p.id==goodId)[0];
     return model.manualId;
   }

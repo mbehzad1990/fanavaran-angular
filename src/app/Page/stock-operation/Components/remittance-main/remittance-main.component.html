@@ -7,12 +7,12 @@
       <div fxLayout="column" fxFill>
         <p>{{setContainerTitle(formType)}}</p>
         <app-remittance-header [nextStepper]="header" [stockOperationType]="formType" #stepHeader
-          (headerInfo)="getHeaderInfo($event)" (headerInfoDto)="getHeaderDto($event)"></app-remittance-header>
+          (headerInfo)="getHeaderInfo($event)" (headerInfoDto)="getHeaderDto($event)" [operationDateControl]="(getOperationDateControl()|async)!"></app-remittance-header>
       </div>
     </mat-step>
     <mat-step label="ثبت ریز اقلام" completed=false #detail state="list">
       <app-remittance-details [headerInfoDto]="headerInfoDto" [headerInfo]="headerInfo" [stepper]="stepper" [headerStep]="header"
-        (OperationComplete)="getOperationStatus($event)"></app-remittance-details>
+        (OperationComplete)="getOperationStatus($event)" ></app-remittance-details>
     </mat-step>
 
     <ng-template matStepperIcon="info">

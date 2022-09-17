@@ -11,6 +11,8 @@ export class ItemRemainBatchVm {
     public stock!:number;
     public damage!:number;
     public way!:number;
-    public return!:number;
+    public buyReturn!:number;
+    public sellReturn!:number;
+    public stockDate!:Date;
     public isTransferdRemainBatch!:boolean;
 }

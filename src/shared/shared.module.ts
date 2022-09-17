@@ -21,7 +21,7 @@ import { PersianCurencyPipe } from './Pipe/persian-curency.pipe';
     HttpClientModule,
     ComponentsModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 4000,
       positionClass: 'toast-bottom-left',
       preventDuplicates: true,
       closeButton: true,

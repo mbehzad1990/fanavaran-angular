@@ -255,7 +255,7 @@ export class ReturnAddDetailsComponent implements OnInit, OnDestroy {
     // 3. replace the input value with formatted numbers
     // this.renderer.setProperty(this.el.nativeElement, 'value', usd);
   }
-  private getGoodManuelId(goodId: number): number {
+  private getGoodManuelId(goodId: number): string {
     const model = this.goods.filter(p => p.id == goodId)[0];
     return model.manualId;
   }
